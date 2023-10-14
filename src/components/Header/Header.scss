@@ -1,0 +1,100 @@
+@import "../GlobalStyleVariable/GlobalStyleVariable.scss";
+.header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 80px;
+  z-index: 151;
+  box-shadow: 0 5px 10px 0 #aaa;
+  padding: 0 50px;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header .right {
+  display: flex;
+}
+#user-btn,
+.toggle-btn {
+  font-size: 2rem;
+  padding: 0.5rem;
+  color: var(--pink-color);
+  cursor: pointer;
+  transition: 0.6s;
+}
+.toggle-btn {
+  margin-left: 0.5rem;
+  display: none;
+}
+.profile-detail {
+  background-color: var(--white-alpha-25);
+  border: 2px solid var(--white-alpha-40);
+  backdrop-filter: var(--backdrop-filter);
+  box-shadow: var(--box-shadow);
+  position: absolute;
+  top: 125%;
+  right: 2rem;
+  border-radius: 0.5rem;
+  width: 22rem;
+  padding: 1.5rem 0.5rem;
+  animation: 0.2s linear fadeIn;
+  text-align: center;
+  overflow: hidden;
+  // display: none;s
+}
+@keyframes fadeIn {
+  0% {
+    transform: translate(1rem);
+  }
+}
+.profile-detail.active {
+  display: inline-block;
+}
+.profile-detail p {
+  padding-bottom: 0.7rem;
+  font-size: 1.5rem;
+  text-transform: capitalize;
+  color: lightgray;
+}
+.profile-detail .flex-btn {
+  display: flex;
+  justify-content: space-evenly;
+}
+.profile-detail .flex-btn .btn {
+  margin: 0.5rem;
+}
+.user-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--main-color);
+  border-radius: 50%;
+  border: solid 3px var(--main-color);
+  padding: 10px;
+}
+.sidebar {
+  background-color: var(--white-alpha-25);
+  backdrop-filter: var(--backdrop-filter);
+  padding-top: 2rem;
+  width: 18vw;
+  height: 100vw;
+  position: sticky;
+  top: var(--space);
+  box-shadow: 0 5px 10px 0 #aaa;
+  overflow: auto;
+  z-index: 1;
+}
+.sidebar h5 {
+  text-transform: uppercase;
+  color: var(--main-color);
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0;
+}
+.profile {
+  margin: 0.5rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
