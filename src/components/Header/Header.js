@@ -8,6 +8,7 @@ import {
     faFileImport,
     faRightFromBracket,
     faUserPlus,
+    faBars,
 } from "@fortawesome/free-solid-svg-icons";
 import {
     faFacebookF,
@@ -16,9 +17,19 @@ import {
     faPinterestP,
     faXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
+import { useState } from "react";
 
 const cx = className.bind(style);
 function Header() {
+    const [showProfile, setShowProfile] = useState(false);
+    const [showSideBar, setShowSideBar] = useState(false);
+
+    const handleShowProfile = () => {
+        setShowProfile(!showProfile);
+    };
+    const handleShowSideBar = () => {
+        setShowSideBar(!showSideBar);
+    };
     return (
         <div className={cx("container")}>
             <div className={cx("header")}>
@@ -33,35 +44,46 @@ function Header() {
                     <FontAwesomeIcon
                         className={cx("user-icon")}
                         icon={faUser}
+                        onClick={(e) => handleShowProfile()}
                     />
-                    <div className={cx("toggle-btn")}></div>
+                    <FontAwesomeIcon
+                        icon={faBars}
+                        onClick={(e) => handleShowSideBar()}
+                        className={cx("toggle-btn")}
+                    />
                 </div>
-                <div className={cx("profile-detail")}>
-                    <div className={cx("profile")}>
-                        <img
-                            src={require("../../assets/img/avt.png")} //load later from user info
-                            className={cx("logo-img")}
-                            width="100"
-                            alt="profile"
-                        />
-                        <p>User Name</p>
-                        <div className={cx("flex-btn")}>
-                            <a href="profile.php" className={cx("btn")}>
-                                profile
-                            </a>
-                            <a
-                                href="../components/admin_logout.php"
-                                onclick="return confirm('logout from this website?');"
-                                className={cx("btn")}
-                            >
-                                logout
-                            </a>
+                {showProfile ? (
+                    <div className={cx("profile-detail")}>
+                        <div className={cx("profile")}>
+                            <img
+                                src={require("../../assets/img/avt.png")} //load later from user info
+                                className={cx("logo-img")}
+                                width="100"
+                                alt="profile"
+                            />
+                            <p>User Name</p>
+                            <div className={cx("flex-btn")}>
+                                <a href="profile.php" className={cx("btn")}>
+                                    profile
+                                </a>
+                                <a
+                                    href="../components/admin_logout.php"
+                                    onclick="return confirm('logout from this website?');"
+                                    className={cx("btn")}
+                                >
+                                    logout
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                ) : null}
             </div>
             <div className={cx("sidebar-container")}>
-                <div className={cx("sidebar")}>
+                <div
+                    className={
+                        showSideBar ? cx("sidebar active") : cx("sidebar")
+                    }
+                >
                     <div className={cx("profile")}>
                         <img
                             src={require("../../assets/img/avt.jpg")}
