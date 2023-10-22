@@ -6,11 +6,11 @@ import style from "./Admin.scss";
 const cx = className.bind(style);
 
 function Dashboard() {
-  return (
-    <div className={cx("main-container")}>
-      <Header />
-    </div>
-  );
+    return (
+        <div className={cx("main-container")}>
+            <Header />
+        </div>
+    );
 }
 
 export default Dashboard;
