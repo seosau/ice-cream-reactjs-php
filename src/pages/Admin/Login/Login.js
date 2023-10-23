@@ -1,5 +1,5 @@
 import className from "classnames/bind";
-import style from "./Login.scss";
+import style from "./Login.module.scss";
 import { useState } from "react";
 
 const cx = className.bind(style);

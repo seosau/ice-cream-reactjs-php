@@ -1,5 +1,5 @@
 import className from "classnames/bind";
-import style from "./Header.scss";
+import style from "./Header.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faUser,
@@ -18,8 +18,10 @@ import {
     faXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 import { useState } from "react";
-
 const cx = className.bind(style);
+const sidebarClass = cx("sidebar");
+const sidebarActive = sidebarClass + " " + cx("active");
+
 function Header() {
     const [showProfile, setShowProfile] = useState(false);
     const [showSideBar, setShowSideBar] = useState(false);
@@ -79,11 +81,7 @@ function Header() {
                 ) : null}
             </div>
             <div className={cx("sidebar-container")}>
-                <div
-                    className={
-                        showSideBar ? cx("sidebar active") : cx("sidebar")
-                    }
-                >
+                <div className={showSideBar ? sidebarActive : sidebarClass}>
                     <div className={cx("profile")}>
                         <img
                             src={require("../../assets/img/avt.jpg")}
