@@ -1,0 +1,31 @@
+.main-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 220px;
+    background-image: url("../../assets/img/bg1.png");
+
+    background-position: center;
+}
+.view-product {
+    padding: 0 10vw;
+    margin-bottom: 5rem;
+}
+.heading {
+    text-align: center;
+    line-height: 1.5;
+}
+.heading h1 {
+    font-size: 2rem;
+    text-transform: capitalize;
+}
+.heading span {
+    color: var(--main-color);
+    text-transform: capitalize;
+    font-size: 16px;
+}
+.heading img {
+    margin-top: 0.5rem;
+    width: 150px !important;
+}

@@ -1,0 +1,88 @@
+.main-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 220px;
+    background-image: url("../../assets/img/bg1.png");
+
+    background-position: center;
+}
+.add-product {
+    padding: 0 10vw;
+    margin-bottom: 5rem;
+}
+
+.heading {
+    text-align: center;
+    line-height: 1.5;
+}
+.heading h1 {
+    font-size: 2rem;
+    text-transform: capitalize;
+}
+.heading span {
+    color: var(--main-color);
+    text-transform: capitalize;
+    font-size: 16px;
+}
+.heading img {
+    margin-top: 0.5rem;
+    width: 150px !important;
+}
+.form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 4% 0;
+    position: relative;
+}
+.form-container form {
+    background-color: var(--white-alpha-25);
+    border: 2px solid var(--white-alpha-40);
+    backdrop-filter: var(--backdrop-filter);
+    box-shadow: var(--box-shadow);
+    border-radius: 0.5rem;
+    padding: 2rem;
+    width: 100%;
+}
+.form-container form .flex {
+    display: flex;
+    gap: 2rem;
+}
+.form-container form .flex .col {
+    flex: 1 1 25rem;
+}
+
+.form-container form .box {
+    background-color: var(--white-alpha-25);
+    border: 2px solid var(--white-alpha-40);
+    backdrop-filter: var(--backdrop-filter);
+    box-shadow: var(--box-shadow);
+    width: 100%;
+    border-radius: 0.5rem;
+    margin: 0.5rem 0;
+    font-size: 1.3rem;
+    padding: 1rem;
+}
+.form-container form textarea {
+    height: 20rem;
+    resize: none;
+}
+
+.form-container .image {
+    height: 30rem;
+}
+.form-container form p {
+    padding-top: 1rem;
+    font-size: 1.2rem;
+    text-transform: capitalize;
+}
+.form-container form p span {
+    color: red;
+}
+.flex-btn {
+    display: flex;
+    justify-content: space-evenly;
+}

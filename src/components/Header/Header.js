@@ -1,6 +1,7 @@
 import className from "classnames/bind";
 import style from "./Header.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 import {
     faUser,
     faHome,
@@ -18,6 +19,7 @@ import {
     faXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 import { useState } from "react";
+import Btn from "../Button/Btn";
 const cx = className.bind(style);
 const sidebarClass = cx("sidebar");
 const sidebarActive = sidebarClass + " " + cx("active");
@@ -35,25 +37,32 @@ function Header() {
     return (
         <div className={cx("container")}>
             <div className={cx("header")}>
-                <div className={cx("logo")}>
-                    <img
-                        src={require("../../assets/img/logo.png")}
-                        width="130"
-                        alt="logo"
-                    />
-                </div>
-                <div className={cx("right")}>
-                    <FontAwesomeIcon
-                        className={cx("user-icon")}
-                        icon={faUser}
-                        onClick={(e) => handleShowProfile()}
-                    />
+                <div className={cx("left")}>
+                    <div className={cx("logo")}>
+                        <img
+                            src={require("../../assets/img/logo.png")}
+                            width="130"
+                            alt="logo"
+                        />
+                    </div>
                     <FontAwesomeIcon
                         icon={faBars}
                         onClick={(e) => handleShowSideBar()}
                         className={cx("toggle-btn")}
+                        style={
+                            showSideBar
+                                ? { left: "250px", transform: "rotate(90deg) " }
+                                : { left: "30px" }
+                        }
                     />
                 </div>
+
+                <FontAwesomeIcon
+                    className={cx("user-icon")}
+                    icon={faUser}
+                    onClick={(e) => handleShowProfile()}
+                />
+
                 {showProfile ? (
                     <div className={cx("profile-detail")}>
                         <div className={cx("profile")}>
@@ -65,15 +74,14 @@ function Header() {
                             />
                             <p>User Name</p>
                             <div className={cx("flex-btn")}>
-                                <a href="profile.php" className={cx("btn")}>
-                                    profile
+                                <a href="profile.php">
+                                    <Btn value={"profile"} />
                                 </a>
                                 <a
                                     href="../components/admin_logout.php"
                                     onclick="return confirm('logout from this website?');"
-                                    className={cx("btn")}
                                 >
-                                    logout
+                                    <Btn value={"log out"} />
                                 </a>
                             </div>
                         </div>
@@ -97,7 +105,7 @@ function Header() {
                     <div className={cx("navbar")}>
                         <ul>
                             <li>
-                                <a href="dashboard.php">
+                                <a href="/Dashboard">
                                     <FontAwesomeIcon
                                         className={cx("sidebar-icon")}
                                         icon={faHome}
@@ -106,7 +114,7 @@ function Header() {
                                 </a>
                             </li>
                             <li>
-                                <a href="add_product.php">
+                                <a href="/AddProduct">
                                     <FontAwesomeIcon
                                         className={cx("sidebar-icon")}
                                         icon={faFileImport}
@@ -115,7 +123,7 @@ function Header() {
                                 </a>
                             </li>
                             <li>
-                                <a href="view_product.php">
+                                <a href="/ViewProduct">
                                     <FontAwesomeIcon
                                         className={cx("sidebar-icon")}
                                         icon={faEye}
@@ -124,7 +132,7 @@ function Header() {
                                 </a>
                             </li>
                             <li>
-                                <a href="user_account.php">
+                                <a href="UserAccount">
                                     <FontAwesomeIcon
                                         className={cx("sidebar-icon")}
                                         icon={faUserPlus}

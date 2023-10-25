@@ -1,6 +1,7 @@
 import className from "classnames/bind";
 import style from "./Register.module.scss";
 import { useState } from "react";
+import Btn from "../../components/Button/Btn";
 
 const cx = className.bind(style);
 
@@ -135,12 +136,7 @@ function Register() {
                         login now
                     </a>
                 </p>
-                <input
-                    type="submit"
-                    name="submit"
-                    value={"register now"}
-                    className={cx("btn")}
-                />
+                <Btn value={"register now"}></Btn>
             </form>
         </div>
     );

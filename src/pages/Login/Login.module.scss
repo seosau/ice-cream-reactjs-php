@@ -24,9 +24,7 @@
 .form-container .login {
     width: 50rem;
 }
-.form-container .register {
-    width: 60rem;
-}
+
 .form-container .register .img-box {
     text-align: center;
     margin-bottom: 1rem;
@@ -78,14 +76,14 @@
     font-size: 1.3rem;
     padding: 1rem;
 }
-.form-container form textarea {
-    height: 20rem;
-    resize: none;
-}
+
 .form-container form .btn {
     width: 100%;
     font-size: 1.3rem;
 }
 .form-container .image {
     height: 30rem;
+}
+.btn {
+    width: 100%;
 }

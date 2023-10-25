@@ -1,3 +1,12 @@
+.admin-container {
+    background-image: url("../../assets//img//bg1.png");
+
+    background-repeat: no-repeat;
+
+    background-position: center;
+    background-size: cover;
+}
+
 .empty {
     background-color: var(--white-alpha-25);
     border: 2px solid var(--white-alpha-40);
@@ -13,13 +22,6 @@
     font-size: 20px;
     margin-bottom: 2rem;
 }
-input[type="submit"] {
-    cursor: pointer;
-}
-input[type="submit"]:hover {
-    color: var(--main-color);
-}
-section,
 
 //-----------------------------------scrollbar-----------------------------------
 ::-webkit-scrollbar {
@@ -43,14 +45,4 @@ section,
     margin-bottom: 30px;
     margin-right: 10px;
     margin-left: 10px;
-}
-.main-container {
-    position: relative;
-    display: flex;
-    height: 110vh;
-    align-items: center;
-    justify-content: space-between;
-}
-.sidebar {
-    background-color: black;
 }
