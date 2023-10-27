@@ -29,3 +29,49 @@
     margin-top: 0.5rem;
     width: 150px !important;
 }
+.flex-btn {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.box-container {
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+}
+.box-container .box {
+    background-color: var(--white-alpha-25);
+    border: 2px solid var(--white-alpha-40);
+    backdrop-filter: var(--backdrop-filter);
+    box-shadow: var(--box-shadow);
+    margin: 1rem;
+    text-align: center;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    padding-bottom: 3rem;
+}
+.view-product .box-container .box {
+    position: relative;
+    margin: 1rem;
+    overflow: hidden;
+}
+
+.sharp {
+    width: 70px;
+    height: auto;
+}
+.empty {
+    background-color: var(--white-alpha-25);
+    border: 2px solid var(--white-alpha-40);
+    backdrop-filter: var(--backdrop-filter);
+    box-shadow: var(--box-shadow);
+    text-transform: capitalize;
+    color: var(--main-color);
+    padding: 1.5rem;
+    text-align: center;
+    margin: 2rem auto;
+}
+.empty p {
+    font-size: 20px;
+    margin-bottom: 2rem;
+}

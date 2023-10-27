@@ -32,7 +32,7 @@ function AddProduct() {
                 className={cx("add-product")}
             >
                 <div className={cx("heading")}>
-                    <h1 className={cx("heading-title")}>AddProduct</h1>
+                    <h1 className={cx("heading-title")}>add product</h1>
                     <img
                         src={require("../../assets/img/separator.png")}
                         alt="spr"

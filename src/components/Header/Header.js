@@ -74,15 +74,18 @@ function Header() {
                             />
                             <p>User Name</p>
                             <div className={cx("flex-btn")}>
-                                <a href="profile.php">
-                                    <Btn value={"profile"} />
-                                </a>
-                                <a
+                                <Btn
+                                    width={"fit-content"}
+                                    href="profile.php"
+                                    value={"profile"}
+                                />
+
+                                <Btn
+                                    width={"fit-content"}
                                     href="../components/admin_logout.php"
-                                    onclick="return confirm('logout from this website?');"
-                                >
-                                    <Btn value={"log out"} />
-                                </a>
+                                    // onclick="return confirm('logout from this website?');"
+                                    value={"log out"}
+                                />
                             </div>
                         </div>
                     </div>
