@@ -57,7 +57,7 @@ function Header({ children }) {
     }, []);
     return (
         <div className={cx("main")}>
-            <div className={cx("container")}>
+            <div className={cx("header-container")}>
                 <div className={cx("header")}>
                     <div className={cx("left")}>
                         <div className={cx("logo")}>
@@ -214,18 +214,22 @@ function Header({ children }) {
                     </div>
                 </div>
             </div>
-            <div className={cx("main-container")}>
-                <div
-                    style={{
-                        width:
-                            (viewportWidth / 100) * 18 > 220
-                                ? "82vw"
-                                : viewportWidth - 220 + "px",
-                    }}
-                    className={cx("product-detail")}
-                >
-                    {children}
-                </div>
+            <div
+                className={cx("main-container")}
+                style={{
+                    width:
+                        (viewportWidth / 100) * 18 > 220
+                            ? "81vw"
+                            : viewportWidth - 220 + "px",
+                    left:
+                        showSideBar && (viewportWidth / 100) * 18 < 220
+                            ? "180px"
+                            : (viewportWidth / 100) * 18 < 220
+                            ? "12vw"
+                            : null,
+                }}
+            >
+                {children}
             </div>
         </div>
     );

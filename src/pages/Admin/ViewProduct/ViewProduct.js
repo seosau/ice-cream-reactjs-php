@@ -65,7 +65,7 @@ function ViewProduct() {
                                 style={{
                                     width: "30%",
                                 }}
-                                href="/ProductDetail"
+                                href="/Admin/ProductDetail"
                                 value={"description"}
                             />
                         </div>
@@ -120,7 +120,7 @@ function ViewProduct() {
                                 style={{
                                     width: "30%",
                                 }}
-                                href="/ProductDetail"
+                                href="/Admin/ProductDetail"
                                 value={"description"}
                             />
                         </div>
@@ -175,7 +175,7 @@ function ViewProduct() {
                                 style={{
                                     width: "30%",
                                 }}
-                                href="/ProductDetail"
+                                href="/Admin/ProductDetail"
                                 value={"description"}
                             />
                         </div>
@@ -230,7 +230,7 @@ function ViewProduct() {
                                 style={{
                                     width: "30%",
                                 }}
-                                href="/ProductDetail"
+                                href="/Admin/ProductDetail"
                                 value={"description"}
                             />
                         </div>

@@ -6,6 +6,7 @@ import {
     Dashboard,
     AddProduct,
     ViewProduct,
+    ProductDetail,
 } from "./pages";
 import { AdminHeader } from "./components";
 
@@ -51,6 +52,14 @@ function App() {
                         element={
                             <AdminHeader>
                                 <ViewProduct />
+                            </AdminHeader>
+                        }
+                    />
+                    <Route
+                        path="/Admin/ProductDetail"
+                        element={
+                            <AdminHeader>
+                                <ProductDetail />
                             </AdminHeader>
                         }
                     />

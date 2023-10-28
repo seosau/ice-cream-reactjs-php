@@ -1,16 +1,8 @@
-.main-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 220px;
-    background-image: url("../../../assets/img/bg1.png");
-
-    background-position: center;
-}
 .container {
     margin-bottom: 5rem;
+    flex: 1;
 }
+
 .heading {
     text-align: center;
     line-height: 1.5;
