@@ -5,4 +5,15 @@ import Home from "./Client/Home/Home";
 import Login from "./Login/Login";
 import Register from "./Register/Register";
 import ViewProduct from "./Admin/ViewProduct/ViewProduct";
-export { AddProduct, Admin, Dashboard, Home, Login, Register, ViewProduct };
+import ProductDetail from "./Admin/ProductDetail/ProductDetail";
+
+export {
+    AddProduct,
+    Admin,
+    Dashboard,
+    Home,
+    Login,
+    Register,
+    ViewProduct,
+    ProductDetail,
+};

@@ -7,17 +7,53 @@ import {
     AddProduct,
     ViewProduct,
 } from "./pages";
+import { AdminHeader } from "./components";
 
 function App() {
     return (
         <div className="App">
             <Router>
                 <Routes>
-                    <Route path="/Dashboard" element={<Dashboard />} />
-                    <Route path="/Login" element={<Login />} />
-                    <Route path="/Register" element={<Register />} />
-                    <Route path="/AddProduct" element={<AddProduct />} />
-                    <Route path="/ViewProduct" element={<ViewProduct />} />
+                    <Route
+                        path="/Admin/Dashboard"
+                        element={
+                            <AdminHeader>
+                                <Dashboard />
+                            </AdminHeader>
+                        }
+                    />
+                    <Route
+                        path="/Admin/Login"
+                        element={
+                            <AdminHeader>
+                                <Login />
+                            </AdminHeader>
+                        }
+                    />
+                    <Route
+                        path="/Admin/Register"
+                        element={
+                            <AdminHeader>
+                                <Register />
+                            </AdminHeader>
+                        }
+                    />
+                    <Route
+                        path="/Admin/AddProduct"
+                        element={
+                            <AdminHeader>
+                                <AddProduct />
+                            </AdminHeader>
+                        }
+                    />
+                    <Route
+                        path="/Admin/ViewProduct"
+                        element={
+                            <AdminHeader>
+                                <ViewProduct />
+                            </AdminHeader>
+                        }
+                    />
                 </Routes>
             </Router>
         </div>
