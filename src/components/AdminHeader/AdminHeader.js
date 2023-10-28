@@ -1,5 +1,5 @@
 import className from "classnames/bind";
-import style from "./Header.module.scss";
+import style from "./AdminHeader.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import {
@@ -75,13 +75,17 @@ function Header() {
                             <p>User Name</p>
                             <div className={cx("flex-btn")}>
                                 <Btn
-                                    width={"fit-content"}
+                                    style={{
+                                        width: "fit-content",
+                                    }}
                                     href="profile.php"
                                     value={"profile"}
                                 />
 
                                 <Btn
-                                    width={"fit-content"}
+                                    style={{
+                                        width: "fit-content",
+                                    }}
                                     href="../components/admin_logout.php"
                                     // onclick="return confirm('logout from this website?');"
                                     value={"log out"}

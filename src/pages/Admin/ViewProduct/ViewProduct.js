@@ -1,8 +1,7 @@
 import className from "classnames/bind";
 import style from "./ViewProduct.module.scss";
 import { useState, useEffect } from "react";
-import Btn from "../../components/Button/Btn";
-import Header from "../../components/Header/Header";
+import { Btn, AdminHeader } from "../../../components";
 
 const cx = className.bind(style);
 
@@ -20,8 +19,7 @@ function ViewProduct() {
     }, []);
     return (
         <div className={cx("main-container")}>
-            <Header className={cx("header")} />
-
+            <AdminHeader className={cx("header")} />
             <div
                 style={{
                     width:
@@ -34,7 +32,7 @@ function ViewProduct() {
                 <div className={cx("heading")}>
                     <h1 className={cx("heading-title")}>your products</h1>
                     <img
-                        src={require("../../assets/img/separator.png")}
+                        src={require("../../../assets/img/separator.png")}
                         alt="spr"
                     />
                 </div>
@@ -49,7 +47,11 @@ function ViewProduct() {
                         />
                         {/*-----product image-----*/}
 
-                        <img src={require("../../assets/img/type.jpg")} />
+                        <img
+                            alt=""
+                            src={require("../../../assets/img/514215896_012c012ccc@2x.jpg")}
+                            className={cx("image")}
+                        />
                         <div
                             className={cx("status")}
                             style={{ color: true ? "limegreen" : "coral" }}
@@ -57,26 +59,36 @@ function ViewProduct() {
                             status
                         </div>
                         {/*-----product price-----*/}
-                        <div className={cx("price")}>20.000đ</div>
+                        <div className={cx("price")}>$5</div>
                         <div className={cx("content")}>
                             <img
-                                src={require("../../assets/img/shape-19.png")}
+                                alt=""
+                                src={require("../../../assets/img/shape-19.png")}
                                 className={cx("sharp")}
                             />
                             <div className={cx("title")}>product name</div>
                             <div className={cx("flex-btn")}>
                                 <Btn
-                                    width={"fit-content"}
+                                    style={{
+                                        width: "30%",
+                                    }}
                                     href="edit_product.php"
                                     value={"edit"}
                                 />
 
-                                <Btn width={"fit-content"} value={"delete"} />
+                                <Btn
+                                    style={{
+                                        width: "30%",
+                                    }}
+                                    value={"delete"}
+                                />
 
                                 <Btn
-                                    width={"fit-content"}
+                                    style={{
+                                        width: "30%",
+                                    }}
                                     href="read_product.php"
-                                    value={"read product"}
+                                    value={"description"}
                                 />
                             </div>
                         </div>
@@ -90,7 +102,11 @@ function ViewProduct() {
                         />
                         {/*-----product image-----*/}
 
-                        <img src={require("../../assets/img/type.jpg")} />
+                        <img
+                            alt=""
+                            src={require("../../../assets/img/514215896_012c012ccc@2x.jpg")}
+                            className={cx("image")}
+                        />
                         <div
                             className={cx("status")}
                             style={{ color: true ? "limegreen" : "coral" }}
@@ -98,26 +114,36 @@ function ViewProduct() {
                             status
                         </div>
                         {/*-----product price-----*/}
-                        <div className={cx("price")}>20.000đ</div>
+                        <div className={cx("price")}>$5</div>
                         <div className={cx("content")}>
                             <img
-                                src={require("../../assets/img/shape-19.png")}
+                                alt=""
+                                src={require("../../../assets/img/shape-19.png")}
                                 className={cx("sharp")}
                             />
                             <div className={cx("title")}>product name</div>
                             <div className={cx("flex-btn")}>
                                 <Btn
-                                    width={"fit-content"}
+                                    style={{
+                                        width: "30%",
+                                    }}
                                     href="edit_product.php"
                                     value={"edit"}
                                 />
 
-                                <Btn width={"fit-content"} value={"delete"} />
+                                <Btn
+                                    style={{
+                                        width: "30%",
+                                    }}
+                                    value={"delete"}
+                                />
 
                                 <Btn
-                                    width={"fit-content"}
+                                    style={{
+                                        width: "30%",
+                                    }}
                                     href="read_product.php"
-                                    value={"read product"}
+                                    value={"description"}
                                 />
                             </div>
                         </div>
@@ -131,7 +157,11 @@ function ViewProduct() {
                         />
                         {/*-----product image-----*/}
 
-                        <img src={require("../../assets/img/type.jpg")} />
+                        <img
+                            alt=""
+                            src={require("../../../assets/img/514215896_012c012ccc@2x.jpg")}
+                            className={cx("image")}
+                        />
                         <div
                             className={cx("status")}
                             style={{ color: true ? "limegreen" : "coral" }}
@@ -139,26 +169,36 @@ function ViewProduct() {
                             status
                         </div>
                         {/*-----product price-----*/}
-                        <div className={cx("price")}>20.000đ</div>
+                        <div className={cx("price")}>$5</div>
                         <div className={cx("content")}>
                             <img
-                                src={require("../../assets/img/shape-19.png")}
+                                alt=""
+                                src={require("../../../assets/img/shape-19.png")}
                                 className={cx("sharp")}
                             />
                             <div className={cx("title")}>product name</div>
                             <div className={cx("flex-btn")}>
                                 <Btn
-                                    width={"fit-content"}
+                                    style={{
+                                        width: "30%",
+                                    }}
                                     href="edit_product.php"
                                     value={"edit"}
                                 />
 
-                                <Btn width={"fit-content"} value={"delete"} />
+                                <Btn
+                                    style={{
+                                        width: "30%",
+                                    }}
+                                    value={"delete"}
+                                />
 
                                 <Btn
-                                    width={"fit-content"}
+                                    style={{
+                                        width: "30%",
+                                    }}
                                     href="read_product.php"
-                                    value={"read product"}
+                                    value={"description"}
                                 />
                             </div>
                         </div>
@@ -172,7 +212,11 @@ function ViewProduct() {
                         />
                         {/*-----product image-----*/}
 
-                        <img src={require("../../assets/img/type.jpg")} />
+                        <img
+                            alt=""
+                            src={require("../../../assets/img/514215896_012c012ccc@2x.jpg")}
+                            className={cx("image")}
+                        />
                         <div
                             className={cx("status")}
                             style={{ color: true ? "limegreen" : "coral" }}
@@ -180,26 +224,36 @@ function ViewProduct() {
                             status
                         </div>
                         {/*-----product price-----*/}
-                        <div className={cx("price")}>20.000đ</div>
+                        <div className={cx("price")}>$5</div>
                         <div className={cx("content")}>
                             <img
-                                src={require("../../assets/img/shape-19.png")}
+                                alt=""
+                                src={require("../../../assets/img/shape-19.png")}
                                 className={cx("sharp")}
                             />
                             <div className={cx("title")}>product name</div>
                             <div className={cx("flex-btn")}>
                                 <Btn
-                                    width={"fit-content"}
+                                    style={{
+                                        width: "30%",
+                                    }}
                                     href="edit_product.php"
                                     value={"edit"}
                                 />
 
-                                <Btn width={"fit-content"} value={"delete"} />
+                                <Btn
+                                    style={{
+                                        width: "30%",
+                                    }}
+                                    value={"delete"}
+                                />
 
                                 <Btn
-                                    width={"fit-content"}
+                                    style={{
+                                        width: "30%",
+                                    }}
                                     href="read_product.php"
-                                    value={"read product"}
+                                    value={"description"}
                                 />
                             </div>
                         </div>
@@ -214,7 +268,9 @@ function ViewProduct() {
                                 href="/AddProduct"
                             >
                                 <Btn
-                                    width={"fit-content"}
+                                    style={{
+                                        width:'30%'
+                                    }}
                                     value={"add product"}
                                 />
                             </a>{" "}

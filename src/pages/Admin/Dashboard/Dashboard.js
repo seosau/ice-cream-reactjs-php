@@ -1,8 +1,7 @@
 import className from "classnames/bind";
 import style from "./Dashboard.module.scss";
 import { useState, useEffect } from "react";
-import Btn from "../../components/Button/Btn";
-import Header from "../../components/Header/Header";
+import { Btn, AdminHeader } from "../../../components";
 
 const cx = className.bind(style);
 function Dashboard() {
@@ -19,7 +18,7 @@ function Dashboard() {
     }, []);
     return (
         <div className={cx("main-container")}>
-            <Header className={cx("header")} />
+            <AdminHeader className={cx("header")} />
 
             <div
                 style={{
@@ -33,7 +32,7 @@ function Dashboard() {
                 <div className={cx("heading")}>
                     <h1 className={cx("heading-title")}>dashboard</h1>
                     <img
-                        src={require("../../assets/img/separator.png")}
+                        src={require("../../../assets/img/separator.png")}
                         alt="spr"
                     />
                 </div>
@@ -43,7 +42,9 @@ function Dashboard() {
                         <p>User Name</p> {/*fetch_profile['name'] */}
                         <Btn
                             value={"update profile"}
-                            width={"fit-content"}
+                            style={{
+                                width: "fit-content",
+                            }}
                         ></Btn>
                     </div>
                     <div className={cx("box")}>
@@ -53,7 +54,12 @@ function Dashboard() {
                         </h3>
                         <p>unread message</p>
 
-                        <Btn value={"see message"} width={"fit-content"}></Btn>
+                        <Btn
+                            value={"see message"}
+                            style={{
+                                width: "fit-content",
+                            }}
+                        ></Btn>
                     </div>
                     <div className={cx("box")}>
                         {/* select product from db*/}
@@ -62,7 +68,12 @@ function Dashboard() {
                         </h3>
 
                         <p>products added</p>
-                        <Btn value={"add product"} width={"fit-content"}></Btn>
+                        <Btn
+                            value={"add product"}
+                            style={{
+                                width: "fit-content",
+                            }}
+                        ></Btn>
                     </div>
                     <div className={cx("box")}>
                         {/* select active product from db*/}
@@ -74,7 +85,9 @@ function Dashboard() {
 
                         <Btn
                             value={"View active product"}
-                            width={"fit-content"}
+                            style={{
+                                width: "fit-content",
+                            }}
                         ></Btn>
                     </div>
                     <div className={cx("box")}>
@@ -87,7 +100,9 @@ function Dashboard() {
 
                         <Btn
                             value={"Total inactive products"}
-                            width={"fit-content"}
+                            style={{
+                                width: "fit-content",
+                            }}
                         ></Btn>
                     </div>
                     <div className={cx("box")}>
@@ -96,7 +111,12 @@ function Dashboard() {
                             0{/*Number of users */}
                         </h3>
                         <p>users account</p>
-                        <Btn value={"see users"} width={"fit-content"}></Btn>
+                        <Btn
+                            value={"see users"}
+                            style={{
+                                width: "fit-content",
+                            }}
+                        ></Btn>
                     </div>
                     <div className={cx("box")}>
                         {/*select sellers from db*/}
@@ -104,7 +124,12 @@ function Dashboard() {
                             2{/*Number of sellers */}
                         </h3>
                         <p>sellers account</p>
-                        <Btn value={"see sellers"} width={"fit-content"}></Btn>
+                        <Btn
+                            value={"see sellers"}
+                            style={{
+                                width: "fit-content",
+                            }}
+                        ></Btn>
                     </div>
                     <div className={cx("box")}>
                         {/*select orders from db*/}
@@ -113,7 +138,12 @@ function Dashboard() {
                         </h3>
                         <p>total orders placed</p>
 
-                        <Btn value={"total orders"} width={"fit-content"}></Btn>
+                        <Btn
+                            value={"total orders"}
+                            style={{
+                                width: "fit-content",
+                            }}
+                        ></Btn>
                     </div>
                     <div className={cx("box")}>
                         {/*select confirm orders from db*/}
@@ -124,7 +154,9 @@ function Dashboard() {
 
                         <Btn
                             value={"confirm orders"}
-                            width={"fit-content"}
+                            style={{
+                                width: "fit-content",
+                            }}
                         ></Btn>
                     </div>
                     <div className={cx("box")}>
@@ -136,7 +168,9 @@ function Dashboard() {
 
                         <Btn
                             value={"canceled orders"}
-                            width={"fit-content"}
+                            style={{
+                                width: "fit-content",
+                            }}
                         ></Btn>
                     </div>
                 </div>

@@ -1,8 +1,7 @@
 import className from "classnames/bind";
 import style from "./AddProduct.module.scss";
 import { useState, useEffect } from "react";
-import Btn from "../../components/Button/Btn";
-import Header from "../../components/Header/Header";
+import { Btn, AdminHeader } from "../../../components";
 
 const cx = className.bind(style);
 
@@ -20,7 +19,7 @@ function AddProduct() {
     }, []);
     return (
         <div className={cx("main-container")}>
-            <Header className={cx("header")} />
+            <AdminHeader className={cx("header")} />
 
             <div
                 style={{
@@ -34,7 +33,7 @@ function AddProduct() {
                 <div className={cx("heading")}>
                     <h1 className={cx("heading-title")}>add product</h1>
                     <img
-                        src={require("../../assets/img/separator.png")}
+                        src={require("../../../assets/img/separator.png")}
                         alt="spr"
                     />
                 </div>

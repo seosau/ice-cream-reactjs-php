@@ -3,20 +3,11 @@ import style from "./Btn.module.scss";
 import { Link } from "react-router-dom";
 const cx = className.bind(style);
 
-function Btn({ value, width, href }) {
+function Btn({ value, style, href }) {
     return href ? (
         <Link
             to={href}
-            style={
-                width === "fit-content"
-                    ? {
-                          width: width,
-                      }
-                    : {
-                          width: "auto",
-                          flex: 1,
-                      }
-            }
+            style={style ? style : { flex: 1, width: "auto" }}
             className={cx("btn")}
         >
             {value}
@@ -24,16 +15,7 @@ function Btn({ value, width, href }) {
     ) : (
         <div
             href={href}
-            style={
-                width === "fit-content"
-                    ? {
-                          width: width,
-                      }
-                    : {
-                          width: "auto",
-                          flex: 1,
-                      }
-            }
+            style={style ? style : { flex: 1, width: "auto" }}
             className={cx("btn")}
         >
             {value}
