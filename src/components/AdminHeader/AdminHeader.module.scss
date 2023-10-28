@@ -1,3 +1,9 @@
+.main {
+    background-image: url("../../assets/img/bg1.png");
+    background-position: center;
+}
+.header-container {
+}
 .header {
     position: fixed;
     left: 0;
@@ -104,7 +110,6 @@
     box-shadow: 0 5px 10px 0 #aaa;
     overflow: auto;
     z-index: 1;
-    animation: 0.2s linear fadeInReverse;
     padding-bottom: 60px;
 }
 .sidebar h5 {
@@ -228,6 +233,35 @@
     margin-right: 10px;
     margin-left: 10px;
 }
+.main-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 160px 10vw 100px 10vw;
+    width: 81vw;
+    left: 18vw;
+    right: 18vw;
+    transition: all 0.5s;
+}
+.heading {
+    text-align: center;
+    line-height: 1.5;
+}
+.heading h1 {
+    font-size: 2rem;
+    text-transform: capitalize;
+}
+.heading span {
+    color: var(--main-color);
+    text-transform: capitalize;
+    font-size: 16px;
+}
+.heading img {
+    margin-top: 0.5rem;
+    width: 150px !important;
+}
+
 @media screen and (max-width: 1200px) {
     .toggle-btn {
         display: block;
@@ -242,5 +276,8 @@
     }
     .sidebar.active {
         width: 220px;
+    }
+    .main-container {
+        left: 180px;
     }
 }

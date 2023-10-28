@@ -1,7 +1,16 @@
 import className from "classnames/bind";
 import style from "./AdminHeader.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+import {
+    Register,
+    Login,
+    Dashboard,
+    AddProduct,
+    ViewProduct,
+    ProductDetail,
+} from "../../pages";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faUser,
     faHome,
@@ -18,13 +27,14 @@ import {
     faPinterestP,
     faXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Btn from "../Button/Btn";
+
 const cx = className.bind(style);
 const sidebarClass = cx("sidebar");
 const sidebarActive = sidebarClass + " " + cx("active");
 
-function Header() {
+function Header({ children }) {
     const [showProfile, setShowProfile] = useState(false);
     const [showSideBar, setShowSideBar] = useState(false);
 
@@ -34,159 +44,192 @@ function Header() {
     const handleShowSideBar = () => {
         setShowSideBar(!showSideBar);
     };
+    const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+    useEffect(() => {
+        function handleResize() {
+            setViewportWidth(window.innerWidth);
+        }
+        window.addEventListener("resize", handleResize);
+        handleResize();
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
     return (
-        <div className={cx("container")}>
-            <div className={cx("header")}>
-                <div className={cx("left")}>
-                    <div className={cx("logo")}>
-                        <img
-                            src={require("../../assets/img/logo.png")}
-                            width="130"
-                            alt="logo"
+        <div className={cx("main")}>
+            <div className={cx("header-container")}>
+                <div className={cx("header")}>
+                    <div className={cx("left")}>
+                        <div className={cx("logo")}>
+                            <img
+                                src={require("../../assets/img/logo.png")}
+                                width="130"
+                                alt="logo"
+                            />
+                        </div>
+                        <FontAwesomeIcon
+                            icon={faBars}
+                            onClick={(e) => handleShowSideBar()}
+                            className={cx("toggle-btn")}
+                            style={
+                                showSideBar
+                                    ? {
+                                          left: "250px",
+                                          transform: "rotate(90deg) ",
+                                      }
+                                    : { left: "30px" }
+                            }
                         />
                     </div>
+
                     <FontAwesomeIcon
-                        icon={faBars}
-                        onClick={(e) => handleShowSideBar()}
-                        className={cx("toggle-btn")}
-                        style={
-                            showSideBar
-                                ? { left: "250px", transform: "rotate(90deg) " }
-                                : { left: "30px" }
-                        }
+                        className={cx("user-icon")}
+                        icon={faUser}
+                        onClick={(e) => handleShowProfile()}
                     />
-                </div>
 
-                <FontAwesomeIcon
-                    className={cx("user-icon")}
-                    icon={faUser}
-                    onClick={(e) => handleShowProfile()}
-                />
-
-                {showProfile ? (
-                    <div className={cx("profile-detail")}>
-                        <div className={cx("profile")}>
-                            <img
-                                src={require("../../assets/img/avt.png")} //load later from user info
-                                className={cx("logo-img")}
-                                width="100"
-                                alt="profile"
-                            />
-                            <p>User Name</p>
-                            <div className={cx("flex-btn")}>
-                                <Btn
-                                    style={{
-                                        width: "fit-content",
-                                    }}
-                                    href="profile.php"
-                                    value={"profile"}
+                    {showProfile ? (
+                        <div className={cx("profile-detail")}>
+                            <div className={cx("profile")}>
+                                <img
+                                    src={require("../../assets/img/avt.png")} //load later from user info
+                                    className={cx("logo-img")}
+                                    width="100"
+                                    alt="profile"
                                 />
+                                <p>User Name</p>
+                                <div className={cx("flex-btn")}>
+                                    <Btn
+                                        style={{
+                                            width: "fit-content",
+                                        }}
+                                        to="profile.php"
+                                        value={"profile"}
+                                    />
 
-                                <Btn
-                                    style={{
-                                        width: "fit-content",
-                                    }}
-                                    href="../components/admin_logout.php"
-                                    // onclick="return confirm('logout from this website?');"
-                                    value={"log out"}
-                                />
+                                    <Btn
+                                        style={{
+                                            width: "fit-content",
+                                        }}
+                                        to="../components/admin_logout.php"
+                                        // onclick="return confirm('logout from this website?');"
+                                        value={"log out"}
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ) : null}
-            </div>
-            <div className={cx("sidebar-container")}>
-                <div className={showSideBar ? sidebarActive : sidebarClass}>
-                    <div className={cx("profile")}>
-                        <img
-                            src={require("../../assets/img/avt.jpg")}
-                            className={cx("user-img")}
-                            width="150"
-                            height="150"
-                            alt="logo"
-                        />
-                        <p>User Name</p>
-                    </div>
+                    ) : null}
+                </div>
+                <div className={cx("sidebar-container")}>
+                    <div className={showSideBar ? sidebarActive : sidebarClass}>
+                        <div className={cx("profile")}>
+                            <img
+                                src={require("../../assets/img/avt.jpg")}
+                                className={cx("user-img")}
+                                width="150"
+                                height="150"
+                                alt="logo"
+                            />
+                            <p>User Name</p>
+                        </div>
 
-                    <h5>menu</h5>
-                    <div className={cx("navbar")}>
-                        <ul>
-                            <li>
-                                <a href="/Dashboard">
-                                    <FontAwesomeIcon
-                                        className={cx("sidebar-icon")}
-                                        icon={faHome}
-                                    />
-                                    <p>dashboard</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/AddProduct">
-                                    <FontAwesomeIcon
-                                        className={cx("sidebar-icon")}
-                                        icon={faFileImport}
-                                    />
-                                    <p>add products </p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/ViewProduct">
-                                    <FontAwesomeIcon
-                                        className={cx("sidebar-icon")}
-                                        icon={faEye}
-                                    />
-                                    <p>view product</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="UserAccount">
-                                    <FontAwesomeIcon
-                                        className={cx("sidebar-icon")}
-                                        icon={faUserPlus}
-                                    />
-                                    <p>accounts</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="../components/admin_logout.php"
-                                    onclick={() => {
-                                        // confirm("logout from this website");
-                                    }}
-                                >
-                                    <FontAwesomeIcon
-                                        className={cx("sidebar-icon")}
-                                        icon={faRightFromBracket}
-                                    />
-                                    <p>logout</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <h5>find us</h5>
-                    <div className={cx("social-links")}>
-                        <FontAwesomeIcon
-                            className={cx("social-icon")}
-                            icon={faFacebookF}
-                        />
-                        <FontAwesomeIcon
-                            className={cx("social-icon")}
-                            icon={faInstagram}
-                        />
-                        <FontAwesomeIcon
-                            className={cx("social-icon")}
-                            icon={faLinkedinIn}
-                        />
-                        <FontAwesomeIcon
-                            className={cx("social-icon")}
-                            icon={faXTwitter}
-                        />
-                        <FontAwesomeIcon
-                            className={cx("social-icon")}
-                            icon={faPinterestP}
-                        />
+                        <h5>menu</h5>
+                        <div className={cx("navbar")}>
+                            <ul>
+                                <li>
+                                    <Link to="/Admin/Dashboard">
+                                        <FontAwesomeIcon
+                                            className={cx("sidebar-icon")}
+                                            icon={faHome}
+                                        />
+                                        <p>dashboard</p>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/Admin/AddProduct">
+                                        <FontAwesomeIcon
+                                            className={cx("sidebar-icon")}
+                                            icon={faFileImport}
+                                        />
+                                        <p>add products </p>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/Admin/ViewProduct">
+                                        <FontAwesomeIcon
+                                            className={cx("sidebar-icon")}
+                                            icon={faEye}
+                                        />
+                                        <p>view product</p>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/Admin/UserAccount">
+                                        <FontAwesomeIcon
+                                            className={cx("sidebar-icon")}
+                                            icon={faUserPlus}
+                                        />
+                                        <p>accounts</p>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to="../components/admin_logout.php"
+                                        onclick={() => {
+                                            // confirm("logout from this website");
+                                        }}
+                                    >
+                                        <FontAwesomeIcon
+                                            className={cx("sidebar-icon")}
+                                            icon={faRightFromBracket}
+                                        />
+                                        <p>logout</p>
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                        <h5>find us</h5>
+                        <div className={cx("social-links")}>
+                            <FontAwesomeIcon
+                                className={cx("social-icon")}
+                                icon={faFacebookF}
+                            />
+                            <FontAwesomeIcon
+                                className={cx("social-icon")}
+                                icon={faInstagram}
+                            />
+                            <FontAwesomeIcon
+                                className={cx("social-icon")}
+                                icon={faLinkedinIn}
+                            />
+                            <FontAwesomeIcon
+                                className={cx("social-icon")}
+                                icon={faXTwitter}
+                            />
+                            <FontAwesomeIcon
+                                className={cx("social-icon")}
+                                icon={faPinterestP}
+                            />
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div
+                className={cx("main-container")}
+                style={{
+                    width:
+                        (viewportWidth / 100) * 18 > 220
+                            ? "81vw"
+                            : viewportWidth - 220 + "px",
+                    left:
+                        showSideBar && (viewportWidth / 100) * 18 < 220
+                            ? "180px"
+                            : (viewportWidth / 100) * 18 < 220
+                            ? "12vw"
+                            : null,
+                }}
+            >
+                {children}
             </div>
         </div>
     );
