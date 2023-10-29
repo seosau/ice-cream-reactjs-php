@@ -1,6 +1,7 @@
 .container {
     margin-bottom: 5rem;
     flex: 1;
+    min-height: 65vh;
 }
 .heading {
     text-align: center;
@@ -77,6 +78,8 @@
     margin-bottom: 1rem;
     padding: 0.5rem 2rem;
     border-radius: 0.5rem;
+    display: none;
+
     // display: inline-block;
     // background-color: var(--white-alpha-40);
 }
@@ -110,16 +113,16 @@
     padding: 1.5rem;
     text-align: center;
     margin: 2rem auto;
+    width: 50vw;
+    border-radius: 0.5rem;
+    line-height: 2;
 }
 .empty p {
     font-size: 20px;
-    margin-bottom: 2rem;
+    padding-bottom: 2rem;
 }
 .posts-content {
     font-size: 1.3rem;
     line-height: 1.5;
     padding: 1rem 0;
-}
-.posts-editor img {
-    width: 100%;
 }

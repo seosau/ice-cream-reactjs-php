@@ -1,6 +1,7 @@
 .container {
     margin-bottom: 5rem;
     flex: 1;
+    min-height: 65vh;
 }
 
 .heading {
@@ -25,7 +26,7 @@
     align-items: center;
     grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
 }
-.box-container .box {
+.box {
     background-color: var(--white-alpha-25);
     border: 2px solid var(--white-alpha-40);
     backdrop-filter: var(--backdrop-filter);
@@ -39,19 +40,12 @@
     flex-direction: column;
     align-items: center;
 }
-.post-editor {
-    width: 75vw;
-    min-height: 100vh;
-    padding: 4%;
-    margin: 8% 5%;
-    margin-bottom: 2%;
-}
 
-.box-container .box h3 {
+.box h3 {
     font-size: 2.7rem;
     margin-bottom: -1rem;
 }
-.box-container .box p {
+.box p {
     padding: 1rem;
     font-size: 1.8rem;
     text-transform: capitalize;

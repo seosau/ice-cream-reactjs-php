@@ -6,14 +6,7 @@ import Login from "./Login/Login";
 import Register from "./Register/Register";
 import ViewProduct from "./Admin/ViewProduct/ViewProduct";
 import ProductDetail from "./Admin/ProductDetail/ProductDetail";
+import EditProduct from "./Admin/EditProduct/EditProduct";
+import Profile from "./Admin/Profile/Profile";
 
-export {
-    AddProduct,
-    Admin,
-    Dashboard,
-    Home,
-    Login,
-    Register,
-    ViewProduct,
-    ProductDetail,
-};
+export { AddProduct, Admin, Dashboard, Home, Login, Register, ViewProduct, ProductDetail, EditProduct, Profile };

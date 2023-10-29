@@ -1,6 +1,7 @@
 .container {
     margin-bottom: 5rem;
     flex: 1;
+    min-height: 65vh;
 }
 
 .heading {
@@ -30,7 +31,7 @@
     align-items: center;
     grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
 }
-.box-container .box {
+.box {
     background-color: var(--white-alpha-25);
     border: 2px solid var(--white-alpha-40);
     backdrop-filter: var(--backdrop-filter);
@@ -39,23 +40,23 @@
     text-align: center;
     border-radius: 0.5rem;
 }
-.box-container .box {
+.box {
     position: relative;
     margin: 1rem;
     overflow: hidden;
 }
 
-.box-container .box .image:hover {
+.image:hover {
     transform: scale(1.1);
 }
-.box-container .box .image {
+.image {
     width: 100%;
     height: 30rem;
     object-fit: cover;
     transition: 0.5s;
     background-color: palegreen;
 }
-.box-container .box .content {
+.content {
     position: relative;
     display: block;
     background-color: #fff;
@@ -66,7 +67,7 @@
     line-height: 1.5;
     text-transform: capitalize;
 }
-.box-container .box .content .sharp {
+.sharp {
     width: 80px;
     height: 80px;
     position: absolute;
@@ -74,7 +75,7 @@
     top: -80px;
     background-repeat: no-repeat;
 }
-.box-container .box .content .status {
+.status {
     position: absolute;
     left: -40px;
     text-transform: uppercase;
@@ -82,10 +83,10 @@
     margin-bottom: 1rem;
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
-    display: inline-block;
+    display: none;
     background-color: var(--white-alpha-40);
 }
-.box-container .box .price {
+.price {
     width: 70px;
     height: 70px;
     line-height: 70px;
@@ -98,13 +99,17 @@
     background-color: var(--pink-color);
     font-size: 1.5rem;
 }
-.box-container .box .content .title {
+.title {
     font-size: 1.2rem;
     text-transform: uppercase;
     text-align: center;
     margin-bottom: 1rem;
 }
-
+.posts-content {
+    font-size: 1.3rem;
+    line-height: 1.5;
+    padding: 1rem 0;
+}
 .empty {
     background-color: var(--white-alpha-25);
     border: 2px solid var(--white-alpha-40);
@@ -115,16 +120,15 @@
     padding: 1.5rem;
     text-align: center;
     margin: 2rem auto;
+    width: 50vw;
+    border-radius: 0.5rem;
+    line-height: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 3rem;
 }
 .empty p {
     font-size: 20px;
-    margin-bottom: 2rem;
-}
-.box-container .box .posts-content {
-    font-size: 1.3rem;
-    line-height: 1.5;
-    padding: 1rem 0;
-}
-.posts-editor img {
-    width: 100%;
+    padding-bottom: 1rem;
 }

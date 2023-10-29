@@ -3,10 +3,6 @@
     flex: 1;
     min-height: 65vh;
 }
-.add-product {
-    padding: 0 10vw;
-    margin-bottom: 5rem;
-}
 
 .heading {
     text-align: center;
@@ -25,6 +21,7 @@
     margin-top: 0.5rem;
     width: 150px !important;
 }
+
 .form-container {
     display: flex;
     align-items: center;
@@ -40,17 +37,18 @@
     box-shadow: var(--box-shadow);
     border-radius: 0.5rem;
     padding: 2rem;
-    width: 100%;
-}
-.form-container form .flex {
-    display: flex;
-    gap: 2rem;
-}
-.form-container form .flex .col {
-    flex: 1 1 25rem;
+    width: 80rem;
 }
 
-.form-container form .box {
+.form-container form p {
+    padding-top: 1rem;
+    font-size: 1.2rem;
+    text-transform: capitalize;
+}
+.form-container form p span {
+    color: red;
+}
+.box {
     background-color: var(--white-alpha-25);
     border: 2px solid var(--white-alpha-40);
     backdrop-filter: var(--backdrop-filter);
@@ -61,23 +59,25 @@
     font-size: 1.3rem;
     padding: 1rem;
 }
-.form-container form textarea {
-    height: 20rem;
-    resize: none;
+.post-editor {
+    width: 75vw;
+    min-height: 100vh;
+    padding: 4%;
+    margin: 8% 5%;
+    margin-bottom: 2%;
 }
-
-.form-container .image {
-    height: 30rem;
-}
-.form-container form p {
-    padding-top: 1rem;
-    font-size: 1.2rem;
-    text-transform: capitalize;
-}
-.form-container form p span {
-    color: red;
+.image {
+    width: 40%;
+    align-self: center;
+    border-radius: 10px;
+    box-shadow: var(--box-shadow);
+    margin: 2rem 0;
 }
 .flex-btn {
     display: flex;
     justify-content: space-evenly;
+}
+.input-field {
+    display: flex;
+    flex-direction: column;
 }

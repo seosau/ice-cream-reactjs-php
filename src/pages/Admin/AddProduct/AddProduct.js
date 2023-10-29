@@ -6,6 +6,7 @@ import Admin from "../Admin";
 const cx = className.bind(style);
 
 function AddProduct() {
+    const inputField = cx("input-field");
     return (
         <div className={cx("container")}>
             <div className={cx("heading")}>
@@ -22,7 +23,7 @@ function AddProduct() {
                     encType="multipart/form-data"
                     className={cx("add-product")}
                 >
-                    <div className={cx("input field")}>
+                    <div className={inputField}>
                         <p>
                             product name<span>*</span>
                         </p>
@@ -35,7 +36,7 @@ function AddProduct() {
                             required
                         ></input>
                     </div>
-                    <div className={cx("input field")}>
+                    <div className={inputField}>
                         <p>
                             product price<span>*</span>
                         </p>
@@ -48,7 +49,7 @@ function AddProduct() {
                             required
                         ></input>
                     </div>
-                    <div className={cx("input field")}>
+                    <div className={inputField}>
                         <p>
                             product detail<span>*</span>
                         </p>
@@ -60,7 +61,7 @@ function AddProduct() {
                             required
                         ></textarea>
                     </div>
-                    <div className={cx("input field")}>
+                    <div className={inputField}>
                         <p>
                             product stock<span>*</span>
                         </p>
@@ -75,7 +76,7 @@ function AddProduct() {
                             required
                         ></input>
                     </div>
-                    <div className={cx("input field")}>
+                    <div className={inputField}>
                         <p>
                             product image<span>*</span>
                         </p>

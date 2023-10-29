@@ -16,7 +16,6 @@ function ViewProduct() {
             </div>
             <div className={cx("box-container")}>
                 {/*Select product from database */}
-
                 <form className={cx("box")} action="" method="post">
                     <input
                         type="hidden"
@@ -50,7 +49,7 @@ function ViewProduct() {
                                 style={{
                                     width: "30%",
                                 }}
-                                href="edit_product.php"
+                                href="/Admin/EditProduct"
                                 value={"edit"}
                             />
 
@@ -105,7 +104,7 @@ function ViewProduct() {
                                 style={{
                                     width: "30%",
                                 }}
-                                href="edit_product.php"
+                                href="/Admin/EditProduct"
                                 value={"edit"}
                             />
 
@@ -160,7 +159,7 @@ function ViewProduct() {
                                 style={{
                                     width: "30%",
                                 }}
-                                href="edit_product.php"
+                                href="/Admin/EditProduct"
                                 value={"edit"}
                             />
 
@@ -215,7 +214,7 @@ function ViewProduct() {
                                 style={{
                                     width: "30%",
                                 }}
-                                href="edit_product.php"
+                                href="/Admin/EditProduct"
                                 value={"edit"}
                             />
 
@@ -238,22 +237,16 @@ function ViewProduct() {
                 </form>
                 {/*-----If empty-----*/}
                 {/* <div className={cx("empty")}>
-                        <p>
-                            no product added yet!
-                            <br />
-                            <a
-                                style={{ marginTop: "1.5rem" }}
-                                href="/AddProduct"
-                            >
-                                <Btn
-                                    style={{
-                                        width:'30%'
-                                    }}
-                                    value={"add product"}
-                                />
-                            </a>{" "}
-                        </p>
-                    </div> */}
+                    <p>no product added yet!</p>
+                    <Btn
+                        style={{
+                            width: "33%",
+                            flex: 1,
+                        }}
+                        value={"add product"}
+                        href={"/Admin/AddProduct"}
+                    />
+                </div> */}
             </div>
         </div>
     );
