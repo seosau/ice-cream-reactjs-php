@@ -1,12 +1,10 @@
 import className from "classnames/bind";
-import style from "./HomeHeader.module.scss"
+import style from "./HomeHeader.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faUser,
-    faPlus, faSearch, faHeart, faShoppingCart,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUser, faPlus, faSearch, faHeart, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 import { useState } from "react";
+import Btn from "../Button/Btn";
 const cx = className.bind(style);
 
 const navBarClass = cx("navbar");
@@ -17,7 +15,7 @@ const searchFormActive = searchFormClass + " " + cx("active");
 function HomeHeader() {
     const [showNavBar, setShowNavBar] = useState(false);
     const [showSearchForm, setShowSeachForm] = useState(false);
-    const [searchValue, setSearchValue] = useState('');
+    const [searchValue, setSearchValue] = useState("");
     const [showProfile, setShowProfile] = useState(false);
 
     const handleShowProfile = () => {
@@ -25,11 +23,11 @@ function HomeHeader() {
     };
     const handleShowNavBar = () => {
         setShowNavBar(!showNavBar);
-    }
+    };
 
     const handleShowSearchForm = () => {
         setShowSeachForm(!showSearchForm);
-    }
+    };
 
     const handleSearchChange = (event) => {
         setSearchValue(event.target.value);
@@ -38,11 +36,7 @@ function HomeHeader() {
         <div className={cx("header")}>
             <section className={cx("flex")}>
                 <a className={cx("logo")}>
-                    <img
-                        src={require("../../assets/img/logo.png")}
-                        width="130"
-                        alt="logo"
-                    />
+                    <img src={require("../../assets/img/logo.png")} width="130" alt="logo" />
                 </a>
                 <nav className={showNavBar ? navBarActive : navBarClass}>
                     <a href="">home</a>
@@ -52,31 +46,17 @@ function HomeHeader() {
                     <a href="">contact us</a>
                 </nav>
                 <form className={showSearchForm ? searchFormActive : searchFormClass}>
-                    <input
-                        type="text"
-                        name="search_product"
-                        placeholder="Search product..."
-                        value={searchValue}
-                        onChange={handleSearchChange}
-                        required
-                        maxLength="100"
-                    />
+                    <input type="text" name="search_product" placeholder="Search product..." value={searchValue} onChange={handleSearchChange} required maxLength="100" />
                     <button type="submit" id="search_product_btn">
                         <FontAwesomeIcon icon={faSearch} className={cx("icon-style")} />
                     </button>
                 </form>
                 <div className={cx("icons")}>
-                    <div id={cx("menu-btn")} >
-                        <FontAwesomeIcon icon={faPlus}
-                            className={cx("icon-style")}
-                            onClick={(e) => handleShowNavBar()}
-                        />
+                    <div id={cx("menu-btn")}>
+                        <FontAwesomeIcon icon={faPlus} className={cx("icon-style")} onClick={(e) => handleShowNavBar()} />
                     </div>
                     <div id={cx("search-btn")}>
-                        <FontAwesomeIcon icon={faSearch}
-                            className={cx("icon-style")}
-                            onClick={(e) => handleShowSearchForm()}
-                        />
+                        <FontAwesomeIcon icon={faSearch} className={cx("icon-style")} onClick={(e) => handleShowSearchForm()} />
                     </div>
                     <a href="">
                         <FontAwesomeIcon icon={faHeart} className={cx("icon-style")} />
@@ -87,10 +67,7 @@ function HomeHeader() {
                         <sup>0</sup>
                     </a>
                     <div id="user-btn">
-                        <FontAwesomeIcon icon={faUser} 
-                        className={cx("icon-style")}  
-                        onClick={(e) => handleShowProfile()}
-                        />
+                        <FontAwesomeIcon icon={faUser} className={cx("icon-style")} onClick={(e) => handleShowProfile()} />
                     </div>
                 </div>
                 {showProfile ? (
@@ -104,24 +81,15 @@ function HomeHeader() {
                             />
                             <p>User Name</p>
                             <div className={cx("flex-btn")}>
-                                <a href="profile.php" className={cx("btn")}>
-                                    profile
-                                </a>
-                                <a
-                                    href="../components/admin_logout.php"
-                                    onclick="return confirm('logout from this website?');"
-                                    className={cx("btn")}
-                                >
-                                    logout
-                                </a>
+                                <Btn href="/Profile" value={"profile"}></Btn>
+                                <Btn value={"logout"} href="" onclick="return confirm('logout from this website?');"></Btn>
                             </div>
                         </div>
                     </div>
                 ) : null}
             </section>
         </div>
-    )
+    );
 }
 
 export default HomeHeader;
-

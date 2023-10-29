@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Register, Login, Home, Dashboard, AddProduct, ViewProduct, ProductDetail, EditProduct, Profile } from "./pages";
+import { Register, Login, Home, Dashboard, AddProduct, ViewProduct, ProductDetail, EditProduct, Profile, UpdateProfile } from "./pages";
 import { AdminHeader } from "./components";
 
 function App() {
@@ -72,6 +72,14 @@ function App() {
                         element={
                             <AdminHeader>
                                 <Profile />
+                            </AdminHeader>
+                        }
+                    />
+                    <Route
+                        path="/Admin/UpdateProfile"
+                        element={
+                            <AdminHeader>
+                                <UpdateProfile />
                             </AdminHeader>
                         }
                     />

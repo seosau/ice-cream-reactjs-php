@@ -12,7 +12,7 @@
     width: 100%;
     height: 100%;
     opacity: 0;
-    transition: .5s;
+    transition: 0.5s;
 }
 
 .slider-container .slideBox.active {
@@ -23,7 +23,7 @@
     position: absolute;
     top: 30%;
     left: 5%;
-    display:flex;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -80,7 +80,7 @@
     backdrop-filter: var(--backdrop-filter);
     box-shadow: var(--box-shadow);
     margin: 1rem;
-    border-radius: .5rem;
+    border-radius: 0.5rem;
 }
 
 .service .box-container .box {
@@ -113,7 +113,7 @@
 .service .box-container .box .icon-box {
     display: flex;
     width: 200%;
-    transition: .2s ease-in;
+    transition: 0.2s ease-in;
 }
 
 .service .box-container .box .icon-box .img1,
@@ -137,7 +137,7 @@
     line-height: 1.5;
 }
 
-.heading h1{
+.heading h1 {
     font-size: 2rem;
     text-transform: capitalize;
 }
@@ -149,7 +149,7 @@
 }
 
 .heading img {
-    margin-top: .5rem;
+    margin-top: 0.5rem;
     width: 150px !important;
 }
 
@@ -159,7 +159,7 @@
 }
 
 .categories .box-container .box {
-    margin: .5rem;
+    margin: 0.5rem;
     position: relative;
     overflow: hidden;
     box-shadow: var(--box-shadow);
@@ -168,7 +168,10 @@
 .categories .box-container .box:hover img {
     transform: scale(1.1);
 }
-
+.categories .box-container .box img {
+    transition: all 0.5s;
+    width: 100%;
+}
 .menu-banner img {
     width: 100%;
 }
@@ -197,6 +200,7 @@
 
 .taste .box-container .box img {
     width: 100%;
+    transition: all 0.5s;
 }
 
 .taste .box-container .box:hover img {
@@ -237,7 +241,7 @@
     font-size: 3rem;
 }
 
-.ice-container .detail p{
+.ice-container .detail p {
     font-size: 1.5rem;
     line-height: 1.5;
     padding-bottom: 2em;
@@ -348,7 +352,7 @@
     letter-spacing: 0.15rem;
     font-size: 1.5rem;
     text-transform: uppercase;
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
 }
 
 .taste2 .box-container .box .box-details p {
@@ -417,7 +421,7 @@
 
 .newsletter h1 {
     font-size: 2.5rem;
-    margin: .5rem;
+    margin: 0.5rem;
     text-transform: capitalize;
 }
 

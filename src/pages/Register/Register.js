@@ -16,12 +16,7 @@ function Register() {
     console.log(userDataRegister);
     return (
         <div className={cx("form-container")}>
-            <form
-                action=""
-                method="post"
-                encType="multipart/from-data"
-                className={cx("register")}
-            >
+            <form action="" method="post" encType="multipart/from-data" className={cx("register")}>
                 <h3 className={cx("")}>register now</h3>
                 <div className={cx("flex")}>
                     <div className={cx("col")}>
@@ -89,8 +84,7 @@ function Register() {
                         </div>
                         <div className={cx("input-field")}>
                             <p className={cx("")}>
-                                confirm password{" "}
-                                <span className={cx("")}>*</span>
+                                confirm password <span className={cx("")}>*</span>
                             </p>
                             <input
                                 className={cx("box")}

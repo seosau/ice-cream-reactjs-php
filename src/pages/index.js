@@ -8,5 +8,6 @@ import ViewProduct from "./Admin/ViewProduct/ViewProduct";
 import ProductDetail from "./Admin/ProductDetail/ProductDetail";
 import EditProduct from "./Admin/EditProduct/EditProduct";
 import Profile from "./Admin/Profile/Profile";
+import UpdateProfile from "./Admin/UpdateProfile/UpdateProfile";
 
-export { AddProduct, Admin, Dashboard, Home, Login, Register, ViewProduct, ProductDetail, EditProduct, Profile };
+export { AddProduct, Admin, Dashboard, Home, Login, Register, ViewProduct, ProductDetail, EditProduct, Profile, UpdateProfile };
