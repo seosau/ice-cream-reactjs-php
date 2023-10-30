@@ -9,6 +9,7 @@ import {
     faArrowLeft,
     faPlus,
 } from "@fortawesome/free-solid-svg-icons";
+import { Footer } from "../../../components";
 const cx = className.bind(style);
 
 
@@ -109,7 +110,7 @@ function Home() {
             title: "strawberry"
         },
         {
-            img: require("../../../assets/img/type.avif"),
+            img: require("../../../assets/img/type3.jpg"),
             title: "strawberry"
         },
         {
@@ -121,7 +122,7 @@ function Home() {
             title: "strawberry"
         },
         {
-            img: require("../../../assets/img/type0.avif"),
+            img: require("../../../assets/img/type0.jpg"),
             title: "strawberry"
         },
         {
@@ -245,7 +246,7 @@ function Home() {
                 <div className={cx("box-container")}>
                     {
                         categories.map((category, index) => (
-                            <div class={cx("box")} key={index}>
+                            <div className={cx("box")} key={index}>
                                 <img
                                     src={category.img}
                                     alt="category"
@@ -385,6 +386,7 @@ function Home() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }
