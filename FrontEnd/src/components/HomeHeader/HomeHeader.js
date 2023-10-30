@@ -2,7 +2,7 @@ import className from "classnames/bind";
 import style from "./HomeHeader.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faPlus, faSearch, faHeart, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import Btn from "../Button/Btn";
 const cx = className.bind(style);
@@ -35,15 +35,15 @@ function HomeHeader() {
     return (
         <div className={cx("header")}>
             <section className={cx("flex")}>
-                <a className={cx("logo")}>
+                <Link className={cx("logo")}>
                     <img src={require("../../assets/img/logo.png")} width="130" alt="logo" />
-                </a>
+                </Link>
                 <nav className={showNavBar ? navBarActive : navBarClass}>
-                    <a href="">home</a>
-                    <a href="">about us</a>
-                    <a href="">shop</a>
-                    <a href="">order</a>
-                    <a href="">contact us</a>
+                    <Link href="">home</Link>
+                    <Link href="">about us</Link>
+                    <Link href="">shop</Link>
+                    <Link href="">order</Link>
+                    <Link href="">contact us</Link>
                 </nav>
                 <form className={showSearchForm ? searchFormActive : searchFormClass}>
                     <input type="text" name="search_product" placeholder="Search product..." value={searchValue} onChange={handleSearchChange} required maxLength="100" />
@@ -58,14 +58,14 @@ function HomeHeader() {
                     <div id={cx("search-btn")}>
                         <FontAwesomeIcon icon={faSearch} className={cx("icon-style")} onClick={(e) => handleShowSearchForm()} />
                     </div>
-                    <a href="">
+                    <Link href="">
                         <FontAwesomeIcon icon={faHeart} className={cx("icon-style")} />
                         <sup>0</sup>
-                    </a>
-                    <a href="">
+                    </Link>
+                    <Link to="/Client/Cart">
                         <FontAwesomeIcon icon={faShoppingCart} className={cx("icon-style")} />
                         <sup>0</sup>
-                    </a>
+                    </Link>
                     <div id="user-btn">
                         <FontAwesomeIcon icon={faUser} className={cx("icon-style")} onClick={(e) => handleShowProfile()} />
                     </div>
