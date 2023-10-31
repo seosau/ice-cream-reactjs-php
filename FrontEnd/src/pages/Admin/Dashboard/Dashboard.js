@@ -2,8 +2,8 @@ import className from "classnames/bind";
 import style from "./Dashboard.module.scss";
 import { useState, useEffect } from "react";
 import { Btn, AdminHeader } from "../../../components";
-
 const cx = className.bind(style);
+
 function Dashboard() {
     return (
         <div className={cx("container")}>
