@@ -12,6 +12,43 @@ function UserAccount() {
                 <img src={require("../../../assets/img/separator.png")} alt="spr" />
             </div>
             <div className={cx("box-container")}>
+                <div className={cx("box")}>
+                    <img src={require("../../../assets/img/avt.png")} alt="" />
+                    <p>
+                        user id: <span>01</span>
+                    </p>
+                    <p>
+                        user name: <span>Truong{/*fetch from db*/}</span>
+                    </p>
+                    <p>
+                        user email: <span>truong@gmail.com{/*fetch from db*/}</span>
+                    </p>
+                </div>
+                <div className={cx("box")}>
+                    <img src={require("../../../assets/img/avt.png")} alt="" />
+                    <p>
+                        user id: <span>01</span>
+                    </p>
+                    <p>
+                        user name: <span>Truong{/*fetch from db*/}</span>
+                    </p>
+                    <p>
+                        user email: <span>truong@gmail.com{/*fetch from db*/}</span>
+                    </p>
+                </div>
+                <div className={cx("box")}>
+                    <img src={require("../../../assets/img/avt.png")} alt="" />
+                    <p>
+                        user id: <span>01</span>
+                    </p>
+                    <p>
+                        user name: <span>Truong{/*fetch from db*/}</span>
+                    </p>
+                    <p>
+                        user email: <span>truong@gmail.com{/*fetch from db*/}</span>
+                    </p>
+                </div>
+
                 {/* <div className={cx("empty")}>
                     <p>no registered user yet!</p>
                 </div> */}

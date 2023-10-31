@@ -81,7 +81,7 @@ function Dashboard() {
                     <h3 className={cx("box-title")}>0{/*Number of users */}</h3>
                     <p>users account</p>
                     <Btn
-                        href={"/Admin/Profile"}
+                        href={"/Admin/UserAccount"}
                         value={"see users"}
                         style={{
                             width: "fit-content",
