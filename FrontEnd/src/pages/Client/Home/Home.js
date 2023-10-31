@@ -9,7 +9,7 @@ import {
     faArrowLeft,
     faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import { Footer } from "../../../components";
+import Footer from "../../../components/Footer/Footer"
 const cx = className.bind(style);
 
 

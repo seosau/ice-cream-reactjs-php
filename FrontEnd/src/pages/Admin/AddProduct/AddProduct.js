@@ -1,7 +1,7 @@
 import className from "classnames/bind";
 import style from "./AddProduct.module.scss";
 import { Btn } from "../../../components";
-import Admin from "../Admin";
+
 
 const cx = className.bind(style);
 
