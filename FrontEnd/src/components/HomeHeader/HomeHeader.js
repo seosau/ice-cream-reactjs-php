@@ -35,7 +35,7 @@ function HomeHeader() {
     return (
         <div className={cx("header")}>
             <section className={cx("flex")}>
-                <Link className={cx("logo")}>
+                <Link to={"/"} className={cx("logo")}>
                     <img src={require("../../assets/img/logo.png")} width="130" alt="logo" />
                 </Link>
                 <nav className={showNavBar ? navBarActive : navBarClass}>

@@ -2,8 +2,8 @@ import className from "classnames/bind";
 import style from "./Dashboard.module.scss";
 import { useState, useEffect } from "react";
 import { Btn, AdminHeader } from "../../../components";
-
 const cx = className.bind(style);
+
 function Dashboard() {
     return (
         <div className={cx("container")}>
@@ -32,6 +32,7 @@ function Dashboard() {
                         style={{
                             width: "fit-content",
                         }}
+                        href={"/Admin/Message"}
                     ></Btn>
                 </div>
                 <div className={cx("box")}>
@@ -80,7 +81,7 @@ function Dashboard() {
                     <h3 className={cx("box-title")}>0{/*Number of users */}</h3>
                     <p>users account</p>
                     <Btn
-                        href={"/Admin/Profile"}
+                        href={"/Admin/UserAccount"}
                         value={"see users"}
                         style={{
                             width: "fit-content",
@@ -92,6 +93,7 @@ function Dashboard() {
                     <h3 className={cx("box-title")}>2{/*Number of sellers */}</h3>
                     <p>sellers account</p>
                     <Btn
+                        href={"/Admin/Profile"}
                         value={"see sellers"}
                         style={{
                             width: "fit-content",
@@ -104,6 +106,7 @@ function Dashboard() {
                     <p>total orders placed</p>
 
                     <Btn
+                        href={"/Admin/Order"}
                         value={"total orders"}
                         style={{
                             width: "fit-content",
