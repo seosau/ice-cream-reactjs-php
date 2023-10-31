@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Register, Login, Home, Dashboard, AddProduct, ViewProduct, ProductDetail, EditProduct, Profile, UpdateProfile } from "./pages";
+import { Register, Login, Home, Dashboard, AddProduct, ViewProduct, ProductDetail, EditProduct, Profile, UpdateProfile, Message, Order } from "./pages";
 import { AdminHeader } from "./components";
 
 function App() {
@@ -80,6 +80,22 @@ function App() {
                         element={
                             <AdminHeader>
                                 <UpdateProfile />
+                            </AdminHeader>
+                        }
+                    />
+                    <Route
+                        path="/Admin/Message"
+                        element={
+                            <AdminHeader>
+                                <Message />
+                            </AdminHeader>
+                        }
+                    />
+                    <Route
+                        path="/Admin/Order"
+                        element={
+                            <AdminHeader>
+                                <Order />
                             </AdminHeader>
                         }
                     />
