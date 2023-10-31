@@ -11,5 +11,6 @@ import Profile from "./Admin/Profile/Profile";
 import UpdateProfile from "./Admin/UpdateProfile/UpdateProfile";
 import Message from "./Admin/Message/Message";
 import Order from "./Admin/Order/Order";
+import UserAccount from "./Admin/UserAccount/UserAccount";
 
-export { AddProduct, Admin, Dashboard, Home, Login, Register, ViewProduct, ProductDetail, EditProduct, Profile, UpdateProfile, Message, Order };
+export { AddProduct, Admin, Dashboard, Home, Login, Register, ViewProduct, ProductDetail, EditProduct, Profile, UpdateProfile, Message, Order, UserAccount };
