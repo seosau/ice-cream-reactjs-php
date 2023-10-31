@@ -1,12 +1,15 @@
 import { Outlet } from "react-router-dom";
+import style from "./GuestLayout.module.scss";
+import className from "classnames/bind";
 
 function GuestLayout() {
-  return (
-    <>
-      //code cái hình dâu tây gì ở đây
-      <Outlet />
-    </>
-  );
+    const cx = className.bind(style);
+
+    return (
+        <div className={cx("background")}>
+            <Outlet />
+        </div>
+    );
 }
 
 export default GuestLayout;
