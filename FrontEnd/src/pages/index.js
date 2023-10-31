@@ -12,8 +12,6 @@ import Message from "./Admin/Message/Message";
 import Order from "./Admin/Order/Order";
 import UserAccount from "./Admin/UserAccount/UserAccount";
 
-<<<<<<< HEAD
-export { AddProduct, Dashboard, Home, Login, Register, ViewProduct, ProductDetail, EditProduct, Profile, UpdateProfile };
-=======
-export { AddProduct, Admin, Dashboard, Home, Login, Register, ViewProduct, ProductDetail, EditProduct, Profile, UpdateProfile, Message, Order, UserAccount };
->>>>>>> b936c993db891bc24cc5085db9b30b8a563ebe66
+
+export { AddProduct, Dashboard, Home, Login, Register, ViewProduct, ProductDetail, EditProduct, Profile, UpdateProfile, Message, Order, UserAccount };
+

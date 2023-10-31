@@ -4,17 +4,14 @@ import { useState, useEffect } from "react";
 import HomeHeader from "../../../components/HomeHeader/HomeHeader";
 import Btn from "../../../components/Button/Btn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-<<<<<<< HEAD
+
 import {
     faArrowRight,
     faArrowLeft,
     faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import Footer from "../../../components/Footer/Footer"
-=======
-import { faArrowRight, faArrowLeft, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { Footer } from "../../../components";
->>>>>>> b936c993db891bc24cc5085db9b30b8a563ebe66
+
 const cx = className.bind(style);
 
 function Home() {

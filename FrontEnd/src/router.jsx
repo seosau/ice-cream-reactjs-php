@@ -9,7 +9,8 @@ import {
     ProductDetail, 
     EditProduct, 
     Profile, 
-    UpdateProfile } 
+    UpdateProfile,
+    UserAccount } 
 from "./pages";
 
 import { DefaultLayout, GuestLayout, AdminLayout } from './layouts';
@@ -79,6 +80,10 @@ const router = createBrowserRouter([
             {
                 path:'/admin/updateProfile',
                 element: <UpdateProfile/>
+            },
+            {
+                path:'/admin/userAccount',
+                element: <UserAccount/>
             },
         ]
     },
