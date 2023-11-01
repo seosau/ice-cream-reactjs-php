@@ -1,7 +1,6 @@
 import className from "classnames/bind";
 import style from "./Home.module.scss";
 import { useState, useEffect } from "react";
-import HomeHeader from "../../../components/HomeHeader/HomeHeader";
 import Btn from "../../../components/Button/Btn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -161,7 +160,6 @@ function Home() {
 
     return (
         <div className={cx("main-container")}>
-            <HomeHeader />
             <div className={cx("slider-container")}>
                 <div className={cx("slider")}>
                     {slides.map((slide, index) => (
@@ -341,7 +339,6 @@ function Home() {
                     </div>
                 </div>
             </div>
-            <Footer />
         </div>
     );
 }

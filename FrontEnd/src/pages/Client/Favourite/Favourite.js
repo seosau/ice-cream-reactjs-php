@@ -1,10 +1,9 @@
 import className from "classnames/bind";
-import { Btn, HomeHeader, Footer } from "../../../components";
+import { Btn } from "../../../components";
 import style from "./Favourite.module.scss"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { faCartShopping, faEye, faX } from "@fortawesome/free-solid-svg-icons"
-import { Link } from "react-router-dom";
 const cx = className.bind(style);
 
 function Favourite() {
@@ -65,7 +64,7 @@ function Favourite() {
 
     return (
         <div className={cx("main-container")}>
-            <HomeHeader />
+           
             <div className={cx("products")}>
                 <div className={cx("heading")}>
                     <h1>My wishlist</h1>
@@ -125,7 +124,6 @@ function Favourite() {
                     }
                 </div>
             </div>
-            <Footer />
         </div>
     )
 }

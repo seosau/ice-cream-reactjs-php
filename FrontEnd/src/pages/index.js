@@ -1,17 +1,37 @@
-import AddProduct from "./Admin/AddProduct/AddProduct";
-import Dashboard from "./Admin/Dashboard/Dashboard";
-import Home from "./Client/Home/Home";
+// import auth
 import Login from "./Auth/Login/Login";
 import Register from "./Auth/Register/Register";
+// import admin
+import Dashboard from "./Admin/Dashboard/Dashboard";
+import AddProduct from "./Admin/AddProduct/AddProduct";
 import ViewProduct from "./Admin/ViewProduct/ViewProduct";
 import ProductDetail from "./Admin/ProductDetail/ProductDetail";
 import EditProduct from "./Admin/EditProduct/EditProduct";
 import Profile from "./Admin/Profile/Profile";
 import UpdateProfile from "./Admin/UpdateProfile/UpdateProfile";
 import Message from "./Admin/Message/Message";
-import Order from "./Admin/Order/Order";
 import UserAccount from "./Admin/UserAccount/UserAccount";
-
-
-export { AddProduct, Dashboard, Home, Login, Register, ViewProduct, ProductDetail, EditProduct, Profile, UpdateProfile, Message, Order, UserAccount };
+import Order from "./Admin/Order/Order";
+// import client/user
+import Home from "./Client/Home/Home";
+import { default as OrderClient } from "./Client/Order/Order";
+import Cart from "./Client/Cart/Cart"
+import Favourite from "./Client/Favourite/Favourite"
+export { 
+    Register, 
+    Login, 
+    Dashboard, 
+    Profile, 
+    UpdateProfile, 
+    AddProduct, 
+    ViewProduct, 
+    EditProduct, 
+    ProductDetail, 
+    Order, 
+    UserAccount,
+    Message, 
+    Home, 
+    OrderClient,
+    Cart,
+    Favourite };
 

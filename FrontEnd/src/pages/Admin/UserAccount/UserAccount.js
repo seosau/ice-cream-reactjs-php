@@ -1,7 +1,6 @@
 import className from "classnames/bind";
 import style from "./UserAccount.module.scss";
-import { useState, useEffect } from "react";
-import { Btn, AdminHeader } from "../../../components";
+
 
 const cx = className.bind(style);
 function UserAccount() {

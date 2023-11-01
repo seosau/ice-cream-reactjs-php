@@ -1,8 +1,7 @@
 import className from "classnames/bind";
-import { Btn, HomeHeader, Footer } from "../../../components";
+import { Btn } from "../../../components";
 import style from "./Order.module.scss"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 const cx = className.bind(style);
@@ -74,7 +73,7 @@ function Order() {
     };
     return (
         <div className={cx("main-container")}>
-            <HomeHeader />
+           
             <div className={cx("orders")}>
                 <div className={cx("heading")}>
                     <h1>My Orders</h1>
@@ -120,7 +119,6 @@ function Order() {
                     }
                 </div >
             </div>
-            <Footer />
         </div >
 
     )

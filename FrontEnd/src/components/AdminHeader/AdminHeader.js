@@ -1,8 +1,6 @@
 import className from "classnames/bind";
 import style from "./AdminHeader.module.scss";
 import { Link } from "react-router-dom";
-import { Register, Login, Dashboard, AddProduct, ViewProduct, ProductDetail } from "../../pages";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faHome, faEye, faFileImport, faRightFromBracket, faUserPlus, faBars } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faInstagram, faLinkedinIn, faPinterestP, faXTwitter } from "@fortawesome/free-brands-svg-icons";
@@ -103,25 +101,25 @@ function Header({ children }) {
                         <div className={cx("navbar")}>
                             <ul>
                                 <li>
-                                    <Link to="/Admin/Dashboard">
+                                    <Link to="/admin/dashboard">
                                         <FontAwesomeIcon className={cx("sidebar-icon")} icon={faHome} />
                                         <p>dashboard</p>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to="/Admin/AddProduct">
+                                    <Link to="/admin/addProduct">
                                         <FontAwesomeIcon className={cx("sidebar-icon")} icon={faFileImport} />
                                         <p>add products </p>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to="/Admin/ViewProduct">
+                                    <Link to="/admin/viewProduct">
                                         <FontAwesomeIcon className={cx("sidebar-icon")} icon={faEye} />
                                         <p>view product</p>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to="/Admin/Profile">
+                                    <Link to="/admin/profile">
                                         <FontAwesomeIcon className={cx("sidebar-icon")} icon={faUserPlus} />
                                         <p>accounts</p>
                                     </Link>

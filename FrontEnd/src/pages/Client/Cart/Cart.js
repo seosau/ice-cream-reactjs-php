@@ -72,7 +72,6 @@ function Cart() {
 
     return (
         <div className={cx("main-container")}>
-            <HomeHeader />
             <div className={cx("products")}>
                 <div className={cx("heading")}>
                     <h1>My cart</h1>
@@ -140,7 +139,6 @@ function Cart() {
                     </div>) : null
                 }
             </div>
-            <Footer />
         </div>
     )
 }
