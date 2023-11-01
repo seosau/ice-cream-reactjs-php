@@ -1,5 +1,5 @@
 import className from "classnames/bind";
-import { Btn, HomeHeader, Footer } from "../../../components";
+import { Btn } from "../../../components";
 import style from "./Cart.module.scss"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, useEffect } from "react";
@@ -84,7 +84,7 @@ function Cart() {
                     datas.length > 0 ? datas.map(data => (
                         <form key={data.id}action="" method="post" className={cx("box")}>
                             <input type="hidden" name="cart_id" value={data.id} />
-                            <img src={data.img} alt="image product" />
+                            <img src={data.img} alt="product" />
                             <div className={cx("content")}>
                                 <h3>{data.name}</h3>
                                 <div className={cx("flex-btn")}>

@@ -51,9 +51,6 @@ function Favourite() {
             quantity: 5,
         },
     ]);
-    const [grandTotal, setGrandTotal] = useState(0);
-
-    const [quantities, setQuantities] = useState({});
 
     const handleButtonDelete = () => {
         if (datas.length > 0) {
@@ -77,7 +74,7 @@ function Favourite() {
                         datas.length > 0 ? datas.map(data => (
                             <form key={data.id} action="" method="post" className={cx("box")}>
                                 <input type="hidden" name="cart_id" value={data.id} />
-                                <img src={data.img} alt="image product" />
+                                <img src={data.img} alt="product" />
                                 <div className={cx("content")}>
                                     <h3>{data.name}</h3>
                                     <div className={cx("flex-btn")}>

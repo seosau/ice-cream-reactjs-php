@@ -17,6 +17,7 @@ import Home from "./Client/Home/Home";
 import { default as OrderClient } from "./Client/Order/Order";
 import Cart from "./Client/Cart/Cart"
 import Favourite from "./Client/Favourite/Favourite"
+import ViewOrder from "./Client/ViewOrder/ViewOrder";
 export { 
     Register, 
     Login, 
@@ -33,5 +34,6 @@ export {
     Home, 
     OrderClient,
     Cart,
+    ViewOrder,
     Favourite };
 

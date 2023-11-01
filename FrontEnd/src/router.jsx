@@ -15,7 +15,8 @@ import {
   Home,
   OrderClient,
   Cart,
-  Favourite
+  Favourite,
+  ViewOrder
 } from "./pages";
 
 import { DefaultLayout, GuestLayout, AdminLayout } from "./layouts";
@@ -41,8 +42,12 @@ const router = createBrowserRouter([
         element: <Cart/>,
       },
       {
-        path: "/favouite",
+        path: "/favourite",
         element: <Favourite/>,
+      },
+      {
+        path: "/order/vieworder/:productId",
+        element: <ViewOrder/>,
       },
     ],
   },

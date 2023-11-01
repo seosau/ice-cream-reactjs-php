@@ -85,7 +85,7 @@ function Order() {
                     {
                         datas.length > 0 ? datas.map(data => (
                             <div className={cx("box")} key={data.id}>
-                                <Link to="/Client/Order/ViewOrder" className={cx("view-order")}>
+                                <Link to={`/order/vieworder/${data.id}`} className={cx("view-order")}>
                                     <img src={data.img} alt="ordered"/>
                                     <p className={cx("date")}>{data.date}</p>
                                 </Link>
@@ -96,7 +96,7 @@ function Order() {
                                         <p className={cx("status", `${data.status.toLowerCase()}`)}>{data.status}</p>
                                     </div>
                                     <div className={cx("flex-btn")}>
-                                        <Btn href="/Client/Order/ViewOrder"
+                                        <Btn href={`/order/vieworder/${data.id}`}
                                             style={{
                                                 width: "fit-content",
                                             }}

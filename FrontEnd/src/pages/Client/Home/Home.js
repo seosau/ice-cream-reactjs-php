@@ -1,15 +1,13 @@
 import className from "classnames/bind";
 import style from "./Home.module.scss";
-import { useState, useEffect } from "react";
+import { useState,  } from "react";
 import Btn from "../../../components/Button/Btn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
     faArrowRight,
     faArrowLeft,
-    faPlus,
-} from "@fortawesome/free-solid-svg-icons";
-import Footer from "../../../components/Footer/Footer"
+    } from "@fortawesome/free-solid-svg-icons";
 
 const cx = className.bind(style);
 
@@ -190,8 +188,8 @@ function Home() {
                         <div className={cx("box")} key={index}>
                             <div className={cx("icon")}>
                                 <div className={cx("icon-box")}>
-                                    <img src={service.img1} className={cx("img1")} />
-                                    <img src={service.img2} className={cx("img2")} />
+                                    <img src={service.img1} className={cx("img1")} alt="service" />
+                                    <img src={service.img2} className={cx("img2")} alt="service"/>
                                 </div>
                             </div>
                             <div className={cx("detail")}>
@@ -205,7 +203,7 @@ function Home() {
             <div className={cx("categories")}>
                 <div className={cx("heading")}>
                     <h1>categories features</h1>
-                    <img src={require("../../../assets/img/separator.png")} />
+                    <img src={require("../../../assets/img/separator.png")} alt="separator"/>
                 </div>
                 <div className={cx("box-container")}>
                     {categories.map((category, index) => (
@@ -217,13 +215,13 @@ function Home() {
                 </div>
             </div>
             <div className={cx("menu-banner")}>
-                <img src={require("../../../assets/img/menu-banner.jpg")} />
+                <img src={require("../../../assets/img/menu-banner.jpg")} alt="banner" />
             </div>
             <div className={cx("taste")}>
                 <div className={cx("heading")}>
                     <span>Taste</span>
                     <h1>buy any ice cream @ get one free</h1>
-                    <img src={require("../../../assets/img/separator.png")} />
+                    <img src={require("../../../assets/img/separator.png")} alt="separator"/>
                 </div>
                 <div className={cx("box-container")}>
                     {tastes.map((taste, index) => (
@@ -276,7 +274,7 @@ function Home() {
                     {tastes2.map((taste, index) => (
                         <div className={cx("box")} key={index}>
                             <div className={cx("box-overlay")}></div>
-                            <img src={taste.img} />
+                            <img src={taste.img} alt="taste"/>
                             <div className={cx("box-details", "fadeIn-bottom")}>
                                 <h1>{taste.title}</h1>
                                 <p>Find your taste of desserts</p>

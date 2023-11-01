@@ -84,7 +84,7 @@ function HomeHeader({ children }) {
                 onClick={(e) => handleShowSearchForm()}
               />
             </div>
-            <Link to="/favouite">
+            <Link to="/favourite">
               <FontAwesomeIcon icon={faHeart} className={cx("icon-style")} />
               <sup>2</sup>
             </Link>
