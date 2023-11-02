@@ -1,33 +1,77 @@
 import { useState } from "react";
 import className from "classnames/bind";
 import style from "./Register.module.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faUser,
+  faImage
+} from "@fortawesome/free-solid-svg-icons";
 import Btn from "../../../components/Button/Btn";
-import axiosClient from "../../../axiosClient/axios.js"
+import axiosClient from "../../../axiosClient/axios.js";
+import { useStateContext } from "../../../context/ContextProvider";
+import { useNavigate } from "react-router-dom";
+import Alert from "../../../components/Alert/Alert";
 const cx = className.bind(style);
 
 function Register() {
+  const navigate = useNavigate();
+  const { setUserToken, setcurrentUser } = useStateContext();
   const [userDataRegister, setUserDataRegister] = useState({
     name: "",
     email: "",
     password: "",
-    passwordConfirmation: "",
+    password_confirmation: "",
     image: "",
+    image_url: "",
   });
-//   console.log(process.env.API_BASE_URL)
-  const onSubmit = () => {
-    // console.log(userDataRegister);
-    axiosClient.post('/register', userDataRegister)
-    .then(res => {
-        console.log(res)
-    })
+  const [error, setError] = useState({})
+  const onImageChoose = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      setUserDataRegister({
+        ...userDataRegister,
+        image: file,
+        image_url: reader.result,
+      });
+      e.target.value = "";
+    };
+    reader.readAsDataURL(file);
+  };
+  const onSubmit = async () => {
+    const payload = { ...userDataRegister };
+    if (payload.image) {
+      payload.image = payload.image_url;
+    }
+    delete payload.image_url;
+
+    await axiosClient
+      .post("/register", payload)
+      .then(({ data }) => {
+        Alert(
+          "success",
+          "Register Successfully",
+          "Please login for a great experience"
+        );
+        navigate("/login");
+      })
+      .catch((error) => {
+        setError()
+        Alert(
+          "error",
+          "Register Failed",
+          "Something went wrong, please check again"
+        );
+      });
   };
   return (
     <div className={cx("form-container")}>
       <form
         action="#"
-        method="post"
+        method="POST"
         encType="multipart/from-data"
         className={cx("register")}
+        onSubmit={onSubmit}
       >
         <h3 className={cx("")}>register now</h3>
         <div className={cx("flex")}>
@@ -108,10 +152,10 @@ function Register() {
                 onChange={(e) =>
                   setUserDataRegister({
                     ...userDataRegister,
-                    passwordConfirmation: e.target.value,
+                    password_confirmation: e.target.value,
                   })
                 }
-                value={userDataRegister.cpass}
+                value={userDataRegister.password_confirmation}
               />
             </div>
           </div>
@@ -120,20 +164,33 @@ function Register() {
           <p className={cx("")}>
             your profile <span className={cx("")}>*</span>
           </p>
-          <input
-            className={cx("box")}
-            type="file"
-            name="image"
-            accept="image/*"
-            required
-            onChange={(e) =>
-              setUserDataRegister({
-                ...userDataRegister,
-                image: e.target.value,
-              })
-            }
-            value={userDataRegister.img}
-          />
+          <div className={cx("profile-img-box")}>
+            {userDataRegister.image_url && (
+              <img
+                src={userDataRegister.image_url}
+                alt="Image"
+                className={cx("img-choose")}
+              />
+            )}
+            {!userDataRegister.image_url && (
+              <div>
+                <FontAwesomeIcon
+                  icon={faImage}
+                  className={cx("icon-style")}  
+                />
+              </div>
+            )}
+            <button className={cx("btn-chooseImg")}>
+              <input
+                className={cx("img-choose-input")}
+                type="file"
+                name="image"
+                accept="image/*"
+                onChange={onImageChoose}
+              />
+              Change
+            </button>
+          </div>
         </div>
         <p className={cx("link")}>
           already have an account?

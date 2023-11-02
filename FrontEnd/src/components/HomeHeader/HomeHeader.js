@@ -9,8 +9,11 @@ import {
   faShoppingCart,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Btn from "../Button/Btn";
+import { useStateContext } from "../../context/ContextProvider";
+import axiosClient from "../../axiosClient/axios";
+
 const cx = className.bind(style);
 const navBarClass = cx("navbar");
 const navBarActive = navBarClass + " " + cx("active");
@@ -18,11 +21,17 @@ const navBarActive = navBarClass + " " + cx("active");
 const searchFormClass = cx("search-form");
 const searchFormActive = searchFormClass + " " + cx("active");
 function HomeHeader({ children }) {
+  const { currentUser, setcurrentUser,setUserToken } = useStateContext();
+  const user_img_url = `http://localhost:8000/${currentUser.image}`;
   const [showNavBar, setShowNavBar] = useState(false);
   const [showSearchForm, setShowSeachForm] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [showProfile, setShowProfile] = useState(false);
-
+  useEffect(() => {
+    axiosClient.get("/me").then(({ data }) => {
+      setcurrentUser(data);
+    });
+  }, []);
   const handleShowProfile = () => {
     setShowProfile(!showProfile);
   };
@@ -37,6 +46,13 @@ function HomeHeader({ children }) {
   const handleSearchChange = (event) => {
     setSearchValue(event.target.value);
   };
+  const handleLogout = () => {
+    axiosClient.post("/logout").then((res) => {
+      setcurrentUser({});
+      setUserToken(null);
+    });
+  };
+
   return (
     <>
       <div className={cx("header")}>
@@ -107,19 +123,14 @@ function HomeHeader({ children }) {
             <div className={cx("profile-detail")}>
               <div className={cx("profile")}>
                 <img
-                  src={require("../../assets/img/avt.png")} //load later from user info
-                  className={cx("logo-img")}
-                  width="100"
+                  src={user_img_url}
+                  className={cx("profile-img")}
                   alt="profile"
                 />
-                <p>User Name</p>
+                <p className={cx("profile-name")}>{currentUser.name}</p>
                 <div className={cx("flex-btn")}>
                   <Btn href="/profile" value="profile"></Btn>
-                  <Btn
-                    value="logout"
-                    href=""
-                    onclick="return confirm('logout from this website?');"
-                  ></Btn>
+                  <Btn value="logout" onclick={handleLogout}></Btn>
                 </div>
               </div>
             </div>

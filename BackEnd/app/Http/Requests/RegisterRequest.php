@@ -29,7 +29,20 @@ class RegisterRequest extends FormRequest
                 'required',
                 'confirmed',
                 Password::min(8)->mixedCase()->numbers()->symbols(),   
-            ]
+            ],
+            'image' => 'required'
         ];
     }
+    public function messages(): array
+{
+    return [
+        'name.required' => 'name is required',
+        'email.required' => 'email is required',
+        'email.email' => 'email must be a valid email address',
+        'password.required' => 'password is required',
+        'password' => 'password must be at least 8 characters, one uppercase and one lowercase letter, one symbol, one number',
+        'password.confirmed' => 'password field confirmation does not match',
+        'image.required' => 'image is required'
+    ];
+}
 }
