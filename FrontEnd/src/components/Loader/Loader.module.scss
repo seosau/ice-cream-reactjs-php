@@ -1,0 +1,21 @@
+.loader {
+    border: 5px solid #d4d4d4; /* Light grey */
+    border-top: 5px solid var(--main-color); /* Blue */
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 2s linear infinite;
+    position: absolute;
+    left: 47.5%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }

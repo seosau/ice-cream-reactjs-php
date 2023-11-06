@@ -4,9 +4,9 @@ import { Footer, HomeHeader } from "../../components";
 import { useStateContext } from "../../context/ContextProvider";
 function DefaultLayout() {
   const { userToken } = useStateContext();
-  if (!userToken) {
-    return <Navigate to="login" />;
-  }
+  // if (!userToken) {
+  //   return <Navigate to="login" />;
+  // }
   return (
     <>
       <HomeHeader />

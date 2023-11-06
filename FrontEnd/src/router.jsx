@@ -82,15 +82,15 @@ const router = createBrowserRouter([
         element: <AddProduct />,
       },
       {
-        path: "/admin/viewProduct",
+        path: "/admin/viewproduct",
         element: <ViewProduct />,
       },
       {
-        path: "/admin/productdetail",
+        path: "/admin/productdetail/:id",
         element: <ProductDetail />,
       },
       {
-        path: "/admin/editproduct",
+        path: "/admin/editproduct/:id",
         element: <EditProduct />,
       },
       {
@@ -112,6 +112,14 @@ const router = createBrowserRouter([
       {
         path: "/admin/order",
         element: <Order />,
+      },
+      {
+        path: "/admin/login",
+        element: <Login />,
+      },
+      {
+        path: "/admin/register",
+        element: <Register />,
       },
     ],
   },

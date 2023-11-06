@@ -4,5 +4,5 @@ import HomeHeader from "./HomeHeader/HomeHeader";
 import GlobalStyle from "./GlobalStyle";
 import Footer from "./Footer/Footer";
 import Alert from "./Alert/Alert";
-
-export { AdminHeader, HomeHeader, Btn, GlobalStyle, Footer, Alert };
+import Loader from "./Loader/Loader";
+export { AdminHeader, HomeHeader, Btn, GlobalStyle, Footer, Alert, Loader };

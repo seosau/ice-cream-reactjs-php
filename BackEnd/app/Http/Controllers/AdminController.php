@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use App\Models\User;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Models\Seller;
 
-class AuthController extends Controller
+
+class AdminController extends Controller
 {
-
     public function register(RegisterRequest $request)
     {
         $data = $request->validated();
@@ -22,51 +22,52 @@ class AuthController extends Controller
             $relativePath = $this->saveImage($data['image']);
             $data['image'] = $relativePath;
         }
-        $user = User::create([
+        $seller = Seller::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'image' =>  $hasImg ? $data['image'] : null,
         ]);
-        $token = $user->createToken('main')->plainTextToken;
+        $token = $seller->createToken('main')->plainTextToken;
         return response([
-            'user' => $user,
+            'seller' => $seller,
             'token' => $token
         ]);
     }
-
     public function login(LoginRequest $request)
     {
         $credentials = $request->validated();
-        $user = Auth::user();
-        if (!Auth::attempt($credentials)) {
+        if (!Auth::guard('seller')->attempt($credentials)) {
             return response([
                 'error' => 'The Provided credentials are not correct'
             ], 422);
         }
-        $user = Auth::user();
-        if ($user instanceof User) {
-            $token = $user->createToken('main')->plainTextToken;
+        $seller = Auth::guard('seller')->user();
+
+        if ($seller instanceof Seller) {
+            $token =  $seller->createToken('main')->plainTextToken;
         }
         return response([
-            'user' => $user,
-            'token' => $token
+            'user' => $seller,
+            'token' =>  $token
         ]);
     }
 
     public function logout(Request $request)
     {
-        $user = Auth::user();
-        if ($user instanceof User) {
-            $request->$user->currentAccessToken()->delete();
+        $seller = Auth::guard('seller')->user();
+        if ($seller instanceof Seller) {
+            $request->$seller->currentAccessToken()->delete();
         }
-
-        return response([
-            'success' => true
-        ]);
+        return response(
+            [
+                'sucess' => true,
+            ]
+        );
     }
-    public function me(Request $request)
+    public function admin(Request $request)
     {
+
         return $request->user();
     }
     private function saveImage($image)

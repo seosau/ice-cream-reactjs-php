@@ -2,14 +2,11 @@ import { useState } from "react";
 import className from "classnames/bind";
 import style from "./Register.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUser,
-  faImage
-} from "@fortawesome/free-solid-svg-icons";
+import { faImage } from "@fortawesome/free-solid-svg-icons";
 import Btn from "../../../components/Button/Btn";
 import axiosClient from "../../../axiosClient/axios.js";
 import { useStateContext } from "../../../context/ContextProvider";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import Alert from "../../../components/Alert/Alert";
 const cx = className.bind(style);
 
@@ -24,7 +21,9 @@ function Register() {
     image: "",
     image_url: "",
   });
-  const [error, setError] = useState({})
+  const pathname = window.location.pathname;
+
+  const [errors, setErrors] = useState({});
   const onImageChoose = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -44,24 +43,30 @@ function Register() {
       payload.image = payload.image_url;
     }
     delete payload.image_url;
-
     await axiosClient
-      .post("/register", payload)
+      .post(`${pathname}`, payload)
       .then(({ data }) => {
         Alert(
           "success",
           "Register Successfully",
           "Please login for a great experience"
         );
+        if (pathname.includes("admin")) {
+          navigate("/admin/login");
+          return;
+        }
         navigate("/login");
       })
       .catch((error) => {
-        setError()
-        Alert(
-          "error",
-          "Register Failed",
-          "Something went wrong, please check again"
-        );
+        if (error.response) {
+          let finalErrors = error.response.data.errors;
+          setErrors(finalErrors);
+          Alert(
+            "error",
+            "Register Failed",
+            "Something went wrong, please check again"
+          );
+        }
       });
   };
   return (
@@ -86,15 +91,20 @@ function Register() {
                 name="name"
                 placeholder="enter your name..."
                 maxLength={50}
-                required
-                onChange={(e) =>
+                onChange={(e) => {
+                  if (errors?.name) {
+                    setErrors({ ...errors, name: "" });
+                  }
                   setUserDataRegister({
                     ...userDataRegister,
                     name: e.target.value,
-                  })
-                }
+                  });
+                }}
                 value={userDataRegister.name}
               />
+              {errors?.name ? (
+                <div className={cx("error")}>{errors?.name}</div>
+              ) : null}
             </div>
             <div className={cx("input-field")}>
               <p className={cx("")}>
@@ -106,15 +116,20 @@ function Register() {
                 name="email"
                 placeholder="enter your email..."
                 maxLength={50}
-                required
-                onChange={(e) =>
+                onChange={(e) => {
+                  if (errors?.email) {
+                    setErrors({ ...errors, email: "" });
+                  }
                   setUserDataRegister({
                     ...userDataRegister,
                     email: e.target.value,
-                  })
-                }
+                  });
+                }}
                 value={userDataRegister.email}
               />
+              {errors?.email ? (
+                <div className={cx("error")}>{errors?.email}</div>
+              ) : null}
             </div>
           </div>
           <div className={cx("col")}>
@@ -128,15 +143,22 @@ function Register() {
                 name="password"
                 placeholder="enter your password..."
                 maxLength={50}
-                required
-                onChange={(e) =>
+                onChange={(e) => {
+                  if (errors?.password) {
+                    setErrors({ ...errors, password: "" });
+                  }
                   setUserDataRegister({
                     ...userDataRegister,
                     password: e.target.value,
-                  })
-                }
+                  });
+                }}
                 value={userDataRegister.password}
               />
+              {errors?.password ? (
+                <div className={cx("error")}>
+                  {errors.password[errors?.password?.length - 1]}
+                </div>
+              ) : null}
             </div>
             <div className={cx("input-field")}>
               <p className={cx("")}>
@@ -148,15 +170,20 @@ function Register() {
                 name="password-confirmation"
                 placeholder="confirm your password..."
                 maxLength={50}
-                required
-                onChange={(e) =>
+                onChange={(e) => {
+                  if (errors?.password) {
+                    setErrors({ ...errors, password: "" });
+                  }
                   setUserDataRegister({
                     ...userDataRegister,
                     password_confirmation: e.target.value,
-                  })
-                }
+                  });
+                }}
                 value={userDataRegister.password_confirmation}
               />
+              {errors?.password && errors.password?.length > 1 ? (
+                <div className={cx("error")}>{errors.password[0]}</div>
+              ) : null}
             </div>
           </div>
         </div>
@@ -174,10 +201,7 @@ function Register() {
             )}
             {!userDataRegister.image_url && (
               <div>
-                <FontAwesomeIcon
-                  icon={faImage}
-                  className={cx("icon-style")}  
-                />
+                <FontAwesomeIcon icon={faImage} className={cx("icon-style")} />
               </div>
             )}
             <button className={cx("btn-chooseImg")}>
@@ -194,9 +218,7 @@ function Register() {
         </div>
         <p className={cx("link")}>
           already have an account?
-          <a href="/Login" className={cx("")}>
-            login now
-          </a>
+          <Link to="/login">login now</Link>
         </p>
         <Btn value={"register now"} onclick={onSubmit}></Btn>
       </form>

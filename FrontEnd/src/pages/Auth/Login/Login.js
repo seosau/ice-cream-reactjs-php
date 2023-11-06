@@ -5,6 +5,7 @@ import Btn from "../../../components/Button/Btn";
 import axiosClient from "../../../axiosClient/axios";
 import { useStateContext } from "../../../context/ContextProvider";
 import Alert from "../../../components/Alert/Alert";
+import { Link } from "react-router-dom";
 const cx = className.bind(style);
 
 function Login() {
@@ -15,9 +16,10 @@ function Login() {
     password: "",
   });
   const [error, setError] = useState({});
+  const pathname = window.location.pathname;
   const onSubmit = () => {
     axiosClient
-      .post("/login", userDataLogin)
+      .post(`${pathname}`, userDataLogin)
       .then(({ data }) => {
         Alert("success", "Login Successfully", "Have a nice day");
         setUserToken(data.token);
@@ -26,10 +28,10 @@ function Login() {
       .catch((error) => {
         console.log(error);
         Alert(
-            "error",
-            "Login Failed",
-            "Something went wrong, please check again"
-          );
+          "error",
+          "Login Failed",
+          "Something went wrong, please check again"
+        );
       });
   };
   return (
@@ -83,12 +85,10 @@ function Login() {
         </div>
         <p className={cx("link")}>
           do not have an account?
-          <a href="/Register" className={cx("")}>
-            register now
-          </a>
+        <Link to="/register">register now</Link>
         </p>
 
-        <Btn value={"login now"} onclick={onSubmit}></Btn>
+        <Btn value="Login now" onclick={onSubmit}></Btn>
       </form>
     </div>
   );

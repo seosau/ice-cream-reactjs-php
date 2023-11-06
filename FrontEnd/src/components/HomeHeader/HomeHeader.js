@@ -13,7 +13,7 @@ import { useState, useEffect } from "react";
 import Btn from "../Button/Btn";
 import { useStateContext } from "../../context/ContextProvider";
 import axiosClient from "../../axiosClient/axios";
-
+import Alert from "../Alert/Alert";
 const cx = className.bind(style);
 const navBarClass = cx("navbar");
 const navBarActive = navBarClass + " " + cx("active");
@@ -21,16 +21,30 @@ const navBarActive = navBarClass + " " + cx("active");
 const searchFormClass = cx("search-form");
 const searchFormActive = searchFormClass + " " + cx("active");
 function HomeHeader({ children }) {
-  const { currentUser, setcurrentUser,setUserToken } = useStateContext();
-  const user_img_url = `http://localhost:8000/${currentUser.image}`;
+  const { currentUser, userToken, setcurrentUser, setUserToken } =
+    useStateContext();
+  const user_img_url = currentUser.image
+    ? `http://localhost:8000/${currentUser.image}`
+    : require("../../assets/img/avt.jpg");
   const [showNavBar, setShowNavBar] = useState(false);
   const [showSearchForm, setShowSeachForm] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [showProfile, setShowProfile] = useState(false);
+
   useEffect(() => {
-    axiosClient.get("/me").then(({ data }) => {
-      setcurrentUser(data);
-    });
+    if (userToken) {
+      axiosClient
+        .get("/me")
+        .then(({ data }) => {
+          setcurrentUser(data);
+        })
+        .catch((error) => {
+          return error;
+        });
+    }
+    else {
+
+    }
   }, []);
   const handleShowProfile = () => {
     setShowProfile(!showProfile);
@@ -47,12 +61,20 @@ function HomeHeader({ children }) {
     setSearchValue(event.target.value);
   };
   const handleLogout = () => {
-    axiosClient.post("/logout").then((res) => {
+    axiosClient.post("/logout")
+    .then((res) => {
       setcurrentUser({});
       setUserToken(null);
+      handleShowProfile();
+      Alert(
+        "success",
+        "Logout Successfully",
+      );
+    })
+    .catch(error => {
+      return error;
     });
   };
-
   return (
     <>
       <div className={cx("header")}>
@@ -121,18 +143,28 @@ function HomeHeader({ children }) {
           </div>
           {showProfile ? (
             <div className={cx("profile-detail")}>
-              <div className={cx("profile")}>
-                <img
-                  src={user_img_url}
-                  className={cx("profile-img")}
-                  alt="profile"
-                />
-                <p className={cx("profile-name")}>{currentUser.name}</p>
-                <div className={cx("flex-btn")}>
-                  <Btn href="/profile" value="profile"></Btn>
-                  <Btn value="logout" onclick={handleLogout}></Btn>
+              {currentUser && userToken ? (
+                <div className={cx("profile")}>
+                  <img
+                    src={user_img_url}
+                    className={cx("profile-img")}
+                    alt="profile"
+                  />
+                  <p className={cx("profile-name")}>{currentUser.name}</p>
+                  <div className={cx("flex-btn")}>
+                    <Btn href="/profile" value="profile"></Btn>
+                    <Btn value="logout" onclick={handleLogout}></Btn>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <>
+                  <p className={cx("text")}>Please register or login</p>
+                  <div className={cx("flex-btn")}>
+                    <Btn href="/login" value="login"></Btn>
+                    <Btn href="/register" value="register"></Btn>
+                  </div>
+                </>
+              )}
             </div>
           ) : null}
         </section>

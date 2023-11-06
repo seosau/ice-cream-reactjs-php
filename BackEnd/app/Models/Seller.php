@@ -3,9 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class Seller extends Model
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
+class Seller extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, HasApiTokens;
+    protected $table='sellers';
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'image',
+    ];
+
 }
