@@ -1,10 +1,11 @@
 import className from "classnames/bind";
 import style from "./Profile.module.scss";
-import { useState, useEffect } from "react";
-import { Btn, AdminHeader } from "../../../components";
-
+import { Btn } from "../../../components";
+import { useStateContext } from "../../../context/ContextProvider";
 const cx = className.bind(style);
 function Profile() {
+    const {currentUser} = useStateContext();
+    const image_url = currentUser.image_url ? currentUser.image_url : require("../../../assets/img/avt.png");
     return (
         <div className={cx("container")}>
             <div className={cx("heading")}>
@@ -17,23 +18,23 @@ function Profile() {
                     <img
                         alt=""
                         /*Fetch from db */
-                        src={require("../../../assets/img/avt.png")}
+                        src={image_url}
                     />
-                    <h3>user name</h3>
+                    <h3>{currentUser.name}</h3>
                     <span>seller</span>
-                    <Btn href={"/Admin/UpdateProfile"} value={"update your profile"} />
+                    <Btn href="/admin/updateprofile" value="update your profile" />
                 </div>
                 <div className={cx("flex")}>
                     <div className={cx("box")}>
                         <span>{/*fetch total produts*/}20</span>
-                        <p>total products</p>
-                        <Btn href={"/Admin/ViewProduct"} value={"view your products"} />
+                        <p>Total Products</p>
+                        <Btn href="/admin/viewproduct" value="view your products" />
                     </div>
                     <div className={cx("box")}>
                         <span>{/*fetch total orders*/}20</span>
-                        <p>total orders placed</p>
+                        <p>Total Orders Placed</p>
 
-                        <Btn href={"/Admin/ViewOrder"} value={"view all orders"} />
+                        <Btn href="/admin/order" value="view all orders" />
                     </div>
                 </div>
             </div>

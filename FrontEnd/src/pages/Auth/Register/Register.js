@@ -5,14 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import Btn from "../../../components/Button/Btn";
 import axiosClient from "../../../axiosClient/axios.js";
-import { useStateContext } from "../../../context/ContextProvider";
-import { useNavigate,Link } from "react-router-dom";
+
+import { useNavigate, Link } from "react-router-dom";
 import Alert from "../../../components/Alert/Alert";
 const cx = className.bind(style);
 
 function Register() {
   const navigate = useNavigate();
-  const { setUserToken, setcurrentUser } = useStateContext();
   const [userDataRegister, setUserDataRegister] = useState({
     name: "",
     email: "",
@@ -22,7 +21,6 @@ function Register() {
     image_url: "",
   });
   const pathname = window.location.pathname;
-
   const [errors, setErrors] = useState({});
   const onImageChoose = (e) => {
     const file = e.target.files[0];
@@ -61,11 +59,11 @@ function Register() {
         if (error.response) {
           let finalErrors = error.response.data.errors;
           setErrors(finalErrors);
-          Alert(
-            "error",
-            "Register Failed",
-            "Something went wrong, please check again"
-          );
+          // Alert(
+          //   "error",
+          //   "Register Failed",
+          //   "Something went wrong, please check again"
+          // );
         }
       });
   };
@@ -79,8 +77,8 @@ function Register() {
         onSubmit={onSubmit}
       >
         <h3 className={cx("")}>register now</h3>
-        <div className={cx("flex")}>
-          <div className={cx("col")}>
+        <div className={cx("")}>
+          <div className={cx("row")}>
             <div className={cx("input-field")}>
               <p className={cx("")}>
                 your name <span className={cx("")}>*</span>
@@ -131,9 +129,11 @@ function Register() {
                 <div className={cx("error")}>{errors?.email}</div>
               ) : null}
             </div>
+           
           </div>
-          <div className={cx("col")}>
-            <div className={cx("input-field")}>
+
+          <div className={cx("row")}>
+          <div className={cx("input-field")}>
               <p className={cx("")}>
                 your password <span className={cx("")}>*</span>
               </p>
@@ -187,7 +187,7 @@ function Register() {
             </div>
           </div>
         </div>
-        <div className={cx("input-field")}>
+        <div className={cx("")}>
           <p className={cx("")}>
             your profile <span className={cx("")}>*</span>
           </p>
@@ -218,7 +218,7 @@ function Register() {
         </div>
         <p className={cx("link")}>
           already have an account?
-          <Link to="/login">login now</Link>
+          <Link to={pathname.includes("admin") ? "/admin/login" :"/login"}>login now</Link>
         </p>
         <Btn value={"register now"} onclick={onSubmit}></Btn>
       </form>

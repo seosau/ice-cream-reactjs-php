@@ -11,7 +11,7 @@ const cx = className.bind(style);
 
 function AddProduct() {
   const { currentUser } = useStateContext();
-  const pathName = window.location.pathname;
+  const [errors, setErrors] = useState({});
   const [product, setProduct] = useState({
     name: "",
     price: "",
@@ -22,6 +22,9 @@ function AddProduct() {
     status: "",
   });
   const onImageChoose = (e) => {
+    if (errors?.image) {
+      setErrors({ ...errors, image: "" });
+    }
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.onload = () => {
@@ -54,8 +57,10 @@ function AddProduct() {
         Alert("success", "Insert product successfully");
       })
       .catch((error) => {
-        Alert("error", "Something went wrong");
-        console.log(error);
+        if (error.response) {
+          setErrors(error.response.data.errors);
+        }
+        // Alert("error", "Something went wrong");
       });
   };
   const addProduct = () => {
@@ -94,9 +99,17 @@ function AddProduct() {
               name="name"
               maxLength={100}
               placeholder="add product name"
-              onChange={(e) => setProduct({ ...product, name: e.target.value })}
+              onChange={(e) => {
+                if (errors?.name) {
+                  setErrors({ ...errors, name: "" });
+                }
+                setProduct({ ...product, name: e.target.value });
+              }}
               value={product.name}
             ></input>
+            {errors?.name ? (
+              <div className={cx("error")}>{errors?.name}</div>
+            ) : null}
           </div>
           <div className={inputField}>
             <p>
@@ -109,11 +122,17 @@ function AddProduct() {
               maxLength={100}
               placeholder="add product price"
               required
-              onChange={(e) =>
-                setProduct({ ...product, price: Number(e.target.value) })
-              }
+              onChange={(e) => {
+                if (errors?.price) {
+                  setErrors({ ...errors, price: "" });
+                }
+                setProduct({ ...product, price: Number(e.target.value) });
+              }}
               value={product.price}
             ></input>
+            {errors?.price ? (
+              <div className={cx("error")}>{errors?.price}</div>
+            ) : null}
           </div>
           <div className={inputField}>
             <p>
@@ -125,11 +144,17 @@ function AddProduct() {
               maxLength={1000}
               placeholder="add product detail"
               required
-              onChange={(e) =>
-                setProduct({ ...product, product_detail: e.target.value })
-              }
+              onChange={(e) => {
+                if (errors?.product_detail) {
+                  setErrors({ ...errors, product_detail: "" });
+                }
+                setProduct({ ...product, product_detail: e.target.value });
+              }}
               value={product.product_detail}
             ></textarea>
+            {errors?.product_detail ? (
+              <div className={cx("error")}>{errors?.product_detail}</div>
+            ) : null}
           </div>
           <div className={inputField}>
             <p>
@@ -144,11 +169,17 @@ function AddProduct() {
               max={9999999999}
               placeholder="add product stock"
               required
-              onChange={(e) =>
-                setProduct({ ...product, stock: Number(e.target.value) })
-              }
+              onChange={(e) => {
+                if (errors?.stock) {
+                  setErrors({ ...errors, stock: "" });
+                }
+                setProduct({ ...product, stock: Number(e.target.value) });
+              }}
               value={product.stock}
             ></input>
+            {errors?.stock ? (
+              <div className={cx("error")}>{errors?.stock}</div>
+            ) : null}
           </div>
           <div className={inputField}>
             <p>
@@ -181,6 +212,9 @@ function AddProduct() {
                 Change
               </button>
             </div>
+            {errors?.image ? (
+              <div className={cx("error")}>{errors?.image}</div>
+            ) : null}
           </div>
           <div className={cx("flex-btn")}>
             <Btn value="add product" onclick={addProduct} />

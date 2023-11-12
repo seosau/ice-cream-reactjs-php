@@ -4,9 +4,14 @@ import className from "classnames/bind";
 import { useStateContext } from "../../context/ContextProvider"; 
 const cx = className.bind(style);
 function GuestLayout() {
-    const {userToken} = useStateContext();
+    const {userToken,currentUser} = useStateContext();
     if(userToken) {
-        return <Navigate to="/"/>
+        if(currentUser.user_type==='client') {
+            return <Navigate to="/"/>
+        }
+        else {
+            return <Navigate to="/admin"/>
+        }
     }
     return (
         <div className={cx("background")}>

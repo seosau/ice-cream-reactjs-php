@@ -31,8 +31,8 @@ function Header({ children }) {
   const [showProfile, setShowProfile] = useState(false);
   const [showSideBar, setShowSideBar] = useState(false);
   const { currentUser, setcurrentUser, userToken, setUserToken } = useStateContext();
-  const user_img_url = currentUser?.image
-    ? `http://localhost:8000/${currentUser.image}`
+  const image_url = currentUser.image_url
+    ? currentUser.image_url
     : require("../../assets/img/avt.jpg");
   const handleShowProfile = () => {
     setShowProfile(!showProfile);
@@ -113,13 +113,13 @@ function Header({ children }) {
               {currentUser && userToken ? (
                 <div className={cx("profile")}>
                   <img
-                    src={user_img_url}
+                    src={image_url}
                     className={cx("profile-img")}
                     alt="profile"
                   />
                   <p className={cx("profile-name")}>{currentUser.name}</p>
                   <div className={cx("flex-btn")}>
-                    <Btn href="/profile" value="profile"></Btn>
+                    <Btn href="/admin/profile" value="profile"></Btn>
                     <Btn value="logout" onclick={handleLogout}></Btn>
                   </div>
                 </div>
@@ -139,13 +139,13 @@ function Header({ children }) {
           <div className={showSideBar ? sidebarActive : sidebarClass}>
             <div className={cx("profile")}>
               <img
-                src={require("../../assets/img/avt.png")}
+                src={image_url}
                 className={cx("user-img")}
                 width="150"
                 height="150"
                 alt="logo"
               />
-              <p>User Name</p>
+              <p>{currentUser.name}</p>
             </div>
 
             <h5>menu</h5>

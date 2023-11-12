@@ -18,6 +18,8 @@ import { default as OrderClient } from "./Client/Order/Order";
 import Cart from "./Client/Cart/Cart"
 import Favourite from "./Client/Favourite/Favourite"
 import ViewOrder from "./Client/ViewOrder/ViewOrder";
+import Shop from "./Client/Shop/Shop";
+import View1Product from "./Client/View1Product/View1Product";
 export { 
     Register, 
     Login, 
@@ -35,5 +37,7 @@ export {
     OrderClient,
     Cart,
     ViewOrder,
-    Favourite };
+    Favourite,
+    Shop, 
+    View1Product};
 

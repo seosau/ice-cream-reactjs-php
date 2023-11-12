@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import className from "classnames/bind";
 import style from "./EditProduct.module.scss";
-import { Btn,Loader } from "../../../components";
+import { Btn, Loader } from "../../../components";
 import Alert from "../../../components/Alert/Alert";
 import axiosClient from "../../../axiosClient/axios";
 import { useStateContext } from "../../../context/ContextProvider";
@@ -11,7 +11,16 @@ function EditProduct() {
   const { id } = useParams();
   const { currentUser } = useStateContext();
   const [loading, setLoading] = useState(false);
-  const [product, setProduct] = useState({});
+  const[errors,setErrors] = useState({});
+  const [product, setProduct] = useState({
+    name: "",
+    price: "",
+    image: null,
+    image_url: null,
+    product_detail: "",
+    status: "",
+    stock: "",
+  });
   const navigate = useNavigate();
   const onImageChoose = (e) => {
     const file = e.target.files[0];
@@ -39,8 +48,10 @@ function EditProduct() {
         Alert("success", "update product successfully");
       })
       .catch((error) => {
+        if(error.response) {
+          setErrors(error.response.data.error);
+        }
         Alert("error", "Something went wrong");
-        console.log(error);
       });
   };
 
@@ -58,7 +69,7 @@ function EditProduct() {
         <h1 className={cx("heading-title")}>edit product</h1>
         <img src={require("../../../assets/img/separator.png")} alt="spr" />
       </div>
-      {loading && <Loader/>}
+      {loading && <Loader />}
       {!loading && (
         <div className={cx("box-container")}>
           {/*select product from db */}
@@ -163,7 +174,11 @@ function EditProduct() {
                   onChange={onImageChoose}
                 />
                 {product.image_url ? (
-                  <img alt="" className={cx("image")} src={product.image_url} />
+                  <img
+                    alt="product image"
+                    className={cx("image")}
+                    src={product.image_url}
+                  />
                 ) : null}
                 <div className={cx("flex-btn")}>
                   {/* <Btn

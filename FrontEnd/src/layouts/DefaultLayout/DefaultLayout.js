@@ -1,12 +1,6 @@
-import { Outlet, Navigate } from "react-router-dom";
-
+import { Outlet } from "react-router-dom";
 import { Footer, HomeHeader } from "../../components";
-import { useStateContext } from "../../context/ContextProvider";
 function DefaultLayout() {
-  const { userToken } = useStateContext();
-  // if (!userToken) {
-  //   return <Navigate to="login" />;
-  // }
   return (
     <>
       <HomeHeader />

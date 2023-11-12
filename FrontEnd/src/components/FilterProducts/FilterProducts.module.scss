@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  margin: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  position: relative;
+  border-radius: 2px;
+}
+.sort-choice {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+.sort-text {
+  font-size: 20px;
+  color: var(--main-color);
+  font-weight: 500;
+  margin-right: 20px;
+}
+.sort-select {
+  color: var(--main-color);
+  font-size: 20px;
+  box-shadow: var( --box-shadow);
+  padding: 5px;
+  margin-right: 20px;
+}

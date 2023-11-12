@@ -23,8 +23,8 @@ const searchFormActive = searchFormClass + " " + cx("active");
 function HomeHeader({ children }) {
   const { currentUser, userToken, setcurrentUser, setUserToken } =
     useStateContext();
-  const user_img_url = currentUser.image
-    ? `http://localhost:8000/${currentUser.image}`
+  const image_url = currentUser.image
+    ? currentUser.image
     : require("../../assets/img/avt.jpg");
   const [showNavBar, setShowNavBar] = useState(false);
   const [showSearchForm, setShowSeachForm] = useState(false);
@@ -146,7 +146,7 @@ function HomeHeader({ children }) {
               {currentUser && userToken ? (
                 <div className={cx("profile")}>
                   <img
-                    src={user_img_url}
+                    src={image_url}
                     className={cx("profile-img")}
                     alt="profile"
                   />

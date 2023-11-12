@@ -14,14 +14,20 @@
     border-radius: 0.5rem;
     padding: 2rem;
 }
-.form-container form .flex {
-    display: flex;
-    gap: 2rem;
+// .form-container form .flex {
+//     display: flex;
+//     gap: 2rem;
+// }
+// .form-container form .flex .col {
+//     flex: 1 1 25rem;
+// }
+.row {
+    // display: flex;
+    // justify-content: space-between;
 }
-.form-container form .flex .col {
-    flex: 1 1 25rem;
+.input-field {
+    // width: 80%;
 }
-
 .form-container .register {
     width: 60rem;
 }
@@ -90,6 +96,9 @@ input[type="submit"] {
 }
 input[type="submit"]:hover {
     color: var(--main-color);
+}
+.input-field {
+    // max-height: 300px;
 }
 .profile-img-box {
     

@@ -35,7 +35,6 @@
     backdrop-filter: var(--backdrop-filter);
     box-shadow: var(--box-shadow);
     // margin: 1rem;
-    text-align: center;
     border-radius: 0.5rem;
     padding: 1.5rem;
     padding-bottom: 3rem;
@@ -120,4 +119,8 @@
     margin: 0.5rem 0;
     font-size: 1.3rem;
     padding: 1rem;
+}
+.flex-btn {
+    display: flex;
+    justify-content: space-evenly;
 }
