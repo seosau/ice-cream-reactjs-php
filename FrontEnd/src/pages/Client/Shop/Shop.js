@@ -1,5 +1,5 @@
 import className from "classnames/bind";
-import { Btn, HomeHeader } from "../../../components";
+import { Btn } from "../../../components";
 import style from "./Shop.module.scss"
 import { useState } from "react";
 import { Link } from "react-router-dom";

@@ -145,7 +145,7 @@ function Header({ children }) {
                 height="150"
                 alt="logo"
               />
-              <p>{currentUser.name}</p>
+              <p className={cx("profile-name")}>{currentUser.name}</p>
             </div>
 
             <h5>menu</h5>

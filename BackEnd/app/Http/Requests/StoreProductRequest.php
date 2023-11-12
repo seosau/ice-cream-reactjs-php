@@ -39,4 +39,15 @@ class StoreProductRequest extends FormRequest
             'status' => 'required|string'
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'name is required',
+            'price.required' => 'price is required',
+            'image.required' => 'image is required',
+            'stock.required' => 'stock is required',
+            'product_detail.required' => 'product_detail is required',
+            'status.required' => 'status is required',
+        ];
+    }
 }

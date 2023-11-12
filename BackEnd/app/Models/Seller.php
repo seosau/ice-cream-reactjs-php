@@ -15,5 +15,5 @@ class Seller extends Authenticatable
         'password',
         'image',
     ];
-
+    
 }

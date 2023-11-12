@@ -23,8 +23,7 @@ class ProductController extends Controller
         return ProductResource::collection(
             Product::where('seller_id', $user->id)
                 ->orderBy('created_at', 'desc')
-                ->get()
-            // ->paginate()
+                ->paginate(2)
         );
     }
     public function store(StoreProductRequest $request)
@@ -67,11 +66,11 @@ class ProductController extends Controller
             return abort(403, 'Unauthorized action');
         }
         $product->delete();
-        if($product->image) {
+        if ($product->image) {
             $absolutePath = public_path($product->image);
-            File::delete($absolutePath);    
+            File::delete($absolutePath);
         }
-        return response('delete successfully',204);
+        return response('delete successfully', 204);
     }
     private function saveImage($image)
     {

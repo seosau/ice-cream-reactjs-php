@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 
-class AuthController extends Controller
+class ClientController extends Controller
 {
 
     public function register(RegisterRequest $request)
@@ -41,7 +42,7 @@ class AuthController extends Controller
         $user = Auth::user();
         if (!Auth::attempt($credentials)) {
             return response([
-                'error' => 'The Provided credentials are not correct'
+                'error' => 'The provided credentials are not correct'
             ], 422);
         }
         $user = Auth::user();
@@ -67,7 +68,14 @@ class AuthController extends Controller
     }
     public function me(Request $request)
     {
-        return $request->user();
+        $user = $request->user();
+        return [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'image' => $user->image ? URL::to( $user->image) : null, 
+            'user_type' => $user->user_type,
+        ];
     }
     private function saveImage($image)
     {

@@ -31,4 +31,14 @@ class UpdateProductRequest extends FormRequest
             'status' => 'required|string'
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'price.required' => 'price is required',
+            'image.required' => 'image is required',
+            'stock.required' => 'stock is required',
+            'product_detail.required' => 'product_detail is required',
+            'status.required' => 'status is required',
+        ];
+    }
 }

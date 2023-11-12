@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\UpdateProfileRequest;
 use App\Models\Seller;
 
 
@@ -36,10 +39,12 @@ class AdminController extends Controller
     }
     public function login(LoginRequest $request)
     {
+        $pass = bcrypt('$2y$10$kZq96pE3V3dtPs/ooEwZHeQVvTKZcO6RNKktsVXoBaHe6./9HJgVq');
         $credentials = $request->validated();
         if (!Auth::guard('seller')->attempt($credentials)) {
             return response([
-                'error' => 'The Provided credentials are not correct'
+                'error' => 'The Provided credentials are not correct',
+                'password' =>  $pass 
             ], 422);
         }
         $seller = Auth::guard('seller')->user();
@@ -67,8 +72,45 @@ class AdminController extends Controller
     }
     public function admin(Request $request)
     {
-
-        return $request->user();
+        $user = $request->user();
+        return [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'image_url' => $user->image ? URL::to($user->image) : null,
+            'user_type' => $user->user_type,
+        ];
+    }
+    public function update(UpdateProfileRequest $request)
+    {
+        $credentials = $request->validated();
+        $user = $request->user();
+        if (!Hash::check($credentials['old_password'], $user->password)) {
+            return response([
+                'error' => 'The Provided old password are not correct'
+            ], 422);
+        }
+        if (isset($credentials['image'])) {
+            $relativePath = $this->saveImage($credentials['image']);
+            $credentials['image'] = $relativePath;
+            if ($user->image) {
+                $absolutePath = public_path($user->image);
+                File::delete($absolutePath);
+            }
+        }
+        $user->update([
+            ...$credentials,
+            'password' => bcrypt($credentials['password'])
+        ]);
+        return response(
+            [
+                'id' =>  $user->id,
+                'name' =>  $user->name,
+                'email' =>  $user->email,
+                'image_url' =>  $user->image ? URL::to($user->image) : null,
+                'user_type' =>  $user->user_type,
+            ]
+        );
     }
     private function saveImage($image)
     {

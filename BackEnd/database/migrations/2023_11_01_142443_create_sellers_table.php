@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email',50)->unique();
             $table->string('password');
             $table->string('image',100)->nullable();
+            $table->string('user_type',10)->default('seller');
             $table->timestamps();
         });
     }

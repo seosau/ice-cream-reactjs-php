@@ -2,11 +2,10 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rules\Password;
 
-class LoginRequest extends FormRequest
+class UpdateProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,16 +23,17 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email|string',
-            'password' => 'required',
-        ];
-    }
-    public function messages(): array{
-        return [
-            'email.required' => "email is required",
-            'email.email' => 'email must be a valid email address',
-            'password.required' => 'password is required'
 
+            'name' => 'required|string',
+            'email' => 'required|string|email',
+            'password' => [
+                'required',
+                'confirmed',
+                Password::min(8)->mixedCase()->numbers()->symbols(),
+            ],
+            'old_password' => 'required',
+            'image' => 'nullable|string'
         ];
     }
+    
 }
