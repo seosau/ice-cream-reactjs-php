@@ -14,33 +14,33 @@ function Shop(){
     const [datas, setData] = useState([
         {
             id: 1,
-            name: "Ice cream",
-            img: require("../../../assets/img/products/product0.jpg"),
-            price: 120,
+            name: "Ice cream 1",
+            img: require("../../../assets/img/products/687180636_012c012ccc@2x.jpg"),
+            price: 12000,
             inLike: true,
             inCart: true,
         },
         {
             id: 2,
-            name: "Ice cream",
-            img: require("../../../assets/img/products/product0.jpg"),
-            price: 120,
+            name: "Ice cream 2",
+            img: require("../../../assets/img/products/product5.jpg"),
+            price: 12000,
             inLike: false,
             inCart: false,
         },
         {
             id: 3,
             name: "Ice cream",
-            img: require("../../../assets/img/products/product0.jpg"),
-            price: 120,
+            img: require("../../../assets/img/products/687180662_012c012ccc@2x.jpg"),
+            price: 12000,
             inLike: false,
             inCart: true,
         },
         {
             id: 4,
             name: "Ice cream",
-            img: require("../../../assets/img/products/product0.jpg"),
-            price: 120,
+            img: require("../../../assets/img/products/514215896_012c012ccc@2x.jpg"),
+            price: 12000,
             inLike: false,
             inCart: false,
         },
@@ -48,20 +48,20 @@ function Shop(){
         {
             id: 5,
             name: "Ice cream",
-            img: require("../../../assets/img/products/product0.jpg"),
-            price: 120,
+            img: require("../../../assets/img/products/518151488_012c012ccc@2x.jpg"),
+            price: 12000,
             inLike: true,
             inCart: false,
         }, 
         {
             id: 6,
             name: "Ice cream",
-            img: require("../../../assets/img/products/product0.jpg"),
-            price: 120,
+            img: require("../../../assets/img/products/535405916_012c012ccc@2x.jpg"),
+            price: 12000,
             inLike: true,
             inCart: false,
         },
-    ]);   
+    ]); 
     const handleClickLike = (itemId) => {
         const updatedDatas = datas.map(item => {
           if (item.id === itemId) {
