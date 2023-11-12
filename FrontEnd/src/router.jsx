@@ -16,7 +16,7 @@ import {
   OrderClient,
   Cart,
   Favourite,
-  ViewOrder
+  ViewOrder,
 } from "./pages";
 
 import { DefaultLayout, GuestLayout, AdminLayout } from "./layouts";
@@ -61,6 +61,14 @@ const router = createBrowserRouter([
       },
       {
         path: "/register",
+        element: <Register />,
+      },
+      {
+        path: "/admin/login",
+        element: <Login />,
+      },
+      {
+        path: "/admin/register",
         element: <Register />,
       },
     ],
@@ -113,16 +121,10 @@ const router = createBrowserRouter([
         path: "/admin/order",
         element: <Order />,
       },
-      {
-        path: "/admin/login",
-        element: <Login />,
-      },
-      {
-        path: "/admin/register",
-        element: <Register />,
-      },
+     
     ],
   },
+ 
 ]);
 
 export default router;
