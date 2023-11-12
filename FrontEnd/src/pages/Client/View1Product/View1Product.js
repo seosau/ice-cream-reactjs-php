@@ -11,7 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 const cx = className.bind(style);
 
-function Shop(){
+function View1Product(){
     const [datas, setData] = useState([
         {
             id: 1,
@@ -185,4 +185,4 @@ function Shop(){
     )
 }
 
-export default Shop;
+export default View1Product;
