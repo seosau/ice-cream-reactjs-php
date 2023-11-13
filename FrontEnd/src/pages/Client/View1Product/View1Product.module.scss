@@ -1,51 +1,53 @@
-.main-container{
+.main-container {
     // margin-top: 100px;
 }
-.view-detail{
-    background-image: url('../../../assets/img/bn3.3.webp');
+.view-detail {
+    background-image: url("../../../assets/img/bn3.3.webp");
     // background-attachment: fixed;
     background-position: center center; /* Để giữ ảnh ở giữa */
     background-repeat: no-repeat;
     background-size: cover;
-    padding: 100px 6%
+    padding: 100px 6%;
 }
-.view-detail .main-box{
+.view-detail .main-box {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 }
 .view-detail .main-box .img-box,
-.view-detail .main-box .detail-box{
+.view-detail .main-box .detail-box {
     flex: 1 1 40rem;
     padding: 2rem;
 }
-.view-detail .main-box .img-box{
+.view-detail .main-box .img-box {
     width: 100%;
     display: flex;
     justify-content: space-around;
 }
-.view-detail .main-box .img-box img{
+.view-detail .main-box .img-box img {
     width: 600px;
     height: 600px;
 }
-.view-detail .main-box .detail-box h2, h3, .product-price{
+.view-detail .main-box .detail-box h2,
+.view-detail .main-box .detail-box h3,
+.product-price {
     font-weight: normal;
     margin-left: 0;
     margin-top: 2rem;
 }
-.view-detail .main-box .detail-box .description-text{
+.view-detail .main-box .detail-box .description-text {
     margin-top: 1rem;
     margin-left: 0;
     margin-bottom: 2rem;
 }
-.view-detail .main-box .detail-box .detail-btn{
+.view-detail .main-box .detail-box .detail-btn {
     display: flex;
     justify-content: space-around;
 }
 .products {
     position: relative;
     margin-top: -100px;
-    background-image: url('../../../assets/img/bg1.webp');
+    background-image: url("../../../assets/img/bg1.webp");
     padding: 4%;
     padding-bottom: 50px;
 }
@@ -68,12 +70,11 @@
     top: 0;
 }
 
-
 .products .box-container .box img {
     width: 100%;
     height: 25rem;
     object-fit: cover;
-    transition: .5s;
+    transition: 0.5s;
     background-color: polegreen;
 }
 
@@ -95,7 +96,6 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-
 }
 .icon-style-clicked {
     font-size: 2rem;
@@ -104,7 +104,7 @@
     width: 2.5rem;
     line-height: 2.4rem;
     text-align: center;
-    margin-left: .5rem;
+    margin-left: 0.5rem;
     cursor: pointer;
 }
 .icon-style {
@@ -114,11 +114,9 @@
     width: 2.5rem;
     line-height: 2.4rem;
     text-align: center;
-    margin-left: .5rem;
+    margin-left: 0.5rem;
     cursor: pointer;
 }
-
-
 
 .products .box-container .box h3 {
     text-transform: capitalize;
@@ -142,4 +140,3 @@
     font-size: 1.8rem;
     text-align: center;
 }
-
