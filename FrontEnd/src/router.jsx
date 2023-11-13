@@ -18,7 +18,8 @@ import {
   Favourite,
   ViewOrder,
   Shop,
-  View1Product
+  View1Product,
+  AboutUs
 } from "./pages";
 
 import { DefaultLayout, GuestLayout, AdminLayout } from "./layouts";
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
       {
         path: "/shop/view1product/:productId",
         element: <View1Product />,
+      },
+      {
+        path: "/about",
+        element: <AboutUs />,
       },
     ],
   },
