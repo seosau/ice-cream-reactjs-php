@@ -20,20 +20,44 @@
     padding: 2rem;
 }
 .view-detail .main-box .img-box{
-    width: 100%;
     display: flex;
     justify-content: space-around;
+    align-items: center;
+    overflow: hidden;
 }
 .view-detail .main-box .img-box img{
     width: 600px;
     height: 600px;
+    object-fit: cover; /* Để ảnh không bị bóp méo, nhưng có thể cắt bớt */
+    object-position: center; /* Đưa ảnh về giữa container */
 }
-.view-detail .main-box .detail-box h2, h3, .product-price{
+.view-detail .main-box .detail-box .in-stock{
+    margin-left: 1rem;
+    font-size: 1rem;
+    text-transform: capitalize;
+    color: green;
+}
+.view-detail .main-box .detail-box .out-of-stock{
+    margin-left: 1rem;
+    font-size: 1rem;
+    text-transform: capitalize;
+    color: orange;
+}
+.view-detail .main-box .detail-box h2, .product-price{
     font-weight: normal;
     margin-left: 0;
     margin-top: 2rem;
 }
+.view-detail .main-box .detail-box .product-price{
+    font-size: 2rem;
+}
+.view-detail .main-box .detail-box h2{
+    font-weight: bolder;
+    color: var(--main-color);
+    font-size: 2rem;
+}
 .view-detail .main-box .detail-box .description-text{
+    line-height: 1.5rem;
     margin-top: 1rem;
     margin-left: 0;
     margin-bottom: 2rem;
@@ -80,6 +104,20 @@
 .products .box-container .box:hover img {
     transform: scale(1.1);
 }
+.products .box-container .box .status{
+    margin-left: .5rem;
+    font-size: 1rem;
+    text-transform: capitalize;
+    position: absolute;
+    top: 1%;
+    left: 1%;
+    padding: .5rem 1.2rem;
+    color: #fff;
+    font-size: 1rem;
+    display: inline-block;
+    border-radius: .5rem;
+    background-color: var(--main-color);
+}
 
 .products .box-container .box .content {
     position: relative;
@@ -91,11 +129,46 @@
     text-transform: capitalize;
 }
 
+.products .box-container .box .content .price-name .price{
+    margin-left: 1rem;
+    font-size: 1.8rem;
+}
+.products .box-container .box .content .price-name .name{
+    font-size: 1.5rem;
+}
 .products .box-container .box .content .flex-btn {
     display: flex;
     justify-content: space-around;
     align-items: center;
+}
+.products .box-container .box .content .flex-btn .like-cart{
+    display: flex;
+    align-items: center;
+    margin-left: 6rem;
+}
+.products .box-container .box .content .flex-btn .like-cart #like-icon{
+    padding-right: 2rem;
+}
 
+.detail-icon-style-clicked {
+    font-size: 2rem;
+    color: var(--main-color);
+    height: 1.5rem;
+    width: 1.5rem;
+    line-height: 2.4rem;
+    text-align: center;
+    margin-left: .5rem;
+    cursor: pointer;
+}
+.detail-icon-style {
+    font-size: 2rem;
+    color: gray;
+    height: 1.5rem;
+    width: 1.5rem;
+    line-height: 2.4rem;
+    text-align: center;
+    margin-left: .5rem;
+    cursor: pointer;
 }
 .icon-style-clicked {
     font-size: 2rem;
@@ -117,6 +190,7 @@
     margin-left: .5rem;
     cursor: pointer;
 }
+
 
 
 

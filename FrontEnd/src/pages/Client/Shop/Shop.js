@@ -19,6 +19,7 @@ function Shop(){
             price: 12000,
             inLike: true,
             inCart: true,
+            inStock: 10,
         },
         {
             id: 2,
@@ -27,6 +28,7 @@ function Shop(){
             price: 12000,
             inLike: false,
             inCart: false,
+            inStock: 0,
         },
         {
             id: 3,
@@ -35,6 +37,7 @@ function Shop(){
             price: 12000,
             inLike: false,
             inCart: true,
+            inStock: 0,
         },
         {
             id: 4,
@@ -43,6 +46,7 @@ function Shop(){
             price: 12000,
             inLike: false,
             inCart: false,
+            inStock: 10,
         },
 
         {
@@ -52,6 +56,7 @@ function Shop(){
             price: 12000,
             inLike: true,
             inCart: false,
+            inStock: 0,
         }, 
         {
             id: 6,
@@ -60,6 +65,7 @@ function Shop(){
             price: 12000,
             inLike: true,
             inCart: false,
+            inStock: 10,
         },
     ]); 
     const handleClickLike = (itemId) => {
@@ -105,28 +111,35 @@ function Shop(){
                             <div className={cx("box")} key={data.id}>
                                 <Link to={`/shop/view1product/${data.id}`} className={cx("view-order")}>
                                     <img src={data.img} alt="product"/>
+                                    <p className={cx("status")}>
+                                        {data.inStock>0 ? "In Stock" : "Out of Stock"}
+                                    </p>
                                 </Link>
                                 <div className={cx("content")}>
-                                    <div className={cx("flex-btn")}>
+                                    <div className={cx("price-name")}>
+                                        <h2 className={cx("price")}>Price ${data.price}</h2>
                                         <h3 className={cx("name")}> {data.name}</h3>
-                                        <p className={cx("price")}>Price: {data.price}</p>
                                     </div>
                                     <div className={cx("flex-btn")}>
                                         <Btn href={``}
                                             style={{
                                                 width: "fit-content",
                                             }}
-                                            value="Buy Now" />
-                                        <FontAwesomeIcon 
-                                            icon={faHeart} 
-                                            className= {cx({ "icon-style": !data.inLike, "icon-style-clicked": data.inLike })}
-                                            onClick={() => handleClickLike(data.id)}
+                                            value="Buy Now" 
                                         />
-                                        <FontAwesomeIcon
-                                            icon={faShoppingCart}
-                                            className={cx({ "icon-style": !data.inCart, "icon-style-clicked": data.inCart })}
-                                            onClick={() => handleClickCart(data.id)}
-                                        />
+                                        <div className={cx("like-cart")}>
+                                            <FontAwesomeIcon 
+                                                icon={faHeart} 
+                                                className= {cx({ "icon-style": !data.inLike, "icon-style-clicked": data.inLike })}
+                                                id= {cx("like-icon")}
+                                                onClick={() => handleClickLike(data.id)}
+                                            />
+                                            <FontAwesomeIcon
+                                                icon={faShoppingCart}
+                                                className={cx({ "icon-style": !data.inCart, "icon-style-clicked": data.inCart })}
+                                                onClick={() => handleClickCart(data.id)}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
