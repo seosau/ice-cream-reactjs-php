@@ -20,6 +20,7 @@ import Favourite from "./Client/Favourite/Favourite"
 import ViewOrder from "./Client/ViewOrder/ViewOrder";
 import Shop from "./Client/Shop/Shop";
 import View1Product from "./Client/View1Product/View1Product";
+import AboutUs from "./Client/AboutUs/AboutUs";
 export { 
     Register, 
     Login, 
@@ -39,5 +40,6 @@ export {
     ViewOrder,
     Favourite,
     Shop, 
-    View1Product};
+    View1Product,
+    AboutUs};
 
