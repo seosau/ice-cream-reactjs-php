@@ -37,8 +37,12 @@
 
 .box-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
     align-items: center;
+    justify-content: center;
+    position: relative;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    margin-bottom: 50px;
+    min-height: 500px;
 }
 
 .products .box-container .box {
@@ -47,8 +51,6 @@
     overflow: hidden;
     top: 0;
 }
-
-
 .products .box-container .box img {
     width: 100%;
     height: 25rem;
@@ -97,9 +99,6 @@
     margin-left: .5rem;
     cursor: pointer;
 }
-
-
-
 .products .box-container .box h3 {
     text-transform: capitalize;
     font-size: 18px;

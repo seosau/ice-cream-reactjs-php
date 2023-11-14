@@ -30,7 +30,8 @@ const sidebarActive = sidebarClass + " " + cx("active");
 function Header({ children }) {
   const [showProfile, setShowProfile] = useState(false);
   const [showSideBar, setShowSideBar] = useState(false);
-  const { currentUser, setcurrentUser, userToken, setUserToken } = useStateContext();
+  const { currentUser, setcurrentUser, userToken, setUserToken } =
+    useStateContext();
   const image_url = currentUser.image_url
     ? currentUser.image_url
     : require("../../assets/img/avt.jpg");
@@ -44,7 +45,7 @@ function Header({ children }) {
   function handleResize() {
     setViewportWidth(window.innerWidth);
   }
-  
+
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     handleResize();

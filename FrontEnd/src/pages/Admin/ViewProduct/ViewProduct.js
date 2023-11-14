@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import className from "classnames/bind";
 import style from "./ViewProduct.module.scss";
@@ -14,10 +15,15 @@ function ViewProduct() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [meta, setMeta] = useState({});
-  const getProducts = (url = "/admin/product") => {
+  const [params, setParams] = useState({});
+
+  const currentURL = window.location.search;
+  const isSort = currentURL.includes("sortBy");
+  const getProducts = (url = `/admin/product`) => {
     setLoading(true);
+    const payload = params && url.includes("viewproduct");
     axiosClient
-      .get(url)
+      .get(url, { payload })
       .then(({ data }) => {
         setProducts(data.data);
         setMeta(data.meta);
@@ -27,9 +33,30 @@ function ViewProduct() {
         console.log(error);
       });
   };
+  const getProductsFromCurrentUrl = () => {
+    if (isSort === true) {
+      const searchParams = new URLSearchParams(currentURL);
+      const sortBy = searchParams.get("sortBy");
+      const order = searchParams.get("order");
+      setParams({
+        sortBy: sortBy,
+        order: order,
+      });
+      onGetSortValue(sortBy, order);
+    }
+    return;
+  };
   useEffect(() => {
-    getProducts();
+    if (isSort === false) {
+      getProducts();
+    } else {
+      return;
+    }
   }, []);
+  useEffect(() => {
+    getProductsFromCurrentUrl();
+  }, []);
+
   const onPageClick = (link) => {
     getProducts(link.url);
   };
@@ -63,12 +90,25 @@ function ViewProduct() {
       }
     });
   };
-  const onSortChoose = (option) => {
-    console.log(option);
-  } 
-  const onStatusChoose = (status) => {
-    console.log(status);
-  }
+  const onGetSortValue = (sortBy, order) => {
+    setLoading(true);
+    setParams({ sortBy, order });
+    axiosClient
+      .get(`/admin/viewproduct`, {
+        params: {
+          sortBy: sortBy,
+          order: order,
+        },
+      })
+      .then(({ data }) => {
+        setProducts(data.data);
+        setMeta(data.meta);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div className={cx("container")}>
       <div className={cx("heading")}>
@@ -76,7 +116,11 @@ function ViewProduct() {
         <img src={require("../../../assets/img/separator.png")} alt="spr" />
       </div>
       {products.length > 0 && (
-        <FilterProducts meta={meta} onPageClick={onPageClick}  onSortChoose= {onSortChoose} onStatusChoose={onStatusChoose}/>
+        <FilterProducts
+          meta={meta}
+          onPageClick={onPageClick}
+          onGetSortValue={onGetSortValue}
+        />
       )}
       {loading && <Loader />}
       <div className={cx("box-container")}>

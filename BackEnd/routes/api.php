@@ -27,6 +27,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [ClientController::class, 'me']);
+    // Route::apiResource('/menu', ProductController::class);
+    Route::get('/menu', [ProductController::class, 'showMenu']);
 });
 Route::prefix('/')->group(function () {
     Route::post('/register', [ClientController::class, 'register']);
@@ -43,6 +45,7 @@ Route::prefix('/admin')->group(function () {
 Route::middleware('auth:sanctum')->prefix('/admin')->group(function () {
     Route::get('/', [AdminController::class, 'admin']);
     Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/viewproduct', [ProductController::class, 'sortProduct']);
     Route::post('/updateprofile', [AdminController::class, 'update']);
-    Route::apiResource('product', ProductController::class);
+    Route::apiResource('/product', ProductController::class);
 });

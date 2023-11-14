@@ -26,6 +26,13 @@ class ProductController extends Controller
                 ->paginate(2)
         );
     }
+    public function showMenu()
+    {
+        return ProductResource::collection(
+            Product::orderBy('created_at', 'desc')
+                ->paginate(4)
+        );
+    }
     public function store(StoreProductRequest $request)
     {
         $data = $request->validated();
@@ -71,6 +78,26 @@ class ProductController extends Controller
             File::delete($absolutePath);
         }
         return response('delete successfully', 204);
+    }
+    public function sortProduct(Request $request)
+    {
+        $user = $request->user();
+        $sortBy = $request->input('sortBy');
+        $order = $request->input('order');
+        if ($sortBy === 'price') {
+            return ProductResource::collection(
+                Product::where('seller_id', $user->id)
+                    ->orderBy($sortBy,  $order)
+                    ->paginate(2)
+            );
+        } else if ($sortBy === 'status') {
+            return ProductResource::collection(
+                Product::where('seller_id', $user->id)
+                    ->where($sortBy, "=",  $order)
+                    ->paginate(2)
+            );
+        }
+        return;
     }
     private function saveImage($image)
     {
