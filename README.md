@@ -1,6 +1,6 @@
 # ice-cream
-#link repo: https://github.com/truonghs/ice-cream
-#git clone https://github.com/truonghs/ice-cream.git
+# link repo: https://github.com/truonghs/ice-cream
+# git clone https://github.com/truonghs/ice-cream.git
 #open folder chứa source code:open terminal
 - Từ thư mục gốc cd BackEnd:
   + Chạy lệnh composer install
