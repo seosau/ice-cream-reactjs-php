@@ -40,19 +40,19 @@ function FilterProducts({ meta, onPageClick, onGetSortValue }) {
       ],
     },
   ];
-  const isChecked = (sortBy, order) => {
-    selections.forEach(selection => {
-      if(selection.type === sortBy)
-      {
-        selection.options.forEach(option => {
-          if(option.sortType === order) {
-            setIsChecked(true);
+  // const isChecked = (sortBy, order) => {
+  //   selections.forEach(selection => {
+  //     if(selection.type === sortBy)
+  //     {
+  //       selection.options.forEach(option => {
+  //         if(option.sortType === order) {
+  //           setIsChecked(true);
             
-          }
-        })
-      }
-    })
-  };
+  //         }
+  //       })
+  //     }
+  //   })
+  // };
   return (
     <div className={cx("container")}>
       <div className={cx("sort-choice")}>
@@ -69,7 +69,7 @@ function FilterProducts({ meta, onPageClick, onGetSortValue }) {
                     className={cx("select__link")}
                     onClick={() =>
                       {
-                        isChecked(selection.type, option.sortType)
+                        // isChecked(selection.type, option.sortType)
                         onGetSortValue(selection.type, option.sortType)
                       }
                     }

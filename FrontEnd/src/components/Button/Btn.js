@@ -6,7 +6,6 @@ const cx = className.bind(style);
 function Btn({ value, style, href, onclick }) {
     const handleClick = (e) => {
         e.stopPropagation();
-        e.preventDefault();
         onclick();
     };
     return href ? (

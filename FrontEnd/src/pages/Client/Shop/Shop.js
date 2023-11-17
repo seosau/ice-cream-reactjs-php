@@ -1,23 +1,68 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import className from "classnames/bind";
 import style from "./Shop.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { Btn, Loader } from "../../../components";
+import { Alert, Btn, Loader } from "../../../components";
 import FilterProducts from "../../../components/FilterProducts/FilterProducts";
 import PaginationLinks from "../../../components/PaginationLinks/PaginationLinks";
 import axiosClient from "../../../axiosClient/axios";
+import { useStateContext } from "../../../context/ContextProvider";
 const cx = className.bind(style);
-
 function Shop() {
+  const { currentUser, wishListIds, setWishListIds, cartIds, setCartIds } =
+    useStateContext();
+    console.log(cartIds)
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [meta, setMeta] = useState({});
+  const [params, setParams] = useState({});
+  const navigate = useNavigate();
+  const currentURL = window.location.search;
+  const isSort = currentURL.includes("sortBy");
   const getProducts = (url = `/menu`) => {
     setLoading(true);
+    var payload = {};
+    if (url.includes("viewproduct")) {
+      payload = { ...params };
+    }
     axiosClient
-      .get(url)
+      .get(url, {
+        params: payload,
+      })
+      .then(({ data }) => {
+        setProducts(data.data);
+        setMeta(data.meta);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const getProductsFromCurrentUrl = () => {
+    if (isSort === true) {
+      const searchParams = new URLSearchParams(currentURL);
+      const sortBy = searchParams.get("sortBy");
+      const order = searchParams.get("order");
+      setParams({
+        sortBy: sortBy,
+        order: order,
+      });
+      onGetSortValue(sortBy, order);
+    }
+    return;
+  };
+  const onGetSortValue = (sortBy, order) => {
+    setLoading(true);
+    setParams({ sortBy, order });
+    axiosClient
+      .get(`/viewproduct`, {
+        params: {
+          sortBy: sortBy,
+          order: order,
+        },
+      })
       .then(({ data }) => {
         setProducts(data.data);
         setMeta(data.meta);
@@ -30,77 +75,75 @@ function Shop() {
   const onPageClick = (link) => {
     getProducts(link.url);
   };
-  useEffect(() => {
-    getProducts();
-  }, []);
-  // const [datas, setData] = useState([
-  //     {
-  //         id: 1,
-  //         name: "Ice cream 1",
-  //         img: require("../../../assets/img/products/687180636_012c012ccc@2x.jpg"),
-  //         price: 12000,
-  //         inLike: true,
-  //         inCart: true,
-  //     },
-  //     {
-  //         id: 2,
-  //         name: "Ice cream 2",
-  //         img: require("../../../assets/img/products/product5.jpg"),
-  //         price: 12000,
-  //         inLike: false,
-  //         inCart: false,
-  //     },
-  //     {
-  //         id: 3,
-  //         name: "Ice cream",
-  //         img: require("../../../assets/img/products/687180662_012c012ccc@2x.jpg"),
-  //         price: 12000,
-  //         inLike: false,
-  //         inCart: true,
-  //     },
-  //     {
-  //         id: 4,
-  //         name: "Ice cream",
-  //         img: require("../../../assets/img/products/514215896_012c012ccc@2x.jpg"),
-  //         price: 12000,
-  //         inLike: false,
-  //         inCart: false,
-  //     },
-
-  //     {
-  //         id: 5,
-  //         name: "Ice cream",
-  //         img: require("../../../assets/img/products/518151488_012c012ccc@2x.jpg"),
-  //         price: 12000,
-  //         inLike: true,
-  //         inCart: false,
-  //     },
-  //     {
-  //         id: 6,
-  //         name: "Ice cream",
-  //         img: require("../../../assets/img/products/535405916_012c012ccc@2x.jpg"),
-  //         price: 12000,
-  //         inLike: true,
-  //         inCart: false,
-  //     },
-  // ]);
-  const handleClickLike = (itemId) => {
-    // const updatedDatas = datas.map(item => {
-    //   if (item.id === itemId) {
-    //     return { ...item, inLike: !item.inLike };
-    //   }
-    //   return item;
-    // });
-    // setData(updatedDatas);
+  const handleCheckProductInWishList = (product_id) => {
+    const isWishInMenu = wishListIds.some((item) => {
+      return item.product_id == product_id;
+    });
+    if (isWishInMenu) return true;
+    return false;
   };
-  const handleClickCart = (itemId) => {
-    // const updatedDatas = datas.map(item => {
-    //     if (item.id === itemId) {
-    //       return { ...item, inCart: !item.inCart };
-    //     }
-    //     return item;
-    //   });
-    //   setData(updatedDatas);
+  const handleCheckProductInCart = (product_id) => {
+    const isCartInMenu = cartIds.some((item) => {
+      return item.product_id == product_id;
+    });
+    if (isCartInMenu) return true;
+    return false;
+  };
+  useEffect(() => {
+    if (isSort === false) {
+      getProducts();
+    } else {
+      return;
+    }
+  }, []);
+  useEffect(() => {
+    getProductsFromCurrentUrl();
+  }, []);
+  const handleClickLike = (product) => {
+    if (currentUser.id) {
+      const payload = { ...product, user_id: currentUser.id };
+      axiosClient
+        .post("/wishlists", payload)
+        .then(({ data }) => {
+          setWishListIds(data.wishListIds);
+          Alert("success", "Add to wish list successfully");
+        })
+        .catch((error) => {
+          if (error.response) {
+            Alert("warning", `${error.response.data.errors.id}`);
+          }
+        });
+    } else {
+      Alert(
+        "warning",
+        "You are not logged in",
+        "Please login to have more experience"
+      );
+      navigate("/login");
+    }
+  };
+  const handleClickCart = (product) => {
+    if (currentUser.id) {
+      const payload = { ...product, user_id: currentUser.id, quantity: 1 };
+      axiosClient
+        .post("/cart", payload)
+        .then(({ data }) => {
+          setCartIds(data.cartListIds);
+          Alert("success", "Add to cart successfully");
+        })
+        .catch((error) => {
+          if (error.response) { 
+            Alert("warning", `${error.response.data.errors.id}`);
+          }
+        });
+    } else {
+      Alert(
+        "warning",
+        "You are not logged in",
+        "Please login to have more experience"
+      );
+      navigate("/login");
+    }
   };
   return (
     <div className={cx("main-container")}>
@@ -123,13 +166,13 @@ function Shop() {
             alt="separator"
           />
         </div>
-        {/* {products.length > 0 && (
+        {products.length > 0 && (
           <FilterProducts
             meta={meta}
             onPageClick={onPageClick}
             onGetSortValue={onGetSortValue}
           />
-        )} */}
+        )}
         {loading && <Loader />}
         <div className={cx("box-container")}>
           {!loading && (
@@ -139,14 +182,22 @@ function Shop() {
                   <div className={cx("box")} key={product.id}>
                     <Link
                       to={`/shop/view1product/${product.id}`}
+                      state={product}
                       className={cx("view-order")}
                     >
                       <img src={product.image_url} alt="product" />
+                      <p className={cx("status")}>
+                        {product.stock > 9
+                          ? "In Stock"
+                          : product.stock > 0
+                          ? `Hunry, only ${product.stock} left`
+                          : "Out of Stock"}
+                      </p>
                     </Link>
                     <div className={cx("content")}>
-                      <div className={cx("flex-btn")}>
-                        <h3 className={cx("name")}> {product.name}</h3>
-                        <p className={cx("price")}>Price: ${product.price}</p>
+                      <div className={cx("price-name")}>
+                        <h2 className={cx("price")}>Price ${product.price}</h2>
+                        <h3 className={cx("name")}>{product.name}</h3>
                       </div>
                       <div className={cx("flex-btn")}>
                         <Btn
@@ -156,22 +207,29 @@ function Shop() {
                           }}
                           value="Buy Now"
                         />
-                        <FontAwesomeIcon
-                          icon={faHeart}
-                          className={cx({
-                            "icon-style": true,
-                            "icon-style-clicked": false,
-                          })}
-                          onClick={() => handleClickLike(product.id)}
-                        />
-                        <FontAwesomeIcon
-                          icon={faShoppingCart}
-                          className={cx({
-                            "icon-style": true,
-                            "icon-style-clicked": false,
-                          })}
-                          onClick={() => handleClickCart(product.id)}
-                        />
+                        <div className={cx("like-cart")}>
+                          <FontAwesomeIcon
+                            icon={faHeart}
+                            className={cx("icon-style")}
+                            id={cx("like-icon")}
+                            color={
+                              handleCheckProductInWishList(product.id)
+                                ? "#da6285"
+                                : "#808080"
+                            }
+                            onClick={() => handleClickLike(product)}
+                          />
+                          <FontAwesomeIcon
+                            icon={faShoppingCart}
+                            className={cx("icon-style")}
+                            color={
+                              handleCheckProductInCart(product.id)
+                                ? "#da6285"
+                                : "#808080"
+                            }
+                            onClick={() => handleClickCart(product)}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -191,5 +249,4 @@ function Shop() {
     </div>
   );
 }
-
 export default Shop;

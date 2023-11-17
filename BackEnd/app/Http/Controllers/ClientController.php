@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\WishList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -54,7 +55,6 @@ class ClientController extends Controller
             'token' => $token
         ]);
     }
-
     public function logout(Request $request)
     {
         $user = Auth::user();
@@ -73,7 +73,7 @@ class ClientController extends Controller
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
-            'image' => $user->image ? URL::to( $user->image) : null, 
+            'image' => $user->image ? URL::to($user->image) : null,
             'user_type' => $user->user_type,
         ];
     }

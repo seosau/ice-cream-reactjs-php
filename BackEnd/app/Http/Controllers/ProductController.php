@@ -20,16 +20,16 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
+        if ($user && $user->user_type === 'seller') {
+            return ProductResource::collection(
+                Product::where('seller_id', $user->id)
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(2)
+            );
+        }
         return ProductResource::collection(
-            Product::where('seller_id', $user->id)
+            Product::where('status', "=", "active")
                 ->orderBy('created_at', 'desc')
-                ->paginate(2)
-        );
-    }
-    public function showMenu()
-    {
-        return ProductResource::collection(
-            Product::orderBy('created_at', 'desc')
                 ->paginate(4)
         );
     }
@@ -46,10 +46,18 @@ class ProductController extends Controller
     public function show(Product $product, Request $request)
     {
         $user = $request->user();
-        if ($user->id !== $product->seller_id) {
-            return abort(403, 'Unauthorized action');
+        if ($user && $user->user_type == 'seller') {
+            if ($user->id !== $product->seller_id) {
+                return abort(403, 'Unauthorized action');
+            }
         }
         return new ProductResource($product);
+    }
+    public function getProductById($productId)
+    {
+        return ProductResource::collection(
+            Product::where('id', "=", $productId)->get()
+        );
     }
     public function update(UpdateProductRequest $request, Product $product)
     {
@@ -84,17 +92,32 @@ class ProductController extends Controller
         $user = $request->user();
         $sortBy = $request->input('sortBy');
         $order = $request->input('order');
+        if ($user && $user->user_type === "seller") {
+            if ($sortBy === 'price') {
+                return ProductResource::collection(
+                    Product::where('seller_id', $user->id)
+                        ->orderBy($sortBy,  $order)
+                        ->paginate(2)
+                );
+            } else if ($sortBy === 'status') {
+                return ProductResource::collection(
+                    Product::where('seller_id', $user->id)
+                        ->where($sortBy, "=",  $order)
+                        ->paginate(2)
+                );
+            }
+        }
         if ($sortBy === 'price') {
             return ProductResource::collection(
-                Product::where('seller_id', $user->id)
+                Product::where('status', "=", "active")
                     ->orderBy($sortBy,  $order)
-                    ->paginate(2)
+                    ->paginate(4)
             );
         } else if ($sortBy === 'status') {
             return ProductResource::collection(
-                Product::where('seller_id', $user->id)
+                Product::where('status', "=", "active")
                     ->where($sortBy, "=",  $order)
-                    ->paginate(2)
+                    ->paginate(4)
             );
         }
         return;

@@ -120,7 +120,7 @@ function Header({ children }) {
                   />
                   <p className={cx("profile-name")}>{currentUser.name}</p>
                   <div className={cx("flex-btn")}>
-                    <Btn href="/admin/profile" value="profile"></Btn>
+                    <Btn href="/admin/profile" onclick={() => handleShowProfile()} value="profile"></Btn>
                     <Btn value="logout" onclick={handleLogout}></Btn>
                   </div>
                 </div>

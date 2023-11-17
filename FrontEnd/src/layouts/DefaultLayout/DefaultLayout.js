@@ -1,6 +1,15 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 import { Footer, HomeHeader } from "../../components";
+import { useStateContext } from "../../context/ContextProvider";
 function DefaultLayout() {
+  const { userToken, currentUser } = useStateContext();
+  if (userToken) {
+    if (currentUser.user_type === "seller") {
+      return <Navigate to="/admin" />;
+    }
+  } else {
+    return <Navigate to="/home" />;
+  }
   return (
     <>
       <HomeHeader />

@@ -1,235 +1,290 @@
-import className from "classnames/bind";
-import { Btn, Alert } from "../../../components";
-import style from "./View1Product.module.scss"
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart,
-  faShoppingCart,
-} from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import className from "classnames/bind";
+import style from "./View1Product.module.scss";
+import { Btn, Alert, Loader } from "../../../components";
+import axiosClient from "../../../axiosClient/axios";
+import { useStateContext } from "../../../context/ContextProvider";
 const cx = className.bind(style);
-
-function View1Product(){
-    const [datas, setData] = useState([
-        {
-            id: 1,
-            name: "Ice cream 1",
-            img: require("../../../assets/img/products/687180636_012c012ccc@2x.jpg"),
-            price: 12000,
-            inLike: true,
-            inCart: true,
-            inStock: 10,
-            desciption: "Indulge in our exquisite Vanilla Bean ice cream, a timeless classic crafted with the finest Madagascar vanilla. Each velvety scoop promises a symphony of rich, creamy goodness, perfectly balanced to satisfy your sweet cravings. Elevate your dessert experience with the pure essence of vanilla in every bite – a true delight for your taste buds!",
-        },
-        {
-            id: 2,
-            name: "Ice cream 2",
-            img: require("../../../assets/img/products/product5.jpg"),
-            price: 12000,
-            inLike: false,
-            inCart: false,
-            inStock: 0,
-            desciption: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
-        },
-        {
-            id: 3,
-            name: "Ice cream",
-            img: require("../../../assets/img/products/687180662_012c012ccc@2x.jpg"),
-            price: 12000,
-            inLike: false,
-            inCart: true,
-            inStock: 0,
-            desciption: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
-        },
-        {
-            id: 4,
-            name: "Ice cream",
-            img: require("../../../assets/img/products/514215896_012c012ccc@2x.jpg"),
-            price: 12000,
-            inLike: false,
-            inCart: false,
-            inStock: 10,
-            desciption: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
-        },
-
-        {
-            id: 5,
-            name: "Ice cream",
-            img: require("../../../assets/img/products/518151488_012c012ccc@2x.jpg"),
-            price: 12000,
-            inLike: true,
-            inCart: false,
-            inStock: 0,
-            desciption: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
-        }, 
-        {
-            id: 6,
-            name: "Ice cream",
-            img: require("../../../assets/img/products/535405916_012c012ccc@2x.jpg"),
-            price: 12000,
-            inLike: true,
-            inCart: false,
-            inStock: 10,
-            desciption: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
-        },
-    ]);   
-    const { productId } = useParams();
-
-    const data = datas.find((item) => item.id === parseInt(productId, 10));
-
-    if (!data) {
-        return <p>Product not found</p>;
-    }    
-    const handleClickLike = (itemId) => {
-        const updatedDatas = datas.map(item => {
-          if (item.id === itemId) {
-            return { ...item, inLike: !item.inLike };
-          }       
-          return item;
-        });
-    
-        setData(updatedDatas);
-    };
-    const handleClickCart = (itemId) =>{
-        const updatedDatas = datas.map(item => {
-            if (item.id === itemId) {
-              return { ...item, inCart: !item.inCart };
-            }
-            return item;
-          });
-      
-          setData(updatedDatas);        
+function View1Product() {
+  let { state } = useLocation();
+  const { productId } = useParams();
+  const navigate = useNavigate();
+  const { currentUser, wishListIds, setWishListIds, cartIds, setCartIds } =
+    useStateContext();
+  const [loading, setLoading] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState([]);
+  const [meta, setMeta] = useState({});
+  const [params, setParams] = useState({});
+  const getProducts = (url = `/menu`) => {
+    setLoading(true);
+    var payload = {};
+    if (url.includes("viewproduct")) {
+      payload = { ...params };
     }
-    return(
-        <div className={cx("main-container")}>
-            <section className={cx("view-detail")}>
-                <div className={cx("heading")}>
-                    <h1>Product Detail</h1>
-                        <img src={require("../../../assets/img/separator.png")}
-                            alt="separator"
-                        />
-                </div>      
-                <form action="" method="post" className={cx("main-box")}>
-                    <div className={cx("img-box")}>
-                        <img src={data.img} alt="Main image"/>
-                    </div>
-                    <div className={cx("detail-box")}>
-                        <span className={data.inStock>0 ? cx("in-stock") : cx("out-of-stock")}>
-                            {data.inStock>0 ? "In Stock" : "Out of Stock"}
-                        </span>
-                        <p className={cx("product-price")}>$ {data.price}</p>
-                        <h2>{data.name}</h2>
-                        <p className={cx("description-text")}>{data.desciption}</p>
-                        <div className={cx("detail-btn")}>
-                            {/* <Btn 
-                                onclick={() => handleClickLike(data.id)} 
-                                style={{
-                                    width: "250px",
-                                }}
-                                value={
-                                    data.inLike ? "Already In Wishlist" : "Add To Wishlist"
-                                }
-                            />
-                            <Btn 
-                                onclick={() => handleClickCart(data.id)} 
-                                style={{
-                                    width: "250px",
-                                }}
-                                value={
-                                    data.inCart ? "Already In Cart" : "Add To Cart"
-                                }
-                            /> */}
-                            <Btn 
-                                onclick={() => handleClickLike(data.id)} 
-                                style={{
-                                    width: "272px",
-                                }}
-                                value={
-                                    <>
-                                        {data.inLike ? "Already In Wishlist" : "Add To Wishlist"}
-                                        <FontAwesomeIcon 
-                                            icon={faHeart} 
-                                            className= {cx({ "detail-icon-style": !data.inLike, "detail-icon-style-clicked": data.inLike })}
-                                        />                            
-                                    </>
-                                }
-                                onClick={() => handleClickLike(data.id)}
-                            />
-                            <Btn 
-                                onclick={() => handleClickCart(data.id)} 
-                                style={{
-                                    width: "272px",
-                                }}
-                                value={
-                                    <>
-                                        {data.inCart ? "Already In Cart" : "Add To Cart"}
-                                        <FontAwesomeIcon 
-                                            icon={faShoppingCart} 
-                                            className= {cx({ "detail-icon-style": !data.inCart, "detail-icon-style-clicked": data.inCart })}
-                                        />                                        
-                                    </>
-                                }
-                                onClick={() => handleClickCart(data.id)} 
-                            />
-                        </div>
-                    </div>
-                </form>          
-            </section>
-            <div className={cx("products")}>
-                <div className={cx("heading")}>
-                    <h1>Similar Products</h1>
-                        <img src={require("../../../assets/img/separator.png")}
-                            alt="separator"
-                        />
-                </div>
-                <div className={cx("box-container")}>
-                {
-                        datas.length > 0 ? datas.map(data => (
-                            <div className={cx("box")} key={data.id}>
-                                <Link to={`/shop/view1product/${data.id}`} className={cx("view-order")}>
-                                    <img src={data.img} alt="product"/>
-                                    <p className={cx("status")}>
-                                        {data.inStock>0 ? "In Stock" : "Out of Stock"}
-                                    </p>
-                                </Link>
-                                <div className={cx("content")}>
-                                    <div className={cx("price-name")}>
-                                        <h2 className={cx("price")}>Price ${data.price}</h2>
-                                        <h3 className={cx("name")}> {data.name}</h3>
-                                    </div>
-                                    <div className={cx("flex-btn")}>
-                                        <Btn href={``}
-                                            style={{
-                                                width: "fit-content",
-                                            }}
-                                            value="Buy Now" 
-                                        />
-                                        <div className={cx("like-cart")}>
-                                            <FontAwesomeIcon 
-                                                icon={faHeart} 
-                                                className= {cx({ "icon-style": !data.inLike, "icon-style-clicked": data.inLike })}
-                                                id= {cx("like-icon")}
-                                                onClick={() => handleClickLike(data.id)}
-                                            />
-                                            <FontAwesomeIcon
-                                                icon={faShoppingCart}
-                                                className={cx({ "icon-style": !data.inCart, "icon-style-clicked": data.inCart })}
-                                                onClick={() => handleClickCart(data.id)}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        )) : <div className={cx("empty")}>
-                            <p>no product was found!</p>
-                        </div>
-                    }                    
-                </div>
-            </div>
+    axiosClient
+      .get(url, {
+        params: payload,
+      })
+      .then(({ data }) => {
+        setProducts(data.data);
+        // setMeta(data.meta);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const getProductById = (id = null) => {
+    let product_id = id ? id : productId;
+    setLoading(true);
+    axiosClient
+      .get(`/menu/${product_id}`)
+      .then(({ data }) => {
+        setProduct(data.data[0]);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setLoading(true);
+    if (state) {
+      setProduct(state);
+      setLoading(false);
+      return;
+    }
+    getProductById();
+  }, []);
+  useEffect(() => {
+    getProducts();
+  }, []);
+  const handleCheckProductInWishList = (product_id) => {
+    const isWishInMenu = wishListIds.some((item) => {
+      return item.product_id == product_id;
+    });
+    if (isWishInMenu) return true;
+    return false;
+  };
+  const handleCheckProductInCart = (product_id) => {
+    const isCartInMenu = cartIds?.some((item) => {
+      return item.product_id == product_id;
+    });
+    if (isCartInMenu) return true;
+    return false;
+  };
+  const handleClickLike = (product) => {
+    if (currentUser) {
+      const payload = { ...product, user_id: currentUser.id };
+      axiosClient
+        .post("/wishlists", payload)
+        .then(({ data }) => {
+          setWishListIds(data.wishListIds);
+          Alert("success", "Add to wish list successfully");
+        })
+        .catch((error) => {
+          if (error.response) {
+            Alert("warning", `${error.response.data.errors.id}`);
+          }
+        });
+    } else {
+      Alert(
+        "warning",
+        "You are not logged in",
+        "Please login to have more experience"
+      );
+      navigate("/login");
+    }
+  };
+  const handleClickCart = (product) => {
+    if (currentUser) {
+      const payload = { ...product, user_id: currentUser.id, quanity: 1 };
+      axiosClient
+        .post("/cart", payload)
+        .then(({ data }) => {
+          setCartIds(data.cartIds);
+          Alert("success", "Add to cart successfully");
+        })
+        .catch((error) => {
+          if (error.response) {
+            Alert("warning", `${error.response.data.errors.id}`);
+          }
+        });
+    } else {
+      Alert(
+        "warning",
+        "You are not logged in",
+        "Please login to have more experience"
+      );
+      navigate("/login");
+    }
+  };
+  return (
+    <div className={cx("main-container")}>
+      <section className={cx("view-detail")}>
+        <div className={cx("heading")}>
+          <h1>Product Detail</h1>
+          <img
+            src={require("../../../assets/img/separator.png")}
+            alt="separator"
+          />
         </div>
-    )
-}
+        {loading && <Loader />}
+        {!loading && (
+          <div className={cx("main-box")}>
+            <div className={cx("img-box")}>
+              <img src={product.image_url} alt="Main image" />
+            </div>
+            <div className={cx("detail-box")}>
+              <span
+                className={
+                  product.stock > 0 ? cx("in-stock") : cx("out-of-stock")
+                }
+              >
+                {product?.stock > 0 ? "In Stock" : "Out of Stock"}
+              </span>
+              <p className={cx("product-price")}>$ {product.price}</p>
+              <h2>{product.name}</h2>
+              <p className={cx("description-text")}>{product.product_detail}</p>
+              <div className={cx("detail-btn")}>
+                <Btn
+                  onclick={() => handleClickLike(product)}
+                  style={{
+                    width: "272px",
+                  }}
+                  value={
+                    <>
+                      {handleCheckProductInWishList(product.id)
+                        ? "Already In Wishlist"
+                        : "Add To Wishlist"}
 
+                      <FontAwesomeIcon
+                        icon={faHeart}
+                        className={cx("detail-icon-style")}
+                        color={
+                          handleCheckProductInWishList(product.id)
+                            ? "#da6285"
+                            : "#808080"
+                        }
+                      />
+                    </>
+                  }
+                />
+                <Btn
+                  onclick={() => handleClickCart(product)}
+                  style={{
+                    width: "272px",
+                  }}
+                  value={
+                    <>
+                      {handleCheckProductInCart(product.id)
+                        ? "Already In Cart"
+                        : "Add To Cart"}
+
+                      <FontAwesomeIcon
+                        icon={faShoppingCart}
+                        className={cx("detail-icon-style")}
+                        color={
+                          handleCheckProductInCart(product.id)
+                            ? "#da6285"
+                            : "#808080"
+                        }
+                      />
+                    </>
+                  }
+                />
+              </div>
+            </div>
+          </div>
+        )}
+      </section>
+      <div className={cx("products")}>
+        <div className={cx("heading")}>
+          <h1>Similar Products</h1>
+          <img
+            src={require("../../../assets/img/separator.png")}
+            alt="separator"
+          />
+        </div>
+        {loading && <Loader />}
+        <div className={cx("box-container")}>
+          {!loading && (
+            <>
+              {products.length > 0 ? (
+                products.map((product) => (
+                  <div className={cx("box")} key={product.id}>
+                    <Link
+                      to={`/shop/view1product/${product.id}`}
+                      className={cx("view-order")}
+                      onClick={() => {
+                        window.scrollTo(0, 0);
+                        getProductById(product.id);
+                      }}
+                    >
+                      <img src={product.image_url} alt="product" />
+                      <p className={cx("status")}>
+                        {product.stock > 9
+                          ? "In Stock"
+                          : product.stock > 0
+                          ? `Hunry, only ${product.stock} left`
+                          : "Out of Stock"}
+                      </p>
+                    </Link>
+                    <div className={cx("content")}>
+                      <div className={cx("price-name")}>
+                        <h2 className={cx("price")}>Price ${product.price}</h2>
+                        <h3 className={cx("name")}> {product.name}</h3>
+                      </div>
+                      <div className={cx("flex-btn")}>
+                        <Btn
+                          href={``}
+                          style={{
+                            width: "fit-content",
+                          }}
+                          value="Buy Now"
+                        />
+                        <div className={cx("like-cart")}>
+                          <FontAwesomeIcon
+                            icon={faHeart}
+                            className={cx("icon-style")}
+                            id={cx("like-icon")}
+                            color={
+                              handleCheckProductInWishList(product.id)
+                                ? "#da6285"
+                                : "#808080"
+                            }
+                            onClick={() => handleClickLike(product)}
+                          />
+                          <FontAwesomeIcon
+                            icon={faShoppingCart}
+                            className={cx("icon-style")}
+                            color={
+                              handleCheckProductInCart(product.id)
+                                ? "#da6285"
+                                : "#808080"
+                            }
+                            onClick={() => handleClickCart(product)}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className={cx("empty")}>
+                  <p>no product was found!</p>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 export default View1Product;

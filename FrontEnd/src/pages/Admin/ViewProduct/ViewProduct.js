@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import className from "classnames/bind";
 import style from "./ViewProduct.module.scss";
@@ -21,9 +20,12 @@ function ViewProduct() {
   const isSort = currentURL.includes("sortBy");
   const getProducts = (url = `/admin/product`) => {
     setLoading(true);
-    const payload = params && url.includes("viewproduct");
+    var payload = {};
+    if (url.includes("viewproduct")) {
+      payload = { ...params };
+    }
     axiosClient
-      .get(url, { payload })
+      .get(url, {params: payload })
       .then(({ data }) => {
         setProducts(data.data);
         setMeta(data.meta);
