@@ -21,8 +21,16 @@ const navBarActive = navBarClass + " " + cx("active");
 const searchFormClass = cx("search-form");
 const searchFormActive = searchFormClass + " " + cx("active");
 function HomeHeader({ children }) {
-  const { currentUser, userToken, setcurrentUser, setUserToken } =
-    useStateContext();
+  const {
+    currentUser,
+    userToken,
+    setcurrentUser,
+    setUserToken,
+    wishListIds,
+    setWishListIds,
+    cartIds,
+    setCartIds,
+  } = useStateContext();
   const image_url = currentUser.image
     ? currentUser.image
     : require("../../assets/img/avt.jpg");
@@ -41,11 +49,35 @@ function HomeHeader({ children }) {
         .catch((error) => {
           return error;
         });
-    }
-    else {
-
+    } else {
     }
   }, []);
+  useEffect(() => {
+    if (!currentUser.id) {
+      return;
+    }
+    axiosClient
+      .get("/quantitywishlists")
+      .then(({ data }) => {
+        setWishListIds(data.wishListIds);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [currentUser]);
+  useEffect(() => {
+    if (!currentUser.id) {
+      return;
+    }
+    axiosClient
+      .get("/quantityCartItems")
+      .then(({ data }) => {
+        setCartIds(data.cartIds);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [currentUser]);
   const handleShowProfile = () => {
     setShowProfile(!showProfile);
   };
@@ -61,19 +93,17 @@ function HomeHeader({ children }) {
     setSearchValue(event.target.value);
   };
   const handleLogout = () => {
-    axiosClient.post("/logout")
-    .then((res) => {
-      setcurrentUser({});
-      setUserToken(null);
-      handleShowProfile();
-      Alert(
-        "success",
-        "Logout Successfully",
-      );
-    })
-    .catch(error => {
-      return error;
-    });
+    axiosClient
+      .post("/logout")
+      .then((res) => {
+        setcurrentUser({});
+        setUserToken(null);
+        handleShowProfile();
+        Alert("success", "Logout Successfully");
+      })
+      .catch((error) => {
+        return error;
+      });
   };
   return (
     <>
@@ -124,14 +154,14 @@ function HomeHeader({ children }) {
             </div>
             <Link to="/favourite">
               <FontAwesomeIcon icon={faHeart} className={cx("icon-style")} />
-              <sup>2</sup>
+              <sup>{wishListIds?.length}</sup>
             </Link>
             <Link to="/cart">
               <FontAwesomeIcon
                 icon={faShoppingCart}
                 className={cx("icon-style")}
               />
-              <sup>0</sup>
+              <sup>{cartIds?.length}</sup>
             </Link>
             <div id="user-btn">
               <FontAwesomeIcon
