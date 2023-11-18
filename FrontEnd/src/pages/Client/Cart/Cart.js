@@ -110,7 +110,7 @@ function Cart() {
                     <div className={cx("content")}>
                       <h3>{product.name}</h3>
                       <div className={cx("flex-btn")}>
-                        <p className={cx("price")}>Price: {product.price}</p>
+                        <p className={cx("price")}>Price: ${product.price}</p>
                         <input
                           type="number"
                           name="quantity"
@@ -163,7 +163,7 @@ function Cart() {
               total amount payable: <span>{grandTotal}</span>
             </p>
             <Btn
-              href=""
+              href="/checkout"
               style={{
                 width: "fit-content",
               }}

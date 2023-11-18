@@ -17,14 +17,12 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Seller::class,'seller_id');
             $table->foreignIdFor(\App\Models\Product::class,'product_id');
             $table->string('name', 50);
-            $table->string('number', 10);
+            $table->string('phone_number', 10);
             $table->string('email', 50);
             $table->string('address',50);
-            $table->string('address_type',10);
-            $table->string('method',50);
+            $table->string('payment_method',50);
             $table->integer('price')->unsigned();
             $table->integer('quantity');
-            $table->dateTime('date');
             $table->string('status',50)->default('in progress');
             $table->string('payment_status', 100)->default('pending');
             $table->timestamps();

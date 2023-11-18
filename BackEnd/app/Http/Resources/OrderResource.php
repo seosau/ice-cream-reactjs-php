@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\URL;
-class CartResource extends JsonResource
+class OrderResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,13 +14,16 @@ class CartResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
-            "product_id"=> $this->id,
+        return 
+        [
+            "id"=> $this->id,
+            "seller_id" => $this->seller_id,
+            "product_id" => $this->product_id,
             'name' => $this->name,
             'price' => $this->price,
             'image_url' => $this->image ? URL::to($this->image) : null,
-            'quantity' => $this->quantity,
-            'seller_id' => $this->seller_id,
+            'status' => $this->status,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

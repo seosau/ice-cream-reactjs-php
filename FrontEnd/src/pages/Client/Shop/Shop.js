@@ -13,7 +13,6 @@ const cx = className.bind(style);
 function Shop() {
   const { currentUser, wishListIds, setWishListIds, cartIds, setCartIds } =
     useStateContext();
-    console.log(cartIds)
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [meta, setMeta] = useState({});

@@ -21,6 +21,7 @@ import ViewOrder from "./Client/ViewOrder/ViewOrder";
 import Shop from "./Client/Shop/Shop";
 import View1Product from "./Client/View1Product/View1Product";
 import AboutUs from "./Client/AboutUs/AboutUs";
+import Checkout from "./Client/Checkout/Checkout";
 export { 
     Register, 
     Login, 
@@ -41,5 +42,7 @@ export {
     Favourite,
     Shop, 
     View1Product,
-    AboutUs};
+    AboutUs,
+    Checkout
+};
 

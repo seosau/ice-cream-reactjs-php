@@ -7,9 +7,7 @@ function DefaultLayout() {
     if (currentUser.user_type === "seller") {
       return <Navigate to="/admin" />;
     }
-  } else {
-    return <Navigate to="/home" />;
-  }
+  } 
   return (
     <>
       <HomeHeader />

@@ -19,7 +19,8 @@ import {
   ViewOrder,
   Shop,
   View1Product,
-  AboutUs
+  AboutUs,
+  Checkout
 } from "./pages";
 
 import { DefaultLayout, GuestLayout, AdminLayout } from "./layouts";
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <AboutUs />,
+      },
+      {
+        path: "/checkout",
+        element: <Checkout />,
       },
     ],
   },

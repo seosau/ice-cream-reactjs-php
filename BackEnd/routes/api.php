@@ -6,6 +6,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WishListController;
 
@@ -33,6 +34,7 @@ Route::middleware('auth:sanctum')->prefix('/')->group(function () {
     Route::apiResource('/wishlists', WishListController::class);
     Route::get('/quantityCartItems', [CartController::class, 'getQuantity']);
     Route::apiResource('/cart', CartController::class);
+    Route::apiResource('/order', OrderController::class);
 });
 Route::prefix('/')->group(function () {
     Route::post('/register', [ClientController::class, 'register']);
