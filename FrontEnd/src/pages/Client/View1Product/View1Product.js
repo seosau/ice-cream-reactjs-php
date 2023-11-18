@@ -236,6 +236,7 @@ function View1Product() {
                       </p>
                     </Link>
                     <div className={cx("content")}>
+                      <img src={require("../../../assets/img/shape-19.png")} alt="Shape" className={cx("shap")} />
                       <div className={cx("price-name")}>
                         <h2 className={cx("price")}>Price ${product.price}</h2>
                         <h3 className={cx("name")}> {product.name}</h3>
