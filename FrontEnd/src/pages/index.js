@@ -22,6 +22,10 @@ import Shop from "./Client/Shop/Shop";
 import View1Product from "./Client/View1Product/View1Product";
 import AboutUs from "./Client/AboutUs/AboutUs";
 import Checkout from "./Client/Checkout/Checkout";
+import SearchResult from "./Client/SearchResult/SearchResult";
+import Contact from "./Client/Contact/Contact";
+import UserProfile from "./Client/UserProfile/UserProfile";
+import UpdateUserProfile from "./Client/UpdateUserProfile/UpdateUserProfile";
 export { 
     Register, 
     Login, 
@@ -43,6 +47,10 @@ export {
     Shop, 
     View1Product,
     AboutUs,
-    Checkout
+    Checkout,
+    SearchResult,
+    Contact,
+    UserProfile,
+    UpdateUserProfile
 };
 
