@@ -48,6 +48,7 @@
   margin: 1rem;
   overflow: hidden;
   top: 0;
+  width: fit-content;
 }
 .products .box-container .box img {
   width: 100%;
@@ -82,6 +83,15 @@
   border-top-right-radius: 80px;
   line-height: 1.5;
   text-transform: capitalize;
+}
+.products .box-container .box .content .shap {
+  position: absolute;
+  left: 0;
+  top: -80px;
+  width: 80px;
+  height: 80px;
+  background-repeat: no-repeat;
+  transform: scale(1);
 }
 
 .products .box-container .box .content .price-name .price {
