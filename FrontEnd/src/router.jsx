@@ -20,7 +20,11 @@ import {
   Shop,
   View1Product,
   AboutUs,
-  Checkout
+  Checkout,
+  SearchResult,
+  Contact,
+  UserProfile,
+  UpdateUserProfile
 } from "./pages";
 
 import { DefaultLayout, GuestLayout, AdminLayout } from "./layouts";
@@ -68,6 +72,22 @@ const router = createBrowserRouter([
       {
         path: "/checkout",
         element: <Checkout />,
+      },
+      {
+        path: "/searchresult",
+        element: <SearchResult />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/profile",
+        element: <UserProfile />,
+      },
+      {
+        path: "/profile/updateprofile",
+        element: <UpdateUserProfile />,
       },
     ],
   },
