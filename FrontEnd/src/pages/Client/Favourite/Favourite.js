@@ -4,12 +4,13 @@ import style from "./Favourite.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faEye, faX } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
-import { Btn, Loader } from "../../../components";
+import { Btn, Loader,Alert } from "../../../components";
 import axiosClient from "../../../axiosClient/axios";
 import { useStateContext } from "../../../context/ContextProvider";
 const cx = className.bind(style);
 
 function Favourite() {
+  const {currentUser, setCartIds, setQuantityCart} = useStateContext();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const { setWishListIds } = useStateContext();
@@ -59,7 +60,32 @@ function Favourite() {
       }
     });
   };
-
+  const handleClickCart = (product) => {
+    if (product.stock === 0) {
+      Swal.fire({
+        title: "Sorry",
+        text: "TThis product is temporarily out of stock",
+        imageUrl: require("../../../assets/img/crying.png"),
+        imageWidth: 80,
+        imageHeight: 80,
+        imageAlt: "Custom image",
+      });
+      return;
+    }
+    const payload = { ...product, user_id: currentUser.id, quantity: 1, id:product.product_id };
+    axiosClient
+      .post("/cart", payload)
+      .then(({ data }) => {
+        setCartIds(data.cartListIds);
+        setQuantityCart(data.quantity);
+        Alert("success", "Add to cart successfully");
+      })
+      .catch((error) => {
+        if (error.response) {
+          Alert("warning", `${error.response.data.errors.id}`);
+        }
+      });
+  };
   return (
     <div className={cx("main-container")}>
       <div className={cx("products")}>
@@ -83,14 +109,14 @@ function Favourite() {
                       <div className={cx("flex-btn")}>
                         <p className={cx("price")}>Price: ${product.price}</p>
                         <Btn
-                          href=""
+                         onclick={() => handleClickCart(product)}
                           style={{
                             width: "fit-content",
                           }}
                           value={<FontAwesomeIcon icon={faCartShopping} />}
                         />
                         <Btn
-                          href=""
+                          href={`/shop/view1product/${product.product_id}`}
                           style={{
                             width: "fit-content",
                           }}

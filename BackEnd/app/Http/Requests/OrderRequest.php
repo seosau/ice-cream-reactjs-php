@@ -23,9 +23,13 @@ class OrderRequest extends FormRequest
     {
         return [
             'phone_number' => 'required|string',
-            'payment_method' => 'string',
+            'payment_method' => 'string|required',
             'address' => 'required|string',
             'products' => 'array',
+            'user_id' =>'integer',
+            'user_name' =>'string|required',
+            'email' =>'string|email|required',
+            'stock'=> 'integer,'
         ];
     }
     public function messages(): array

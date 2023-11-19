@@ -13,7 +13,7 @@ class CartController extends Controller
     {
         $user  = $request->user();
         $cartList = Cart::query()
-            ->join("products", "carts.product_id", "=", "products.id")
+            ->join("products", "carts.product_id", "products.id")
             ->where('carts.user_id', $user->id)
             ->get(['products.*', 'carts.quantity']);
 
@@ -38,11 +38,13 @@ class CartController extends Controller
                 'quantity' =>  $data['quantity'],
             ]);
         }
-        $quantity = Cart::query()->select('product_id')
+        $cartListIds = Cart::query()->select('product_id')
             ->where("user_id", $user->id)
             ->get();
+        $quantity = Cart::query()->where("user_id", $user->id)->sum("quantity");
         return [
-            "cartListIds" => $quantity
+            "cartListIds" => $cartListIds,
+            "quantity" =>  $quantity,
         ];
     }
     public function update(Request $request)
@@ -57,9 +59,10 @@ class CartController extends Controller
             ->join("products", "carts.product_id", "=", "products.id")
             ->where('carts.user_id', $user->id)
             ->get(['products.*', 'carts.quantity']);
-
+            $quantity = Cart::query()->where("user_id", $user->id)->sum("quantity");
         return  [
             'cartList' =>  CartResource::collection($cartList),
+            "quantity" =>  $quantity,
         ];
     }
     public function destroy(Request $request, $product_id)
@@ -70,21 +73,23 @@ class CartController extends Controller
             ->where("user_id",  $user_id)
             ->where("product_id", $product_id)
             ->delete();
-        $quantity = Cart::query()->select('product_id')
+        $cartListIds = Cart::query()->select('product_id')
             ->where("user_id", $user->id)
             ->get();
         return [
-            "cartListIds" => $quantity
+            "cartListIds" => $cartListIds
         ];
     }
     public function getQuantity(Request $request)
     {
         $user  = $request->user();
-        $quantity = Cart::query()->select('product_id')
+        $cartIds = Cart::query()->select('product_id')
             ->where("user_id", $user->id)
             ->get();
+        $quantity = Cart::query()->where("user_id", $user->id)->sum("quantity");
         return [
-            "cartIds" => $quantity
+            "cartIds" =>  $cartIds,
+            "quantity" =>  $quantity,
         ];
     }
 }

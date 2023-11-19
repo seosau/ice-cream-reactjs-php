@@ -9,9 +9,10 @@ import FilterProducts from "../../../components/FilterProducts/FilterProducts";
 import PaginationLinks from "../../../components/PaginationLinks/PaginationLinks";
 import axiosClient from "../../../axiosClient/axios";
 import { useStateContext } from "../../../context/ContextProvider";
+import Swal from "sweetalert2";
 const cx = className.bind(style);
 function Shop() {
-  const { currentUser, wishListIds, setWishListIds, cartIds, setCartIds } =
+  const { currentUser, wishListIds, setWishListIds, cartIds, setCartIds, setQuantityCart } =
     useStateContext();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -123,11 +124,23 @@ function Shop() {
   };
   const handleClickCart = (product) => {
     if (currentUser.id) {
+      if(product.stock === 0) {
+        Swal.fire({
+          title: "Sorry",
+          text: "This product will refill soon",
+          imageUrl: require("../../../assets/img/crying.png"),
+          imageWidth: 80,
+          imageHeight:80,
+          imageAlt: "Custom image"
+        });
+        return;
+      }
       const payload = { ...product, user_id: currentUser.id, quantity: 1 };
       axiosClient
         .post("/cart", payload)
         .then(({ data }) => {
           setCartIds(data.cartListIds);
+          setQuantityCart(data.quantity);
           Alert("success", "Add to cart successfully");
         })
         .catch((error) => {

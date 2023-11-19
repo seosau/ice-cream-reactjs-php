@@ -18,6 +18,7 @@ class CartResource extends JsonResource
             "product_id"=> $this->id,
             'name' => $this->name,
             'price' => $this->price,
+            'stock' => $this->stock,
             'image_url' => $this->image ? URL::to($this->image) : null,
             'quantity' => $this->quantity,
             'seller_id' => $this->seller_id,

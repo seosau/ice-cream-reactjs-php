@@ -4,13 +4,13 @@ import style from "./Cart.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
-import { Btn, Loader } from "../../../components";
+import { Alert, Btn, Loader } from "../../../components";
 import axiosClient from "../../../axiosClient/axios";
 import { useStateContext } from "../../../context/ContextProvider";
 const cx = className.bind(style);
 
 function Cart() {
-  const { setCartIds } = useStateContext();
+  const { setCartIds, setQuantityCart } = useStateContext();
   const [grandTotal, setGrandTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
@@ -46,7 +46,9 @@ function Cart() {
     axiosClient
       .put(`/cart/${index}`, product)
       .then(({ data }) => {
+        Alert("success","Update quantity successfully")
         setProducts(data.cartList);
+        setQuantityCart(data.quantity);
         setLoading(false);
       })
       .catch((error) => console.log(error));
@@ -116,7 +118,7 @@ function Cart() {
                           name="quantity"
                           required
                           min="1"
-                          max="99"
+                          max={product.stock}
                           maxLength="2"
                           value={product.quantity}
                           className={cx("quantity", "box")}
@@ -160,7 +162,7 @@ function Cart() {
         {grandTotal > 0 ? (
           <div className={cx("cart-total")}>
             <p>
-              total amount payable: <span>{grandTotal}</span>
+              total amount payable: <span>{grandTotal}$</span>
             </p>
             <Btn
               href="/checkout"

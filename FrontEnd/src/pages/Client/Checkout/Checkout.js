@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import className from "classnames/bind";
 import style from "./Checkout.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Btn, Loader } from "../../../components";
-import axiosClient from "../../../axiosClient/axios";
+import { Alert, Btn, Loader } from "../../../components";
 import { useStateContext } from "../../../context/ContextProvider";
+import axiosClient from "../../../axiosClient/axios";
 const cx = className.bind(style);
 
 export default function Checkout() {
-  const { currentUser } = useStateContext();
+  const navigate = useNavigate();
+  const { currentUser, setQuantityCart } = useStateContext();
   const [orderData, setOrderData] = useState({
-    name: currentUser.name,
+    user_name: currentUser.name,
     phone_number: "",
     email: currentUser.email,
     payment_method: "cash on delivery",
@@ -38,15 +39,20 @@ export default function Checkout() {
     setGrandTotal(total);
   };
   const handleSubmitOrder = () => {
-    const payload = {...orderData, products};
-    axiosClient.post('/order', payload)
-    .then(({data}) => {
-        console.log(data)
-    })
-    .catch(error => {
-        console.log(error)
-    })
+    const payload = { ...orderData, user_id: currentUser.id ,products };
+    console.log(payload)
+    axiosClient
+      .post("/order", payload)
+      .then(({ data }) => {
+        setQuantityCart(data.quantity);
+        Alert("success","Order successfully");
+        navigate('/shop');  
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
+
   useEffect(() => {
     getProductsInCart();
   }, []);
@@ -99,7 +105,7 @@ export default function Checkout() {
                 type="text"
                 name="name"
                 placeholder="enter your name..."
-                value={orderData.name}
+                value={orderData.user_name}
                 disabled
               />
             </div>

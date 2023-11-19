@@ -19,11 +19,16 @@ class OrderResource extends JsonResource
             "id"=> $this->id,
             "seller_id" => $this->seller_id,
             "product_id" => $this->product_id,
-            'name' => $this->name,
+            'user_name' => $this->name,
+            'product_name' => $this->product_name,
             'price' => $this->price,
             'image_url' => $this->image ? URL::to($this->image) : null,
             'status' => $this->status,
-            'updated_at' => $this->updated_at,
+            'quantity' => $this->quantity,
+            'address' => $this->address,
+            'phone_number' => $this->phone_number,
+            'email' => $this->email,
+            'date' => $this->updated_at->format('d-m-Y H:i:s'),
         ];
     }
 }

@@ -54,7 +54,7 @@ const router = createBrowserRouter([
         element: <Favourite/>,
       },
       {
-        path: "/order/vieworder/:productId",
+        path: "/order/vieworder/:id",
         element: <ViewOrder/>,
       },
       {

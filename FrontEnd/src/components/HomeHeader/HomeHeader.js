@@ -28,8 +28,8 @@ function HomeHeader({ children }) {
     setUserToken,
     wishListIds,
     setWishListIds,
-    cartIds,
-    setCartIds,
+    quantityCart,
+    setQuantityCart
   } = useStateContext();
   const image_url = currentUser.image
     ? currentUser.image
@@ -38,7 +38,7 @@ function HomeHeader({ children }) {
   const [showSearchForm, setShowSeachForm] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [showProfile, setShowProfile] = useState(false);
-
+ 
   useEffect(() => {
     if (userToken) {
       axiosClient
@@ -72,7 +72,7 @@ function HomeHeader({ children }) {
     axiosClient
       .get("/quantityCartItems")
       .then(({ data }) => {
-        setCartIds(data.cartIds);
+        setQuantityCart(data.quantity);
       })
       .catch((error) => {
         console.log(error);
@@ -161,7 +161,7 @@ function HomeHeader({ children }) {
                 icon={faShoppingCart}
                 className={cx("icon-style")}
               />
-              <sup>{cartIds?.length}</sup>
+              <sup>{quantityCart}</sup>
             </Link>
             <div id="user-btn">
               <FontAwesomeIcon
