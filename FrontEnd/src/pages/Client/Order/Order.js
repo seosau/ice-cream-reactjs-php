@@ -95,6 +95,11 @@ function Order() {
                       <p className={cx("date")}>{orderInfo.date}</p>
                     </Link>
                     <div className={cx("content")}>
+                    <img
+                        alt=""
+                        src={require("../../../assets/img/shape-19.png")}
+                        className={cx("sharp")}
+                      />
                       <div className={cx("flex-btn")}>
                         <h3 className={cx("name")}>
                           {" "}
