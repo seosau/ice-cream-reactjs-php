@@ -8,7 +8,7 @@ import {
   faHeart,
   faShoppingCart,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Btn from "../Button/Btn";
 import { useStateContext } from "../../context/ContextProvider";
@@ -29,7 +29,7 @@ function HomeHeader({ children }) {
     wishListIds,
     setWishListIds,
     quantityCart,
-    setQuantityCart
+    setQuantityCart,
   } = useStateContext();
   const image_url = currentUser.image
     ? currentUser.image
@@ -38,7 +38,7 @@ function HomeHeader({ children }) {
   const [showSearchForm, setShowSeachForm] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [showProfile, setShowProfile] = useState(false);
- 
+  const navigate = useNavigate();
   useEffect(() => {
     if (userToken) {
       axiosClient
@@ -99,6 +99,7 @@ function HomeHeader({ children }) {
         setcurrentUser({});
         setUserToken(null);
         handleShowProfile();
+        navigate('/home')
         Alert("success", "Logout Successfully");
       })
       .catch((error) => {

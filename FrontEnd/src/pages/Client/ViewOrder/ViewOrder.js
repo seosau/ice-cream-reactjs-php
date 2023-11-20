@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import className from "classnames/bind";
 import style from "./ViewOrder.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,12 +9,13 @@ import {
   faPhone,
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
-import { format } from "date-fns";
+import Swal from "sweetalert2";
 import { Btn, Loader } from "../../../components";
 import axiosClient from "../../../axiosClient/axios";
 const cx = className.bind(style);
 
 function ViewOrder() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [orderInfo, setOrderInfo] = useState({});
@@ -30,19 +31,36 @@ function ViewOrder() {
         console.log(error);
       });
   }, []);
-  const handleButtonCancel = (dataId) => {
-    // let orderDate = new Date();
-    // orderDate = format(orderDate, "yyyy-MM-dd");
-    // const updatedStatus = datas.map(data => {
-    //     if (data.id === parseInt(dataId, 10))
-    //         return {
-    //             ...data,
-    //             status: data.status.toLowerCase() === "canceled" ? "in progress" : "canceled",
-    //             date: data.date = orderDate,
-    //         }
-    //     return data;
-    // })
-    // setData(updatedStatus);
+  const handleEventUpdateOrder = (orderId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, cancel it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const payload = {
+          ...orderInfo,
+          status:
+            orderInfo.status === "in progress" ? "canceled" : "in progress",
+        };
+        axiosClient
+          .put(`/order/${orderId}`, payload)
+          .then(({ data }) => {
+            Swal.fire({
+              title: "Your order have been canceled!",
+              icon: "success",
+            });
+            navigate("/order");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
   };
 
   return (
@@ -106,7 +124,7 @@ function ViewOrder() {
                     value={
                       orderInfo.status === "canceled" ? "order again" : "cancel"
                     }
-                    onclick={() => handleButtonCancel(orderInfo.product_id)}
+                    onclick={() => handleEventUpdateOrder(orderInfo.id)}
                   />
                 )}
               </div>

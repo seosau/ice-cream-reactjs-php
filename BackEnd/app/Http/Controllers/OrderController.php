@@ -54,8 +54,13 @@ class OrderController extends Controller
             'quantity' =>  $quantity ? $quantity : 0,
         ];
     }
-    public function update()
+    public function update(OrderRequest $orderRequest, Order $order)
     {
+        $data = $orderRequest->validated();
+        $order->update($data);
+        return [
+            'success' => true
+        ];
     }
     public function show($id)
     {

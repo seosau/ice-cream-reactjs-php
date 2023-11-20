@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import className from "classnames/bind";
 import style from "./Checkout.module.scss";
 import { Alert, Btn, Loader } from "../../../components";
@@ -9,11 +9,12 @@ const cx = className.bind(style);
 
 export default function Checkout() {
   const navigate = useNavigate();
+  const { id } = useParams();
   const { currentUser, setQuantityCart } = useStateContext();
   const [orderData, setOrderData] = useState({
-    user_name: currentUser.name,
+    user_name: "",
     phone_number: "",
-    email: currentUser.email,
+    email: "",
     payment_method: "cash on delivery",
     address: "",
   });
@@ -39,21 +40,50 @@ export default function Checkout() {
     setGrandTotal(total);
   };
   const handleSubmitOrder = () => {
-    const payload = { ...orderData, user_id: currentUser.id ,products };
-    console.log(payload)
+    if (id) {
+      const payload = { ...orderData, user_id: currentUser.id, status:'in progress'};
+      axiosClient
+        .put(`/order/${id}`, payload)
+        .then(({ data }) => {
+          Alert("success", "Order again successfully");
+          navigate("/order");
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      const payload = { ...orderData, user_id: currentUser.id, products };
+      axiosClient
+        .post("/order", payload)
+        .then(({ data }) => {
+          setQuantityCart(data.quantity);
+          Alert("success", "Order successfully");
+          navigate("/shop");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+  const handleGetDataOrderAgain = () => {
+    setLoading(true);
     axiosClient
-      .post("/order", payload)
+      .get(`/order/${id}`)
       .then(({ data }) => {
-        setQuantityCart(data.quantity);
-        Alert("success","Order successfully");
-        navigate('/shop');  
+        setProducts(data.data);
+        setOrderData(...data.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
   useEffect(() => {
+    if (id) {
+      handleGetDataOrderAgain();
+      return;
+    }
     getProductsInCart();
   }, []);
   useEffect(() => {
@@ -106,7 +136,12 @@ export default function Checkout() {
                 name="name"
                 placeholder="enter your name..."
                 value={orderData.user_name}
-                disabled
+                onChange={(e) => {
+                  setOrderData({
+                    ...orderData,
+                    user_name: e.target.value,
+                  });
+                }}
               />
             </div>
             <div className={cx("input-field")}>
@@ -140,7 +175,12 @@ export default function Checkout() {
                 type="email"
                 name="email"
                 placeholder="enter your email..."
-                disabled
+                onChange={(e) => {
+                  setOrderData({
+                    ...orderData,
+                    email: e.target.value,
+                  });
+                }}
                 value={orderData.email}
               />
 

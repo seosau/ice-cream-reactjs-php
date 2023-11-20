@@ -1,78 +1,59 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import className from "classnames/bind";
 import style from "./Order.module.scss";
-import { format } from "date-fns";
+import Swal from "sweetalert2";
 import { Btn, Loader } from "../../../components";
 import axiosClient from "../../../axiosClient/axios";
 const cx = className.bind(style);
 
 function Order() {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [orderData, setOrderData] = useState([
-    {
-      id: 1,
-      name: "Ice cream",
-      img: require("../../../assets/img/products/product0.jpg"),
-      price: 120,
-      date: "2023-11-01",
-      status: "in progress",
-    },
-    {
-      id: 2,
-      name: "Ice cream",
-      img: require("../../../assets/img/products/product0.jpg"),
-      price: 120,
-      date: "2023-11-01",
-      status: "in progress",
-    },
-    {
-      id: 3,
-      name: "Ice cream",
-      img: require("../../../assets/img/products/product0.jpg"),
-      price: 120,
-      date: "2023-11-01",
-      status: "in progress",
-    },
-    {
-      id: 4,
-      name: "Ice cream",
-      img: require("../../../assets/img/products/product0.jpg"),
-      price: 120,
-      date: "2023-11-01",
-      status: "in progress",
-    },
-
-    {
-      id: 5,
-      name: "Ice cream",
-      img: require("../../../assets/img/products/product0.jpg"),
-      price: 120,
-      date: "2023-11-01",
-      status: "delivered",
-    },
-    {
-      id: 6,
-      name: "Ice cream",
-      img: require("../../../assets/img/products/product0.jpg"),
-      price: 120,
-      date: "2023-10-20",
-      status: "canceled",
-    },
-  ]);
-  const handleButtonCancel = (dataId) => {
-    // let orderDate = new Date();
-    // orderDate = format(orderDate, "yyyy-MM-dd");
-    // const updatedStatus = datas.map(data => {
-    //     if (data.id === dataId)
-    //         return {
-    //             ...data,
-    //             status: data.status.toLowerCase() === "canceled" ? "in progress" : "canceled",
-    //             date: data.date = orderDate,
-    //         }
-    //     return data;
-    // })
-    // setData(updatedStatus);
+  const [orderData, setOrderData] = useState([]);
+  const handleEventUpdateOrder = (orderId, index) => {
+    if (orderData[index].status === "in progress") {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, cancel it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const updateOrderData = orderData.map((prevOrderInfo) => {
+            if (prevOrderInfo.id === orderId) {
+              return {
+                ...prevOrderInfo,
+                status:
+                  prevOrderInfo.status === "canceled"
+                    ? "in progress"
+                    : "canceled",
+              };
+            }
+            return prevOrderInfo;
+          });
+          setOrderData(updateOrderData);
+          axiosClient
+            .put(`/order/${orderId}`, updateOrderData[index])
+            .then(({ data }) => {
+              console.log(data);
+              Swal.fire({
+                title: "Updated!",
+                text: "Your order have been updated!",
+                icon: "success",
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      });
+    } else if (orderData[index].status === "canceled") {
+      navigate(`/checkout/${orderId}`);
+    }
   };
   const getOrderData = () => {
     setLoading(true);
@@ -103,8 +84,8 @@ function Order() {
         <div className={cx("box-container")}>
           {!loading && (
             <>
-              {orderData.length > 0 ? (
-                orderData.map((orderInfo) => (
+              {orderData?.length > 0 ? (
+                orderData.map((orderInfo, index) => (
                   <div className={cx("box")} key={orderInfo.id}>
                     <Link
                       to={`/order/vieworder/${orderInfo.id}`}
@@ -115,7 +96,10 @@ function Order() {
                     </Link>
                     <div className={cx("content")}>
                       <div className={cx("flex-btn")}>
-                        <h3 className={cx("name")}> {orderInfo.product_name}</h3>
+                        <h3 className={cx("name")}>
+                          {" "}
+                          {orderInfo.product_name}
+                        </h3>
                         <p className={cx("price")}>Price: {orderInfo.price}$</p>
                         <p
                           className={cx(
@@ -146,7 +130,9 @@ function Order() {
                                 ? "order again"
                                 : "cancel"
                             }
-                            onclick={() => handleButtonCancel(orderInfo.id)}
+                            onclick={() =>
+                              handleEventUpdateOrder(orderInfo.id, index)
+                            }
                           />
                         )}
                       </div>

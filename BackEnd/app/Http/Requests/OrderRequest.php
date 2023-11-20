@@ -26,10 +26,12 @@ class OrderRequest extends FormRequest
             'payment_method' => 'string|required',
             'address' => 'required|string',
             'products' => 'array',
-            'user_id' =>'integer',
-            'user_name' =>'string|required',
-            'email' =>'string|email|required',
-            'stock'=> 'integer,'
+            'user_id' => 'integer',
+            'user_name' => 'string|required',
+            'email' => 'string|email|required',
+            'stock' => 'integer',
+            'status' => 'string|nullable',
+            'payment_status' => 'string|nullable'
         ];
     }
     public function messages(): array
