@@ -14,13 +14,14 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
     align-items: center;
-    
+    justify-items: center;
 }
 .products .box-container .box {
     position: relative;
     margin: 1rem;
     overflow: hidden;
     top: 0;
+    max-width: 25rem;
 }
 .products .box-container .box img {
     width: 100%;
@@ -77,6 +78,15 @@
     border: 2px solid var(--white-alpha-40);
     backdrop-filter: var(--backdrop-filter);
     box-shadow: var(--box-shadow);
+}
+
+.products .box-container .box .sharp {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    left: 0;
+    top: -80px;
+    background-repeat: no-repeat;
 }
 
 .cart-total {

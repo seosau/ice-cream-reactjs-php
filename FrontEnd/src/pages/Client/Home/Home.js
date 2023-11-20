@@ -57,10 +57,10 @@ function Home() {
             details: "24/7 free returns",
         },
         {
-            img1: require("../../../assets/img/services.png"),
-            img2: require("../../../assets/img/services (1).png"),
-            title: "delivery",
-            details: "100% secure",
+            img1: require("../../../assets/img/aftersale.png"),
+            img2: require("../../../assets/img/aftersale1.png"),
+            title: "after sale",
+            details: "Dedicated",
         },
     ];
 
