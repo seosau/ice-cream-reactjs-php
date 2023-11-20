@@ -8,8 +8,11 @@ import axiosClient from "../../../axiosClient/axios";
 const cx = className.bind(style);
 
 export default function Checkout() {
+  const currentURL = window.location.search;
+  const searchParams = new URLSearchParams(currentURL);
+  const from = searchParams.get("from");
+  const id = Number(searchParams.get("id"));
   const navigate = useNavigate();
-  const { id } = useParams();
   const { currentUser, setQuantityCart } = useStateContext();
   const [orderData, setOrderData] = useState({
     user_name: "",
@@ -40,17 +43,22 @@ export default function Checkout() {
     setGrandTotal(total);
   };
   const handleSubmitOrder = () => {
-    if (id) {
-      const payload = { ...orderData, user_id: currentUser.id, status:'in progress'};
+    if (id && from === "order") {
+      const payload = {
+        ...orderData,
+        user_id: currentUser.id,
+        status: "in progress",
+      };
       axiosClient
         .put(`/order/${id}`, payload)
         .then(({ data }) => {
           Alert("success", "Order again successfully");
           navigate("/order");
-          console.log(data);
         })
         .catch((error) => {
-          console.log(error);
+          if (error.response) {
+            setErrors(error.response.data.errors);
+          }
         });
     } else {
       const payload = { ...orderData, user_id: currentUser.id, products };
@@ -59,29 +67,45 @@ export default function Checkout() {
         .then(({ data }) => {
           setQuantityCart(data.quantity);
           Alert("success", "Order successfully");
-          navigate("/shop");
+          navigate("/order");
+        })
+        .catch((error) => {
+          if (error.response) {
+            setErrors(error.response.data.errors);
+          }
+        });
+    }
+  };
+  const handleGetDataFromCurrentUrl = () => {
+    if (from === "order") {
+      setLoading(true);
+      axiosClient
+        .get(`/order/${id}`)
+        .then(({ data }) => {
+          setProducts(data.data);
+          setOrderData(...data.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else if (from === "menu") {
+      setLoading(true);
+      axiosClient
+        .get(`/menu/${id}`)
+        .then(({ data }) => {
+          setProducts([{...data.data[0],quantity:1, product_id:id}]);
+          setLoading(false);
         })
         .catch((error) => {
           console.log(error);
         });
     }
   };
-  const handleGetDataOrderAgain = () => {
-    setLoading(true);
-    axiosClient
-      .get(`/order/${id}`)
-      .then(({ data }) => {
-        setProducts(data.data);
-        setOrderData(...data.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (id) {
-      handleGetDataOrderAgain();
+      handleGetDataFromCurrentUrl();
       return;
     }
     getProductsInCart();
@@ -137,12 +161,18 @@ export default function Checkout() {
                 placeholder="enter your name..."
                 value={orderData.user_name}
                 onChange={(e) => {
+                  if (errors?.user_name) {
+                    setErrors({ ...errors, user_name: "" });
+                  }
                   setOrderData({
                     ...orderData,
                     user_name: e.target.value,
                   });
                 }}
               />
+              {errors?.user_name ? (
+                <div className={cx("error")}>{errors.user_name}</div>
+              ) : null}
             </div>
             <div className={cx("input-field")}>
               <p className={cx("")}>
@@ -156,15 +186,18 @@ export default function Checkout() {
                 maxLength={50}
                 value={orderData.phone_number}
                 onChange={(e) => {
-                  //   if (errors?.number) {
-                  //     setErrors({ ...errors, number: "" });
-                  //   }
+                  if (errors?.phone_number) {
+                    setErrors({ ...errors, phone_number: "" });
+                  }
                   setOrderData({
                     ...orderData,
                     phone_number: e.target.value,
                   });
                 }}
               />
+              {errors?.phone_number ? (
+                <div className={cx("error")}>{errors.phone_number}</div>
+              ) : null}
             </div>
             <div className={cx("input-field")}>
               <p className={cx("")}>
@@ -176,6 +209,9 @@ export default function Checkout() {
                 name="email"
                 placeholder="enter your email..."
                 onChange={(e) => {
+                  if (errors?.email) {
+                    setErrors({ ...errors, email: "" });
+                  }
                   setOrderData({
                     ...orderData,
                     email: e.target.value,
@@ -183,7 +219,9 @@ export default function Checkout() {
                 }}
                 value={orderData.email}
               />
-
+              {errors?.email ? (
+                <div className={cx("error")}>{errors.email}</div>
+              ) : null}
               <div className={cx("input-field")}>
                 <p className={cx("")}>
                   payment method <span className={cx("")}>*</span>
@@ -220,17 +258,19 @@ export default function Checkout() {
                 maxLength={50}
                 value={orderData.address}
                 onChange={(e) => {
-                  //   if (errors?.country) {
-                  //     setErrors({ ...errors, country: "" });
-                  //   }
+                  if (errors?.address) {
+                    setErrors({ ...errors, address: "" });
+                  }
                   setOrderData({
                     ...orderData,
                     address: e.target.value,
                   });
                 }}
               />
+              {errors?.address ? (
+                <div className={cx("error")}>{errors.address}</div>
+              ) : null}
             </div>
-
             <Btn value="place order" onclick={handleSubmitOrder} />
           </form>
         </div>

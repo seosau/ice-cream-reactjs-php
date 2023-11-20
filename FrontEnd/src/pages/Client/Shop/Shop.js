@@ -12,13 +12,13 @@ import { useStateContext } from "../../../context/ContextProvider";
 import Swal from "sweetalert2";
 const cx = className.bind(style);
 function Shop() {
+  const navigate = useNavigate();
   const { currentUser, wishListIds, setWishListIds, cartIds, setCartIds, setQuantityCart } =
     useStateContext();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [meta, setMeta] = useState({});
   const [params, setParams] = useState({});
-  const navigate = useNavigate();
   const currentURL = window.location.search;
   const isSort = currentURL.includes("sortBy");
   const getProducts = (url = `/menu`) => {
@@ -77,14 +77,14 @@ function Shop() {
   };
   const handleCheckProductInWishList = (product_id) => {
     const isWishInMenu = wishListIds.some((item) => {
-      return item.product_id == product_id;
+      return item.product_id === product_id;
     });
     if (isWishInMenu) return true;
     return false;
   };
   const handleCheckProductInCart = (product_id) => {
     const isCartInMenu = cartIds.some((item) => {
-      return item.product_id == product_id;
+      return item.product_id === product_id;
     });
     if (isCartInMenu) return true;
     return false;
@@ -157,6 +157,29 @@ function Shop() {
       navigate("/login");
     }
   };
+  const handleBuyProduct = (product) => {
+    if (currentUser.id) {
+      if(product.stock === 0) {
+        Swal.fire({
+          title: "Sorry",
+          text: "This product will refill soon",
+          imageUrl: require("../../../assets/img/crying.png"),
+          imageWidth: 80,
+          imageHeight:80,
+          imageAlt: "Custom image"
+        });
+        return;
+      }
+      navigate('/checkout')
+    } else {
+      Alert(
+        "warning",
+        "You are not logged in",
+        "Please login to have more experience"
+      );
+      navigate("/login");
+    }
+  }
   return (
     <div className={cx("main-container")}>
       <div className={cx("banner")}>
@@ -214,11 +237,12 @@ function Shop() {
                       </div>
                       <div className={cx("flex-btn")}>
                         <Btn
-                          href={``}
+                          onclick={() => handleBuyProduct(product)}
                           style={{
                             width: "fit-content",
                           }}
                           value="Buy Now"
+                          href={`?from=menu&id=${product.id}`}
                         />
                         <div className={cx("like-cart")}>
                           <FontAwesomeIcon

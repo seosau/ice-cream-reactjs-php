@@ -22,7 +22,7 @@ class OrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone_number' => 'required|string',
+            'phone_number' => 'required|string|regex:/(0)[0-9]{9}/',
             'payment_method' => 'string|required',
             'address' => 'required|string',
             'products' => 'array',
@@ -37,9 +37,12 @@ class OrderRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'phone_number.required' => 'phone number is required',
-            'address.required' => 'address is required',
-            'email.email' => 'email must be a valid email address',
+            'user_name.required' => 'The user name field is required.',
+            'phone_number.required' => 'The phone number field is required.',
+            'phone_number.regex' => 'Please enter a valid phone number.',
+            'address.required' => 'The address field is required.',
+            'email.required' => 'The email field is required.',
+            'email.email' => 'Please enter a valid email address.',
         ];
     }
 }

@@ -19,7 +19,7 @@ export const ContextProvider = ({ children }) => {
   );
   const [wishListIds, setWishListIds] = useState([]);
   const [cartIds, setCartIds] = useState([]);
-  const [quantityCart, setQuantityCart] = useState(null);
+  const [quantityCart, setQuantityCart] = useState(0);
   const setUserToken = (token) => {
     if (token) {
       localStorage.setItem("TOKEN", token);

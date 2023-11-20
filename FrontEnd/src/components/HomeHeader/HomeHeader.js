@@ -30,6 +30,7 @@ function HomeHeader({ children }) {
     setWishListIds,
     quantityCart,
     setQuantityCart,
+    setCartIds
   } = useStateContext();
   const image_url = currentUser.image
     ? currentUser.image
@@ -72,6 +73,7 @@ function HomeHeader({ children }) {
     axiosClient
       .get("/quantityCartItems")
       .then(({ data }) => {
+        setCartIds(data.cartIds);
         setQuantityCart(data.quantity);
       })
       .catch((error) => {

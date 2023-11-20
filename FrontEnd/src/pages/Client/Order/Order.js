@@ -52,7 +52,7 @@ function Order() {
         }
       });
     } else if (orderData[index].status === "canceled") {
-      navigate(`/checkout/${orderId}`);
+      navigate('/checkout');
     }
   };
   const getOrderData = () => {
@@ -121,7 +121,7 @@ function Order() {
                         {orderInfo.status.toLowerCase() ===
                         "delivered" ? null : (
                           <Btn
-                            href=""
+                            href={orderInfo.status === "canceled" ? `?from=order&id=${orderInfo.id}`: ''}
                             style={{
                               width: "fit-content",
                             }}
