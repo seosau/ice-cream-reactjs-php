@@ -24,7 +24,7 @@ class ProductController extends Controller
             return ProductResource::collection(
                 Product::where('seller_id', $user->id)
                     ->orderBy('created_at', 'desc')
-                    ->paginate(2)
+                    ->paginate(4)
             );
         }
         return ProductResource::collection(

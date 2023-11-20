@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\User::class,'user_id');
             $table->foreignIdFor(\App\Models\Product::class,'product_id');
-            $table->integer('price')->unsigned();
             $table->integer('quantity')->unsigned();
             $table->timestamps();
         });
