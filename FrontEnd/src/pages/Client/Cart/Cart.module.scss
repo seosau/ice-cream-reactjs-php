@@ -14,6 +14,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
     align-items: center;
+    justify-items: center;
 }
 
 .products .box-container .box {
@@ -21,6 +22,7 @@
     margin: 1rem;
     overflow: hidden;
     top: 0;
+    max-width: 25rem;
 }
 
 
@@ -45,6 +47,15 @@
     border-top-right-radius: 80px;
     line-height: 1.5;
     text-transform: capitalize;
+}
+
+.products .box-container .box .sharp {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    left: 0;
+    top: -80px;
+    background-repeat: no-repeat;
 }
 
 .products .box-container .box h3 {

@@ -4,13 +4,13 @@ import style from "./Favourite.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faEye, faX } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
-import { Btn, Loader,Alert } from "../../../components";
+import { Btn, Loader, Alert } from "../../../components";
 import axiosClient from "../../../axiosClient/axios";
 import { useStateContext } from "../../../context/ContextProvider";
 const cx = className.bind(style);
 
 function Favourite() {
-  const {currentUser, setCartIds, setQuantityCart} = useStateContext();
+  const { currentUser, setCartIds, setQuantityCart } = useStateContext();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const { setWishListIds } = useStateContext();
@@ -72,7 +72,7 @@ function Favourite() {
       });
       return;
     }
-    const payload = { ...product, user_id: currentUser.id, quantity: 1, id:product.product_id };
+    const payload = { ...product, user_id: currentUser.id, quantity: 1, id: product.product_id };
     axiosClient
       .post("/cart", payload)
       .then(({ data }) => {
@@ -105,11 +105,16 @@ function Favourite() {
                   <div key={index} className={cx("box")}>
                     <img src={product.image_url} alt="product" />
                     <div className={cx("content")}>
+                      <img
+                        alt=""
+                        src={require("../../../assets/img/shape-19.png")}
+                        className={cx("sharp")}
+                      />
                       <h3>{product.name}</h3>
                       <div className={cx("flex-btn")}>
                         <p className={cx("price")}>Price: ${product.price}</p>
                         <Btn
-                         onclick={() => handleClickCart(product)}
+                          onclick={() => handleClickCart(product)}
                           style={{
                             width: "fit-content",
                           }}

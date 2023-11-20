@@ -297,6 +297,7 @@
 
 .taste2 .box-container .box {
     position: relative;
+    overflow: hidden;
 }
 
 .taste2 .box-container .box img {
@@ -477,4 +478,16 @@
     text-transform: capitalize;
     font-size: 1.1rem;
     color: gray;
+}
+
+@media (min-width: 1205px) {
+    .taste2 .box-container .box {
+        height: 245px;
+    }
+}
+
+@media (min-width: 805px) and (max-width: 1205px) {
+    .taste2 .box-container .box {
+        height: calc(100% - 2rem);
+    }
 }

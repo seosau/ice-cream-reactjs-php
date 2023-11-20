@@ -68,7 +68,7 @@ function Footer() {
                                     category.icon.length <= 1 ? (
                                         <Link to="" key={i} className={cx("link")}>
                                             <FontAwesomeIcon icon={category.icon[0]} />
-                                            <p>{item}</p>
+                                            <p className={cx("category")}>{item}</p>
                                         </Link>
                                     ) : (
                                         <div key={i}>
