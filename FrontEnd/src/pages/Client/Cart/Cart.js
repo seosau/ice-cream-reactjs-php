@@ -110,6 +110,11 @@ function Cart() {
                   <div key={index} className={cx("box")}>
                     <img src={product.image_url} alt="product" />
                     <div className={cx("content")}>
+                    <img
+                        alt=""
+                        src={require("../../../assets/img/shape-19.png")}
+                        className={cx("sharp")}
+                      />
                       <h3>{product.name}</h3>
                       <div className={cx("flex-btn")}>
                         <p className={cx("price")}>Price: ${product.price}</p>
