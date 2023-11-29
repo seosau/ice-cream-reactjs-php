@@ -25,7 +25,7 @@ class UpdateProductRequest extends FormRequest
             'seller_id' => 'exists:sellers,id',
             'name' => 'required|string',
             'price' => 'required|integer',
-            'image' => 'required|string',
+            'image' => 'nullable|string',
             'stock' => 'required|integer',
             'product_detail' => 'required|string',
             'status' => 'required|string'
@@ -35,7 +35,6 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'price.required' => 'price is required',
-            'image.required' => 'image is required',
             'stock.required' => 'stock is required',
             'product_detail.required' => 'product_detail is required',
             'status.required' => 'status is required',

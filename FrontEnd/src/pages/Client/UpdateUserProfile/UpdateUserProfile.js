@@ -1,276 +1,258 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import className from "classnames/bind";
 import style from "./UpdateUserProfile.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImage } from "@fortawesome/free-solid-svg-icons";
 import Btn from "../../../components/Button/Btn";
 import axiosClient from "../../../axiosClient/axios.js";
-
-import { useNavigate, Link } from "react-router-dom";
 import Alert from "../../../components/Alert/Alert";
+import { useStateContext } from "../../../context/ContextProvider.js";
+import { Loader } from "../../../components/index.js";
 const cx = className.bind(style);
 
 function UpdateUserProfile() {
-    const [required, setRequired] = useState(false);
-    const [user,setUser] = useState({
-        id: 1,
-        img: require("../../../assets/img/user.jpg"),
-        name: 'Alexander User',
-        email: 'alexander_user@gmail.com',
-        password: '12345',
-        totalOrders: 6,
-        totalMessages: 2,
+  const navigate = useNavigate();
+  const { currentUser, setcurrentUser } = useStateContext();
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState([]);
+  const [userDataUpdate, setUserDataUpdate] = useState({
+    name: "",
+    email: "",
+    old_password: "",
+    password: "",
+    password_confirmation: "",
+    image: null,
+    image_url: null,
+  });
+  useEffect(() => {
+    setLoading(true);
+    axiosClient
+      .get("/me")
+      .then(({ data }) => {
+        setUserDataUpdate(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-    const navigate = useNavigate();
-    const [userDataUpdate, setuserDataUpdate] = useState({
-        name: "",
-        email: "",
-        current_password: "",
-        new_password: "",
-        password_confirmation: "",
-        image: "",
-        image_url: "",
-    });
-    const pathname = window.location.pathname;
-    const [errors, setErrors] = useState({});
-    const onImageChoose = (e) => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onload = () => {
-            setuserDataUpdate({
-                ...userDataUpdate,
-                image: file,
-                image_url: reader.result,
-            });
-            e.target.value = "";
-        };
-        reader.readAsDataURL(file);
+  }, []);
+  const user_img_url = currentUser.image_url
+    ? currentUser.image_url
+    : require("../../../assets/img/avt.png");
+  const onImageChoose = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      setUserDataUpdate({
+        ...userDataUpdate,
+        image: file,
+        image_url: reader.result,
+      });
+      e.target.value = "";
     };
-    const onSubmit = async () => {
-        const payload = { ...userDataUpdate };
-        if (payload.image) {
-            payload.image = payload.image_url;
+    reader.readAsDataURL(file);
+  };
+  const onUpdate = async () => {
+    const payload = { ...userDataUpdate };
+    if (payload.image) {
+      payload.image = payload.image_url;
+    }
+    delete payload.image_url;
+    console.log(payload);
+    await axiosClient
+      .post(`/updateprofile`, payload)
+      .then(({ data }) => {
+        console.log(data);
+        setcurrentUser(data);
+        Alert("success", "Update Successfully", "Have a nice day");
+        navigate("/profile");
+      })
+      .catch((error) => {
+        if (error.response) {
+          setErrors(error.response.data.errors);
+          Alert(
+            "error",
+            "Update Failed",
+            "Something went wrong, please check again"
+          );
         }
-        delete payload.image_url;
-        await axiosClient
-            .post(`${pathname}`, payload)
-            .then(({ data }) => {
-                Alert(
-                    "success",
-                    "Register Successfully",
-                    "Please login for a great experience"
-                );
-                if (pathname.includes("admin")) {
-                    navigate("/admin/login");
-                    return;
-                }
-                navigate("/login");
-            })
-            .catch((error) => {
-                if (error.response) {
-                    let finalErrors = error.response.data.errors;
-                    setErrors(finalErrors);
-                    // Alert(
-                    //   "error",
-                    //   "Register Failed",
-                    //   "Something went wrong, please check again"
-                    // );
-                }
-            });
-    };
-    return (
-        <div className={cx("form-container")}>
-            <div className={cx("banner")}>
-                <div className={cx("detail")}>
-                    <h1>Update Profile</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing<br />
-                        elit, sed do eiusmod tempor incididunt ut labore et <br />
-                        dolore magna aliqua.</p>
-                </div>
-            </div>
-            <div className={cx("heading")}>
-                <h1>update profile details</h1>
-                <img src={require("../../../assets/img/separator.png")} />
-            </div>
-            <form
-                action="#"
-                method="POST"
-                encType="multipart/from-data"
-                className={cx("register")}
-                onSubmit={onSubmit}
-            >
-                <div className={cx("user")}>
-                    <img src={user.img} />
-                </div>
-                <div className={cx("")}>
-                    <div className={cx("row")}>
-                        <div className={cx("input-field")}>
-                            <p className={cx("")}>your name</p>
-                            <input
-                                className={cx("box")}
-                                type="text"
-                                name="name"
-                                placeholder="enter your name..."
-                                maxLength={50}
-                                onChange={(e) => {
-                                    if (errors?.name) {
-                                        setErrors({ ...errors, name: "" });
-                                    }
-                                    setuserDataUpdate({
-                                        ...userDataUpdate,
-                                        name: e.target.value,
-                                    });
-                                }}
-                                value={userDataUpdate.name}
-                            />
-                            {errors?.name ? (
-                                <div className={cx("error")}>{errors?.name}</div>
-                            ) : null}
-                        </div>
-                        <div className={cx("input-field")}>
-                            <p className={cx("")}>your email</p>
-                            <input
-                                className={cx("box")}
-                                type="email"
-                                name="email"
-                                placeholder="enter your email..."
-                                maxLength={50}
-                                onChange={(e) => {
-                                    if (errors?.email) {
-                                        setErrors({ ...errors, email: "" });
-                                    }
-                                    setuserDataUpdate({
-                                        ...userDataUpdate,
-                                        email: e.target.value,
-                                    });
-                                }}
-                                value={userDataUpdate.email}
-                            />
-                            {errors?.email ? (
-                                <div className={cx("error")}>{errors?.email}</div>
-                            ) : null}
-                        </div>
-
-                    </div>
-
-                    <div className={cx("row")}>
-                        <div className={cx("input-field")}>
-                            <p className={cx("")}>your current password</p>
-                            <input
-                                className={cx("box")}
-                                type="password"
-                                name="current password"
-                                placeholder="enter your password..."
-                                maxLength={50}
-                                onChange={(e) => {
-                                    const currentPw = document.getElementById('current-pw');
-                                    if(currentPw.value!="" && required==false) {
-                                        setRequired(!required);
-                                    }
-                                    if(currentPw.value=="") {
-                                        setRequired(!required);
-                                    }
-                                    if (errors?.password) {
-                                        setErrors({ ...errors, password: "" });
-                                    }
-                                    setuserDataUpdate({
-                                        ...userDataUpdate,
-                                        current_password: e.target.value,
-                                    });
-                                }}
-                                value={userDataUpdate.current_password}
-                                id={cx("current-pw")}
-                            />
-                            {errors?.password ? (
-                                <div className={cx("error")}>
-                                    {errors.password[errors?.password?.length - 1]}
-                                </div>
-                            ) : null}
-                        </div>
-                        <div className={cx("input-field")}>
-                            <p className={cx("")}>your new password <span className={required ? cx("required") : cx("not-required")}>*</span></p>
-                            <input
-                                className={cx("box")}
-                                type="password"
-                                name="new password"
-                                placeholder="enter your new password..."
-                                maxLength={50}
-                                onChange={(e) => {
-                                    if (errors?.password) {
-                                        setErrors({ ...errors, password: "" });
-                                    }
-                                    setuserDataUpdate({
-                                        ...userDataUpdate,
-                                        new_password: e.target.value,
-                                    });
-                                }}
-                                value={userDataUpdate.new_password}
-                                id={cx("new-pw")}
-                            />
-                            {errors?.password ? (
-                                <div className={cx("error")}>
-                                    {errors.password[errors?.password?.length - 1]}
-                                </div>
-                            ) : null}
-                        </div>
-                        <div className={cx("input-field")}>
-                            <p className={cx("")}>
-                                confirm your new password <span className={required ? cx("required") : cx("not-required")}>*</span>
-                            </p>
-                            <input
-                                className={cx("box")}
-                                type="password"
-                                name="password-confirmation"
-                                placeholder="confirm your new password..."
-                                maxLength={50}
-                                onChange={(e) => {
-                                    if (errors?.password) {
-                                        setErrors({ ...errors, password: "" });
-                                    }
-                                    setuserDataUpdate({
-                                        ...userDataUpdate,
-                                        password_confirmation: e.target.value,
-                                    });
-                                }}
-                                value={userDataUpdate.password_confirmation}
-                            />
-                            {errors?.password && errors.password?.length > 1 ? (
-                                <div className={cx("error")}>{errors.password[0]}</div>
-                            ) : null}
-                        </div>
-                    </div>
-                </div>
-                <div className={cx("")}>
-                    <p className={cx("")}>your profile</p>
-                    <div className={cx("profile-img-box")}>
-                        {userDataUpdate.image_url && (
-                            <img
-                                src={userDataUpdate.image_url}
-                                alt="Image"
-                                className={cx("img-choose")}
-                            />
-                        )}
-                        {!userDataUpdate.image_url && (
-                            <div>
-                                <FontAwesomeIcon icon={faImage} className={cx("icon-style")} />
-                            </div>
-                        )}
-                        <button className={cx("btn-chooseImg")}>
-                            <input
-                                className={cx("img-choose-input")}
-                                type="file"
-                                name="image"
-                                accept="image/*"
-                                onChange={onImageChoose}
-                            />
-                            Change
-                        </button>
-                    </div>
-                </div>
-                <Btn value={"update now"} onclick={onSubmit}></Btn>
-            </form>
+      });
+  };
+  return (
+    <div className={cx("form-container")}>
+      <div className={cx("banner")}>
+        <div className={cx("detail")}>
+          <h1>Update Profile</h1>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing
+            <br />
+            elit, sed do eiusmod tempor incididunt ut labore et <br />
+            dolore magna aliqua.
+          </p>
         </div>
-    );
+      </div>
+      <div className={cx("heading")}>
+        <h1>update profile details</h1>
+        <img src={require("../../../assets/img/separator.png")} />
+      </div>
+      {loading && <Loader />}
+      {!loading && (
+        <form className={cx("register")}>
+          <div className={cx("user")}>
+            <img
+              src={
+                userDataUpdate.image_url
+                  ? userDataUpdate.image_url
+                  : user_img_url
+              }
+              alt="image"
+            />
+          </div>
+          <div className={cx("")}>
+            <div className={cx("row")}>
+              <div className={cx("input-field")}>
+                <p className={cx("")}>your name</p>
+                <input
+                  className={cx("box")}
+                  type="text"
+                  name="name"
+                  placeholder="enter your name..."
+                  maxLength={50}
+                  onChange={(e) => {
+                    if (errors?.name) {
+                      setErrors({ ...errors, name: "" });
+                    }
+                    setUserDataUpdate({
+                      ...userDataUpdate,
+                      name: e.target.value,
+                    });
+                  }}
+                  value={userDataUpdate.name}
+                />
+                {errors?.name ? (
+                  <div className={cx("error")}>{errors?.name}</div>
+                ) : null}
+              </div>
+              <div className={cx("input-field")}>
+                <p className={cx("")}>your email</p>
+                <input
+                  className={cx("box")}
+                  type="email"
+                  name="email"
+                  placeholder="enter your email..."
+                  maxLength={50}
+                  onChange={(e) => {
+                    if (errors?.email) {
+                      setErrors({ ...errors, email: "" });
+                    }
+                    setUserDataUpdate({
+                      ...userDataUpdate,
+                      email: e.target.value,
+                    });
+                  }}
+                  value={userDataUpdate.email}
+                />
+                {errors?.email ? (
+                  <div className={cx("error")}>{errors?.email}</div>
+                ) : null}
+              </div>
+            </div>
+
+            <div className={cx("row")}>
+              <div className={cx("input-field")}>
+                <p className={cx("")}>your current password</p>
+                <input
+                  className={cx("box")}
+                  type="password"
+                  name="current password"
+                  placeholder="enter your password..."
+                  maxLength={50}
+                  value={userDataUpdate.old_password}
+                  onChange={(e) => {
+                    if (errors?.old_password) {
+                      setErrors({ ...errors, old_password: "" });
+                    }
+                    setUserDataUpdate({
+                      ...userDataUpdate,
+                      old_password: e.target.value,
+                    });
+                  }}
+                  id={cx("current-pw")}
+                />
+                {errors?.old_password ? (
+                  <div className={cx("error")}>{errors.old_password}</div>
+                ) : null}
+              </div>
+              <div className={cx("input-field")}>
+                <p className={cx("")}>
+                  your new password <span className={cx("required")}>*</span>
+                </p>
+                <input
+                  className={cx("box")}
+                  type="password"
+                  name="new password"
+                  placeholder="enter your new password..."
+                  maxLength={50}
+                  value={userDataUpdate.password}
+                  onChange={(e) => {
+                    if (errors?.password) {
+                      setErrors({ ...errors, password: "" });
+                    }
+                    setUserDataUpdate({
+                      ...userDataUpdate,
+                      password: e.target.value,
+                    });
+                  }}
+                  id={cx("new-pw")}
+                />
+                {errors?.password ? (
+                  <div className={cx("error")}>
+                    {errors.password[errors?.password?.length - 1]}
+                  </div>
+                ) : null}
+              </div>
+              <div className={cx("input-field")}>
+                <p className={cx("")}>
+                  confirm your new password
+                  <span className={cx("required")}>*</span>
+                </p>
+                <input
+                  className={cx("box")}
+                  type="password"
+                  name="password-confirmation"
+                  placeholder="confirm your new password..."
+                  maxLength={50}
+                  value={userDataUpdate.password_confirmation}
+                  onChange={(e) => {
+                    if (errors?.password) {
+                      setErrors({ ...errors, password: "" });
+                    }
+                    setUserDataUpdate({
+                      ...userDataUpdate,
+                      password_confirmation: e.target.value,
+                    });
+                  }}
+                />
+                {errors?.password && errors.password?.length > 1 ? (
+                  <div className={cx("error")}>{errors.password[0]}</div>
+                ) : null}
+              </div>
+            </div>
+          </div>
+          <div className={cx("")}>
+            <p className={cx("")}>your profile</p>
+            <input
+              className={cx("box")}
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={(e) => onImageChoose(e)}
+            />
+          </div>
+          <Btn value={"update now"} onclick={onUpdate}></Btn>
+        </form>
+      )}
+    </div>
+  );
 }
 
 export default UpdateUserProfile;

@@ -25,6 +25,7 @@ function UpdateProfile() {
     axiosClient
       .get("/admin")
       .then(({ data }) => {
+        console.log(data);
         setUserDataUpdate(data);
         setLoading(false);
       })

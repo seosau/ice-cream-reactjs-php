@@ -97,13 +97,13 @@ class ProductController extends Controller
                 return ProductResource::collection(
                     Product::where('seller_id', $user->id)
                         ->orderBy($sortBy,  $order)
-                        ->paginate(2)
+                        ->paginate(4)
                 );
             } else if ($sortBy === 'status') {
                 return ProductResource::collection(
                     Product::where('seller_id', $user->id)
                         ->where($sortBy, "=",  $order)
-                        ->paginate(2)
+                        ->paginate(4)
                 );
             }
         }

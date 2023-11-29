@@ -31,6 +31,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->prefix('/')->group(function () {
     Route::get('/me', [ClientController::class, 'me']);
+    Route::post('/updateprofile', [ClientController::class, 'update']);
     Route::get('/quantitywishlists', [WishListController::class, 'getQuantity']);
     Route::apiResource('/wishlists', WishListController::class);
     Route::get('/quantityCartItems', [CartController::class, 'getQuantity']);
@@ -58,5 +59,6 @@ Route::middleware('auth:sanctum')->prefix('/admin')->group(function () {
     Route::post('/updateprofile', [AdminController::class, 'update']);
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::get('/viewproduct', [ProductController::class, 'sortProduct']);
+    Route::get('/useraccount', [AdminController::class, 'getAllUsers']);
     Route::apiResource('/product', ProductController::class);
 });

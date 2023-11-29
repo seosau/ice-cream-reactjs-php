@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
-use App\Models\Product;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -15,7 +15,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Models\Seller;
-
+use App\Models\User;
 
 class AdminController extends Controller
 {
@@ -46,7 +46,7 @@ class AdminController extends Controller
         if (!Auth::guard('seller')->attempt($credentials)) {
             return response([
                 'error' => 'The Provided credentials are not correct',
-                'password' =>  $pass 
+                'password' =>  $pass
             ], 422);
         }
         $seller = Auth::guard('seller')->user();
@@ -113,6 +113,15 @@ class AdminController extends Controller
                 'user_type' =>  $user->user_type,
             ]
         );
+    }
+    public  function getAllUsers(Request $request)
+    {
+        $user = $request->user();
+        if ($user->user_type === 'client') {
+            return abort(403, 'Unauthorized action');
+        }
+        $data = User::query()->get(['id', 'name', 'email', 'image']);
+        return $data;
     }
     private function saveImage($image)
     {

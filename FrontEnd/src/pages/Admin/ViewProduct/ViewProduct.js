@@ -17,6 +17,7 @@ function ViewProduct() {
   const [params, setParams] = useState({});
 
   const currentURL = window.location.search;
+  console.log(currentURL)
   const isSort = currentURL.includes("sortBy");
   const getProducts = (url = `/admin/product`) => {
     setLoading(true);
@@ -57,7 +58,7 @@ function ViewProduct() {
   }, []);
   useEffect(() => {
     getProductsFromCurrentUrl();
-  }, []);
+  }, [currentURL]);
 
   const onPageClick = (link) => {
     getProducts(link.url);

@@ -181,11 +181,6 @@ function EditProduct() {
                   />
                 ) : null}
                 <div className={cx("flex-btn")}>
-                  {/* <Btn
-                    value={"delete image"}
-                    style={{ width: "49%", height: "3rem" }}
-                    onclick={onDeleteImage}
-                  /> */}
                   <Btn
                     value={"update product"}
                     style={{
@@ -200,15 +195,6 @@ function EditProduct() {
                   />
                 </div>
               </div>
-              {/* <div className={cx("flex-btn")}>
-               
-                <Btn
-                  value={"delete product"}
-                  style={{
-                    width: "49%",
-                  }}
-                />
-              </div> */}
             </form>
           </div>
         </div>

@@ -32,8 +32,8 @@ function HomeHeader({ children }) {
     setQuantityCart,
     setCartIds
   } = useStateContext();
-  const image_url = currentUser.image
-    ? currentUser.image
+  const image_url = currentUser.image_url
+    ? currentUser.image_url
     : require("../../assets/img/avt.jpg");
   const [showNavBar, setShowNavBar] = useState(false);
   const [showSearchForm, setShowSeachForm] = useState(false);
@@ -185,7 +185,7 @@ function HomeHeader({ children }) {
                   />
                   <p className={cx("profile-name")}>{currentUser.name}</p>
                   <div className={cx("flex-btn")}>
-                    <Btn href="/profile" value="profile"></Btn>
+                    <Btn href="/profile" value="profile" onclick={(e) => handleShowProfile()}></Btn>
                     <Btn value="logout" onclick={handleLogout}></Btn>
                   </div>
                 </div>

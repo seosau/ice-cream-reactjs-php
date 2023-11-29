@@ -35,5 +35,16 @@ class UpdateProfileRequest extends FormRequest
             'image' => 'nullable|string'
         ];
     }
-    
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'name field is required',
+            'email.required' => 'email field is required',
+            'email.email' => 'email must be a valid email address',
+            'password.required' => 'password field is required',
+            'password.confirmed' => 'password field confirmation does not match',
+            'password' => 'password must be at least 8 characters, one uppercase and one lowercase letter, one symbol, one number',
+            'old_password.required' => 'old password is required'
+        ];
+    }
 }

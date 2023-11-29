@@ -14,12 +14,21 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-
-        $orderList = Order::query()
-            ->join('products', 'products.id', 'orders.product_id')
-            ->where('orders.user_id', $user->id)
-            ->orderBy('updated_at', 'desc')
-            ->get(['orders.*', 'products.name as product_name', 'products.image']);
+        $orderList = [];
+        if ($user->user_type === 'client') {
+            $orderList = Order::query()
+                ->join('products', 'products.id', 'orders.product_id')
+                ->where('orders.user_id', $user->id)
+                ->orderBy('updated_at', 'desc')
+                ->get(['orders.*', 'products.name as product_name', 'products.image']);
+        } else {
+            $orderList = Order::query()
+                ->join('products', 'products.id', 'orders.product_id')
+                ->where('orders.seller_id', $user->id)
+                ->where('orders.status', '=', 'in progress')
+                ->orderBy('updated_at', 'desc')
+                ->get(['orders.*', 'products.name as product_name', 'products.image']);
+        }
         return [
             'orderList' => OrderResource::collection($orderList)
         ];
@@ -68,5 +77,14 @@ class OrderController extends Controller
             ->join('products', 'products.id', 'orders.product_id')
             ->where('orders.id', $id)
             ->get(['orders.*', 'products.name as product_name', 'products.image']));
+    }
+    public function destroy(Order $order, Request $request)
+    {
+        $user = $request->user();
+        if ($user->user_type === 'client') {
+            return abort(403, 'Unauthorized action');
+        }
+        $order->delete();
+        return response('delete successfully', 204);
     }
 }

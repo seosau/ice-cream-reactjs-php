@@ -1,17 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\WishList;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
-use App\Models\User;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\UpdateProfileRequest;
+use App\Models\User;
 
 class ClientController extends Controller
 {
@@ -73,9 +73,40 @@ class ClientController extends Controller
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
-            'image' => $user->image ? URL::to($user->image) : null,
+            'image_url' => $user->image ? URL::to($user->image) : null,
             'user_type' => $user->user_type,
         ];
+    }
+    public function update(UpdateProfileRequest $request)
+    {
+        $credentials = $request->validated();
+        $user = $request->user();
+        if (!Hash::check($credentials['old_password'], $user->password)) {
+            return response([
+                'error' => 'The Provided old password are not correct'
+            ], 422);
+        }
+        if (isset($credentials['image'])) {
+            $relativePath = $this->saveImage($credentials['image']);
+            $credentials['image'] = $relativePath;
+            if ($user->image) {
+                $absolutePath = public_path($user->image);
+                File::delete($absolutePath);
+            }
+        }
+        $user->update([
+            ...$credentials,
+            'password' => bcrypt($credentials['password'])
+        ]);
+        return response(
+            [
+                'id' =>  $user->id,
+                'name' =>  $user->name,
+                'email' =>  $user->email,
+                'image_url' =>  $user->image ? URL::to($user->image) : null,
+                'user_type' =>  $user->user_type,
+            ]
+        );
     }
     private function saveImage($image)
     {

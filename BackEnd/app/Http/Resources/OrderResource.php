@@ -29,6 +29,7 @@ class OrderResource extends JsonResource
             'phone_number' => $this->phone_number,
             'email' => $this->email,
             'payment_method' => $this->payment_method,
+            'payment_status' => $this->payment_status,
             'date' => $this->updated_at->format('d-m-Y H:i:s'),
         ];
     }

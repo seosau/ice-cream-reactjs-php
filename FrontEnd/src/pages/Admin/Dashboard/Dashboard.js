@@ -44,7 +44,7 @@ function Dashboard() {
           </div>
           <div className={cx("box")}>
             {/*select mesage from db*/}
-            <h3 className={cx("box-title")}>23{/*Number of message */}</h3>
+            <h3 className={cx("box-title")}>{data.totalMessage}{/*Number of message */}</h3>
             <p>unread message</p>
 
             <Btn
@@ -81,7 +81,7 @@ function Dashboard() {
             <p>Total active products</p>
 
             <Btn
-              href={"/admin/viewactiveproduct"}
+              href={`/admin/viewproduct?sortBy=status&order=active`}
               value={"View active product"}
               style={{
                 width: "fit-content",
@@ -98,7 +98,7 @@ function Dashboard() {
             <p>Total inactive products</p>
 
             <Btn
-              href="/admin/viewinactiveproduct"
+              href={`/admin/viewproduct?sortBy=status&order=inactive`}
               value="View inactive product"
               style={{
                 width: "fit-content",
@@ -137,7 +137,7 @@ function Dashboard() {
           </div>
           <div className={cx("box")}>
             {/*select orders from db*/}
-            <h3 className={cx("box-title")}>2{/*Number of orders */}</h3>
+            <h3 className={cx("box-title")}>{data.totalOrderPlaced}</h3>
             <p>total orders placed</p>
 
             <Btn
@@ -151,7 +151,7 @@ function Dashboard() {
           <div className={cx("box")}>
             {/*select confirm orders from db*/}
             <h3 className={cx("box-title")}>
-              2{/*Number of confirm orders */}
+              {data.totalOrderConfirmed}{/*Number of confirm orders */}
             </h3>
             <p>total confirm orders </p>
 
@@ -165,7 +165,7 @@ function Dashboard() {
           <div className={cx("box")}>
             {/*select canceled orders from db*/}
             <h3 className={cx("box-title")}>
-              2{/*Number of canceled orders */}
+              {data.totalOrderCanceld}{/*Number of canceled orders */}
             </h3>
             <p>total canceled orders </p>
 
