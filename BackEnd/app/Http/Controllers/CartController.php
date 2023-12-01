@@ -59,7 +59,7 @@ class CartController extends Controller
             ->join("products", "carts.product_id", "=", "products.id")
             ->where('carts.user_id', $user->id)
             ->get(['products.*', 'carts.quantity']);
-            $quantity = Cart::query()->where("user_id", $user->id)->sum("quantity");
+        $quantity = Cart::query()->where("user_id", $user->id)->sum("quantity");
         return  [
             'cartList' =>  CartResource::collection($cartList),
             "quantity" =>  $quantity,
@@ -76,8 +76,10 @@ class CartController extends Controller
         $cartListIds = Cart::query()->select('product_id')
             ->where("user_id", $user->id)
             ->get();
+        $quantity = Cart::query()->where("user_id", $user->id)->sum("quantity");
         return [
-            "cartListIds" => $cartListIds
+            "cartListIds" => $cartListIds,
+            "quantity" =>  $quantity,
         ];
     }
     public function getQuantity(Request $request)

@@ -46,6 +46,7 @@ Route::prefix('/')->group(function () {
     Route::get('/menu', [ProductController::class, 'index']);
     Route::get('/menu/{productId}', [ProductController::class, 'getProductById']);
     Route::get('/viewproduct', [ProductController::class, 'sortProduct']);
+    Route::get('/searchproduct/{keyword}', [ClientController::class, 'searchProduct']);
 });
 
 Route::prefix('/admin')->group(function () {

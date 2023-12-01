@@ -15,22 +15,16 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
-
-    protected $table = 'products';
     public function index(Request $request)
     {
+        $query = Product::where('status', 'active')->orderBy('created_at', 'desc');
+
         $user = $request->user();
         if ($user && $user->user_type === 'seller') {
-            return ProductResource::collection(
-                Product::where('seller_id', $user->id)
-                    ->orderBy('created_at', 'desc')
-                    ->paginate(4)
-            );
+            $query->where('seller_id', $user->id);
         }
         return ProductResource::collection(
-            Product::where('status', "=", "active")
-                ->orderBy('created_at', 'desc')
-                ->paginate(4)
+            $query->paginate(4)
         );
     }
     public function store(StoreProductRequest $request)
@@ -92,35 +86,22 @@ class ProductController extends Controller
         $user = $request->user();
         $sortBy = $request->input('sortBy');
         $order = $request->input('order');
-        if ($user && $user->user_type === "seller") {
-            if ($sortBy === 'price') {
-                return ProductResource::collection(
-                    Product::where('seller_id', $user->id)
-                        ->orderBy($sortBy,  $order)
-                        ->paginate(4)
-                );
-            } else if ($sortBy === 'status') {
-                return ProductResource::collection(
-                    Product::where('seller_id', $user->id)
-                        ->where($sortBy, "=",  $order)
-                        ->paginate(4)
-                );
-            }
+    
+        $query = Product::where('status', 'active');
+    
+        if ($user && $user->user_type === 'seller') {
+            $query->where('seller_id', $user->id);
         }
+    
         if ($sortBy === 'price') {
-            return ProductResource::collection(
-                Product::where('status', "=", "active")
-                    ->orderBy($sortBy,  $order)
-                    ->paginate(4)
-            );
-        } else if ($sortBy === 'status') {
-            return ProductResource::collection(
-                Product::where('status', "=", "active")
-                    ->where($sortBy, "=",  $order)
-                    ->paginate(4)
-            );
+            $query->orderBy($sortBy, $order);
+        } elseif ($sortBy === 'status') {
+            $query->where($sortBy, $order);
         }
-        return;
+    
+        return ProductResource::collection(
+            $query->paginate(4)
+        );
     }
     private function saveImage($image)
     {

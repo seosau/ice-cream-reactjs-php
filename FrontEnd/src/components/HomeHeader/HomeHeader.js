@@ -30,7 +30,7 @@ function HomeHeader({ children }) {
     setWishListIds,
     quantityCart,
     setQuantityCart,
-    setCartIds
+    setCartIds,
   } = useStateContext();
   const image_url = currentUser.image_url
     ? currentUser.image_url
@@ -94,6 +94,13 @@ function HomeHeader({ children }) {
   const handleSearchChange = (event) => {
     setSearchValue(event.target.value);
   };
+  const onSearch = (e) => {
+    e.preventDefault();
+    if (searchValue === "") {
+      return;
+    }
+    return navigate(`/searchresult/${searchValue}`);
+  };
   const handleLogout = () => {
     axiosClient
       .post("/logout")
@@ -101,7 +108,7 @@ function HomeHeader({ children }) {
         setcurrentUser({});
         setUserToken(null);
         handleShowProfile();
-        navigate('/home')
+        navigate("/home");
         Alert("success", "Logout Successfully");
       })
       .catch((error) => {
@@ -136,7 +143,7 @@ function HomeHeader({ children }) {
               required
               maxLength="100"
             />
-            <button type="submit" id="search_product_btn">
+            <button id="search_product_btn" onClick={(e) => onSearch(e)}>
               <FontAwesomeIcon icon={faSearch} className={cx("icon-style")} />
             </button>
           </form>
@@ -185,7 +192,11 @@ function HomeHeader({ children }) {
                   />
                   <p className={cx("profile-name")}>{currentUser.name}</p>
                   <div className={cx("flex-btn")}>
-                    <Btn href="/profile" value="profile" onclick={(e) => handleShowProfile()}></Btn>
+                    <Btn
+                      href="/profile"
+                      value="profile"
+                      onclick={(e) => handleShowProfile()}
+                    ></Btn>
                     <Btn value="logout" onclick={handleLogout}></Btn>
                   </div>
                 </div>

@@ -46,7 +46,7 @@ function Cart() {
     axiosClient
       .put(`/cart/${index}`, product)
       .then(({ data }) => {
-        Alert("success","Update quantity successfully")
+        Alert("success", "Update quantity successfully");
         setProducts(data.cartList);
         setQuantityCart(data.quantity);
         setLoading(false);
@@ -68,6 +68,7 @@ function Cart() {
           .delete(`/cart/${id}`)
           .then(({ data }) => {
             setCartIds(data.cartListIds);
+            setQuantityCart(data.quantity);
             getProductsInCart();
             Swal.fire({
               title: "Deleted!",
@@ -110,7 +111,7 @@ function Cart() {
                   <div key={index} className={cx("box")}>
                     <img src={product.image_url} alt="product" />
                     <div className={cx("content")}>
-                    <img
+                      <img
                         alt=""
                         src={require("../../../assets/img/shape-19.png")}
                         className={cx("sharp")}

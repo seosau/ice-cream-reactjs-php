@@ -55,7 +55,7 @@
     height: 25rem;
     object-fit: cover;
     transition: .5s;
-    background-color: polegreen;
+    background-color: palegreen;
 }
 
 .products .box-container .box:hover img {
@@ -116,28 +116,15 @@
     padding-right: 2rem;
 }
 
-.icon-style-clicked {
-    font-size: 2rem;
-    color: var(--main-color);
-    height: 2.5rem;
-    width: 2.5rem;
-    line-height: 2.4rem;
-    text-align: center;
-    margin-left: .5rem;
-    cursor: pointer;
-}
 .icon-style {
     font-size: 2rem;
-    color: gray;
     height: 2.5rem;
     width: 2.5rem;
     line-height: 2.4rem;
     text-align: center;
-    margin-left: .5rem;
+    margin-left: 0.5rem;
     cursor: pointer;
-}
-
-
+  }
 
 .products .box-container .box h3 {
     text-transform: capitalize;

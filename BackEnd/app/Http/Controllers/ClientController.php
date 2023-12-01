@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -11,6 +12,8 @@ use Illuminate\Support\Str;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Resources\ProductResource;
+use App\Models\Product;
 use App\Models\User;
 
 class ClientController extends Controller
@@ -106,6 +109,21 @@ class ClientController extends Controller
                 'image_url' =>  $user->image ? URL::to($user->image) : null,
                 'user_type' =>  $user->user_type,
             ]
+        );
+    }
+    public function searchProduct(Request $request, $keyword)
+    {
+        $sortBy = $request->input('sortBy');
+        $order = $request->input('order');
+        $data = Product::where('status', '=', 'active');
+        if ($sortBy === 'price') {
+            $data->orderBy($sortBy, $order);
+        } elseif ($sortBy === 'status') {
+            $data->where($sortBy, '=', $order);
+        }
+        return ProductResource::collection(
+            $data->where('name', 'like', "%{$keyword}%")
+                ->paginate(4)
         );
     }
     private function saveImage($image)

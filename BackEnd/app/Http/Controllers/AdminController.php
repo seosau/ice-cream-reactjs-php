@@ -41,12 +41,10 @@ class AdminController extends Controller
     }
     public function login(LoginRequest $request)
     {
-        $pass = bcrypt('$2y$10$kZq96pE3V3dtPs/ooEwZHeQVvTKZcO6RNKktsVXoBaHe6./9HJgVq');
         $credentials = $request->validated();
         if (!Auth::guard('seller')->attempt($credentials)) {
             return response([
                 'error' => 'The Provided credentials are not correct',
-                'password' =>  $pass
             ], 422);
         }
         $seller = Auth::guard('seller')->user();
