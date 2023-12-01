@@ -8,11 +8,18 @@ const cx = className.bind(style);
 function Order() {
   const [orderData, setOrderData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [params, setParams] = useState({});
   const [paymentStatus, setPaymentStatus] = useState({});
-  const getOrderData = () => {
+  const currentURL = window.location.search;
+  const isSort = currentURL.includes("status");
+  const getOrderData = (url = "/order") => {
     setLoading(true);
+    var payload = {};
+    if (url.includes("order")) {
+      payload = { ...params };
+    }
     axiosClient
-      .get("/order")
+      .get(url)
       .then(({ data }) => {
         setOrderData(data.orderList);
         setLoading(false);
@@ -20,6 +27,19 @@ function Order() {
       .catch((error) => {
         console.log(error);
       });
+  };
+  const getProductsFromCurrentUrl = () => {
+    if (isSort === true) {
+      const searchParams = new URLSearchParams(currentURL);
+      const status = searchParams.get("status");
+      const payment_status = searchParams.get("payment_status");
+      setParams({
+        status: status,
+        payment_status: payment_status,
+      });
+      onGetSortValue(status, payment_status);
+    }
+    return;
   };
   const handleUpdatePaymentStatus = (orderId, index) => {
     if (
@@ -43,11 +63,11 @@ function Order() {
         .put(`/order/${orderId}`, updateOrderData[index])
         .then(({ data }) => {
           getOrderData();
-          Alert({
-            title: "Updated!",
-            text: "This order will be deliverd to cusomer!",
-            icon: "success",
-          });
+          Alert(
+            "success",
+            "Updated!",
+            "This order will be deliverd to cusomer!"
+          );
         })
         .catch((error) => {
           console.log(error);
@@ -68,11 +88,11 @@ function Order() {
         axiosClient
           .delete(`/order/${orderId}`)
           .then(({ data }) => {
-            getOrderData();
+            getProductsFromCurrentUrl();
             Swal.fire({
+              icon: "success",
               title: "Deleted!",
               text: "This order was deleted!",
-              icon: "success",
             });
           })
           .catch((error) => {
@@ -81,8 +101,33 @@ function Order() {
       }
     });
   };
+  const onGetSortValue = (status, payment_status) => {
+    setLoading(true);
+    setParams({ status, payment_status });
+    axiosClient
+      .get(`/order`, {
+        params: {
+          status: status,
+          payment_status: payment_status,
+        },
+      })
+      .then(({ data }) => {
+        setOrderData(data.orderList);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   useEffect(() => {
-    getOrderData();
+    if (isSort === false) {
+      getOrderData();
+    } else {
+      return;
+    }
+  }, []);
+  useEffect(() => {
+    getProductsFromCurrentUrl();
   }, []);
   return (
     <div className={cx("container")}>
@@ -97,12 +142,22 @@ function Order() {
             {orderData.length > 0 ? (
               orderData.map((orderInfo, index) => (
                 <div className={cx("box")} key={index}>
-                  <div className={cx("status")} style={{ color: "limegreen" }}>
+                  <div
+                    className={cx("status")}
+                    style={{
+                      color:
+                        orderInfo.status === "canceled"
+                          ? "red"
+                          : orderInfo.status === "in progress"
+                          ? "orange"
+                          : "green",
+                    }}
+                  >
                     {orderInfo.status}
                   </div>
                   <div className={cx("details")}>
                     <p>
-                      user name:{" "}
+                      user name:
                       <span>
                         {orderInfo.user_name}
                         {/*fetch from db*/}
@@ -165,40 +220,43 @@ function Order() {
                       </span>
                     </p>
                   </div>
+
                   <form>
-                    <select
-                      className={cx("box")}
-                      name="update_payment"
-                      onChange={(e) => {
-                        setPaymentStatus({
-                          orderId: orderInfo.id,
-                          paymentStatus: e.target.value,
-                        });
-                      }}
-                    >
-                      <option
-                        value={
-                          orderInfo.payment_status === "pending"
-                            ? "pending"
-                            : "completed"
-                        }
+                    {orderInfo.status === "canceled" ? null : (
+                      <select
+                        className={cx("box")}
+                        name="update_payment"
+                        onChange={(e) => {
+                          setPaymentStatus({
+                            orderId: orderInfo.id,
+                            paymentStatus: e.target.value,
+                          });
+                        }}
                       >
-                        {orderInfo.payment_status === "pending"
-                          ? "pending"
-                          : "order delivered"}
-                      </option>
-                      <option
-                        value={
-                          orderInfo.payment_status !== "pending"
+                        <option
+                          value={
+                            orderInfo.payment_status === "pending"
+                              ? "pending"
+                              : "completed"
+                          }
+                        >
+                          {orderInfo.payment_status === "pending"
                             ? "pending"
-                            : "completed"
-                        }
-                      >
-                        {orderInfo.payment_status !== "pending"
-                          ? "pending"
-                          : "order delivered"}
-                      </option>
-                    </select>
+                            : "order delivered"}
+                        </option>
+                        <option
+                          value={
+                            orderInfo.payment_status !== "pending"
+                              ? "pending"
+                              : "completed"
+                          }
+                        >
+                          {orderInfo.payment_status !== "pending"
+                            ? "pending"
+                            : "order delivered"}
+                        </option>
+                      </select>
+                    )}
                     <div className={cx("flex-btn")}>
                       <Btn
                         value={"update payment"}

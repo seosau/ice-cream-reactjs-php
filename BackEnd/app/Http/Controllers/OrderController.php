@@ -14,21 +14,23 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $orderList = [];
+        $status = $request->input('status');
+        $payment_status = $request->input('payment_status');
+        $query = Order::join('products', 'products.id', 'orders.product_id');
         if ($user->user_type === 'client') {
-            $orderList = Order::query()
-                ->join('products', 'products.id', 'orders.product_id')
-                ->where('orders.user_id', $user->id)
-                ->orderBy('updated_at', 'desc')
-                ->get(['orders.*', 'products.name as product_name', 'products.image']);
+            $orderListQuery = $query
+                ->where('orders.user_id', $user->id);
         } else {
-            $orderList = Order::query()
-                ->join('products', 'products.id', 'orders.product_id')
+            $orderListQuery = $query
                 ->where('orders.seller_id', $user->id)
-                ->where('orders.status', '=', 'in progress')
-                ->orderBy('updated_at', 'desc')
-                ->get(['orders.*', 'products.name as product_name', 'products.image']);
+                ->where('orders.status', '=',   $status ? $status : 'in progress')
+                ->where('orders.payment_status', '=', $payment_status ? $payment_status : 'pending');
         }
+
+        $orderList =  $orderListQuery
+            ->orderBy('updated_at', 'desc')
+            ->get(['orders.*', 'products.name as product_name', 'products.image']);
+
         return [
             'orderList' => OrderResource::collection($orderList)
         ];

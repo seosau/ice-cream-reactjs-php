@@ -22,7 +22,7 @@ class DashboardController extends Controller
         $totalUserAccounts = User::query()->count();
         $totalSellerAccounts = Seller::query()->count();
         $totalMessage = Message::query()->count();
-        $totalOrderPlaced = Order::query()->where('seller_id', $user->id)->where('status', '=', 'in progress')->count();
+        $totalOrderPlaced = Order::query()->where('seller_id', $user->id)->where('status', '!=', 'canceled')->count();
         $totalOrderCanceld = Order::query()->where('seller_id', $user->id)->where('status', '=', 'canceled')->count();
         $totalOrderConfirmed = Order::query()->where('seller_id', $user->id)->where('status', '=', 'delivered')->count();
         return [

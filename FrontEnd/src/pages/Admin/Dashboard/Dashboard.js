@@ -157,6 +157,7 @@ function Dashboard() {
 
             <Btn
               value={"confirm orders"}
+              href={`/admin/order?status=delivered&payment_status=completed`}
               style={{
                 width: "fit-content",
               }}
@@ -171,6 +172,7 @@ function Dashboard() {
 
             <Btn
               value={"canceled orders"}
+              href={`/admin/order?status=canceled&payment_status=pending`}
               style={{
                 width: "fit-content",
               }}
