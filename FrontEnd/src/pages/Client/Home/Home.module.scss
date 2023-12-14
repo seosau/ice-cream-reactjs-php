@@ -302,6 +302,8 @@
 
 .taste2 .box-container .box img {
     width: 100%;
+    object-fit: contain;
+    height: 100%;
 }
 
 .taste2 .box-container .box .box-overlay {
@@ -482,7 +484,7 @@
 
 @media (min-width: 1205px) {
     .taste2 .box-container .box {
-        height: 245px;
+        height: 350px;
     }
 }
 
