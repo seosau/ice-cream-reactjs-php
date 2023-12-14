@@ -56,7 +56,6 @@ function Footer() {
                     <Btn
                         href="/contact"
                         value="contact now"
-                        style={{width:'50%'}}
                     />
                 </div>
                 {
