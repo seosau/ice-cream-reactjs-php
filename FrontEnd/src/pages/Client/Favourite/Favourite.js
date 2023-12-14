@@ -44,7 +44,8 @@ function Favourite() {
           .delete(`/wishlists/${id}`)
           .then(({ data }) => {
             setWishListIds(data.wishListIds);
-            getProductsInWishList();
+            // getProductsInWishList();
+            setProducts(prevProducts => prevProducts.filter(product => product.product_id !== id));
             Swal.fire({
               title: "Deleted!",
               text: "Your product has been deleted.",
@@ -72,7 +73,12 @@ function Favourite() {
       });
       return;
     }
-    const payload = { ...product, user_id: currentUser.id, quantity: 1, id: product.product_id };
+    const payload = {
+      ...product,
+      user_id: currentUser.id,
+      quantity: 1,
+      id: product.product_id,
+    };
     axiosClient
       .post("/cart", payload)
       .then(({ data }) => {
@@ -111,8 +117,8 @@ function Favourite() {
                         className={cx("sharp")}
                       />
                       <h3>{product.name}</h3>
+                      <p className={cx("price")}>Price: ${product.price}</p>
                       <div className={cx("flex-btn")}>
-                        <p className={cx("price")}>Price: ${product.price}</p>
                         <Btn
                           onclick={() => handleClickCart(product)}
                           style={{

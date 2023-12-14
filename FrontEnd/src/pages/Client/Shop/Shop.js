@@ -13,8 +13,14 @@ import Swal from "sweetalert2";
 const cx = className.bind(style);
 function Shop() {
   const navigate = useNavigate();
-  const { currentUser, wishListIds, setWishListIds, cartIds, setCartIds, setQuantityCart } =
-    useStateContext();
+  const {
+    currentUser,
+    wishListIds,
+    setWishListIds,
+    cartIds,
+    setCartIds,
+    setQuantityCart,
+  } = useStateContext();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [meta, setMeta] = useState({});
@@ -27,7 +33,7 @@ function Shop() {
     if (url.includes("viewproduct")) {
       payload = { ...params };
     }
-   await axiosClient
+    await axiosClient
       .get(url, {
         params: payload,
       })
@@ -50,8 +56,7 @@ function Shop() {
         order: order,
       });
       onGetSortValue(sortBy, order);
-    }
-    else{
+    } else {
       getProducts();
     }
   };
@@ -119,14 +124,14 @@ function Shop() {
   };
   const handleClickCart = (product) => {
     if (currentUser.id) {
-      if(product.stock === 0) {
+      if (product.stock === 0) {
         Swal.fire({
           title: "Sorry",
           text: "This product will refill soon",
           imageUrl: require("../../../assets/img/crying.png"),
           imageWidth: 80,
-          imageHeight:80,
-          imageAlt: "Custom image"
+          imageHeight: 80,
+          imageAlt: "Custom image",
         });
         return;
       }
@@ -139,7 +144,7 @@ function Shop() {
           Alert("success", "Add to cart successfully");
         })
         .catch((error) => {
-          if (error.response) { 
+          if (error.response) {
             Alert("warning", `${error.response.data.errors.id}`);
           }
         });
@@ -154,18 +159,18 @@ function Shop() {
   };
   const handleBuyProduct = (product) => {
     if (currentUser.id) {
-      if(product.stock === 0) {
+      if (product.stock === 0) {
         Swal.fire({
           title: "Sorry",
           text: "This product will refill soon",
           imageUrl: require("../../../assets/img/crying.png"),
           imageWidth: 80,
-          imageHeight:80,
-          imageAlt: "Custom image"
+          imageHeight: 80,
+          imageAlt: "Custom image",
         });
         return;
       }
-      navigate('/checkout')
+      navigate("/checkout");
     } else {
       Alert(
         "warning",
@@ -174,7 +179,7 @@ function Shop() {
       );
       navigate("/login");
     }
-  }
+  };
   return (
     <div className={cx("main-container")}>
       <div className={cx("banner")}>
@@ -225,7 +230,11 @@ function Shop() {
                       </p>
                     </Link>
                     <div className={cx("content")}>
-                      <img src={require("../../../assets/img/shape-19.png")} alt="Shape" className={cx("shap")} />
+                      <img
+                        src={require("../../../assets/img/shape-19.png")}
+                        alt="Shape"
+                        className={cx("shap")}
+                      />
                       <div className={cx("price-name")}>
                         <h2 className={cx("name")}>{product.name}</h2>
                         <h3 className={cx("price")}>Price ${product.price}</h3>
@@ -233,9 +242,7 @@ function Shop() {
                       <div className={cx("flex-btn")}>
                         <Btn
                           onclick={() => handleBuyProduct(product)}
-                          style={{
-                            width: "fit-content",
-                          }}
+                          style={{ flex: 1 }}
                           value="Buy Now"
                           href={`?from=menu&id=${product.id}`}
                         />
