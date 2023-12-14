@@ -357,6 +357,11 @@
   .chef .box > img {
     width: 95vw;
   }
+
+  .team .box-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
   
   //Testimonial
   .testimonial {
