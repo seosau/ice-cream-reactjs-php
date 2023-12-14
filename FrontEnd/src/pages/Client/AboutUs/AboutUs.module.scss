@@ -55,9 +55,7 @@
   margin-bottom: -2rem;
 }
 
-.chef .box > img {
-  width: 95vw;
-}
+
 
 .chef .box p {
   font-size: 1.3rem;
@@ -354,6 +352,10 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+  }
+
+  .chef .box > img {
+    width: 95vw;
   }
   
   //Testimonial
