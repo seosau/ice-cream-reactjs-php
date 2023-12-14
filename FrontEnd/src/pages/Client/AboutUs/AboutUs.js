@@ -307,7 +307,7 @@ function AboutUs() {
               <div className={cx("user-img")}>
                 <img
                   src={require("../../../assets/img/testimonial (1).jpg")}
-                  alt="User Image"
+                  alt="User img"
                 />
               </div>
             </div>
@@ -324,7 +324,7 @@ function AboutUs() {
               <div className={cx("user-img")}>
                 <img
                   src={require("../../../assets/img/testimonial (2).jpg")}
-                  alt="User Image"
+                  alt="User img"
                 />
               </div>
             </div>
@@ -341,7 +341,7 @@ function AboutUs() {
               <div className={cx("user-img")}>
                 <img
                   src={require("../../../assets/img/testimonial (3).jpg")}
-                  alt="User Image"
+                  alt="User img"
                 />
               </div>
             </div>
@@ -358,7 +358,7 @@ function AboutUs() {
               <div className={cx("user-img")}>
                 <img
                   src={require("../../../assets/img/testimonial (4).jpg")}
-                  alt="User Image"
+                  alt="User img"
                 />
               </div>
             </div>
@@ -386,7 +386,7 @@ function AboutUs() {
               <div className={cx("img-box")}>
                 <img
                   src={require("../../../assets/img/mission.webp")}
-                  alt="Mission Image"
+                  alt="Mission img"
                 />
               </div>
               <div>
@@ -401,7 +401,7 @@ function AboutUs() {
               <div className={cx("img-box")}>
                 <img
                   src={require("../../../assets/img/mission1.webp")}
-                  alt="Mission Image"
+                  alt="Mission img"
                 />
               </div>
               <div>
@@ -416,7 +416,7 @@ function AboutUs() {
               <div className={cx("img-box")}>
                 <img
                   src={require("../../../assets/img/mission0.jpg")}
-                  alt="Mission Image"
+                  alt="Mission img"
                 />
               </div>
               <div>
@@ -431,7 +431,7 @@ function AboutUs() {
               <div className={cx("img-box")}>
                 <img
                   src={require("../../../assets/img/mission2.webp")}
-                  alt="Mission Image"
+                  alt="Mission img"
                 />
               </div>
               <div>

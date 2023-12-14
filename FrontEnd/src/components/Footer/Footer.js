@@ -2,7 +2,6 @@ import className from "classnames/bind";
 import style from "./Footer.module.scss"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Btn from "../Button/Btn";
-import { useState } from "react";
 import {
     faChevronRight,
     faPhone,

@@ -12,18 +12,18 @@ function FilterProducts({
   onGetSortValue,
   isClient = true,
 }) {
-  const [isCheck, setIsChecked] = useState(false);
-  const btnSorts = [
+  const [btnSorts, setBtnSorts] = useState([
     {
-      title:'Newest',
-      isChecked:false,
+      title: "Latest",
+      sortBy:'newest',
+      isChecked: false,
     },
     {
-      title:'Best Selling',
-      isChecked:false,
-
-    }
-  ]
+      title: "Hot Sale",
+      sortBy:'bestsale',
+      isChecked: false,
+    },
+  ]);
   const selections = [
     {
       type: "status",
@@ -70,57 +70,83 @@ function FilterProducts({
           isChecked: false,
         },
         {
-          sortType: "strawberry",
-          title: "Category: Strawberry",
+          sortType: "chocolate",
+          title: "Category: Chocolate",
           isChecked: false,
         },
         {
-          sortType: "chocolate",
-          title: "Category: Chocolate",
+          sortType: "strawberry",
+          title: "Category: Strawberry",
           isChecked: false,
         },
       ],
     },
   ];
-  // const isChecked = (sortBy, order) => {
-  //   selections.forEach(selection => {
-  //     if(selection.type === sortBy)
-  //     {
-  //       selection.options.forEach(option => {
-  //         if(option.sortType === order) {
-  //           setIsChecked(true);
-
-  //         }
-  //       })
-  //     }
-  //   })
-  // };
+  const [selectedOptions, setSelectedOptions] = useState([...selections]);
+  const onOptionClick = (sectionIndex, optionIndex) => {
+    const updatedSelectedOptions = selectedOptions.map((section, sIndex) => {
+      if (sIndex === sectionIndex) {
+        return {
+          ...section,
+          options: section.options.map((option, oIndex) => ({
+            ...option,
+            isChecked: oIndex === optionIndex,
+          })),
+        };
+      }
+      return section;
+    });
+    setSelectedOptions(updatedSelectedOptions);
+  };
+  const onActive = (index) => {
+    const updatedBtnSorts = btnSorts.map((btn, i) => ({
+      ...btn,
+      isChecked: i === index,
+    }));
+    setBtnSorts(updatedBtnSorts);
+  };
   return (
     <div className={cx("container")}>
       <div className={cx("sort-choice")}>
         <p className={cx("sort-text")}>Sorted by</p>
-        {selections.map((selection, index) => {
-          return isClient && selection.type!=='status' ? (
-            <div className={cx("select")} key={index}>
+        {btnSorts.map((btnSort, index) => (
+          <Link
+            className={cx("btn-sort", { active: btnSort.isChecked })}
+            key={index}
+            onClick={() => {
+              onActive(index);
+            }}
+            to={`?sortBy=${btnSort.sortBy}&order='ctime'`}
+          >
+            {btnSort.title}
+          </Link>
+        ))}
+        {selectedOptions.map((selection, sectionIndex) => {
+          return isClient && selection.type !== "status" ? (
+            <div className={cx("select")} key={sectionIndex}>
               <span className={cx("select__label")}>{selection.type}</span>
               <FontAwesomeIcon icon={faChevronDown} />
               <ul className={cx("select__list")}>
-                {selection.options.map((option, ind) => (
-                  <li className={cx("select__item")} key={index + ind}>
+                {selection.options.map((option, optionIndex) => (
+                  <li
+                    className={cx("select__item")}
+                    key={optionIndex + sectionIndex}
+                  >
                     <Link
                       to={`?sortBy=${selection.type}&order=${option.sortType}`}
                       className={cx("select__link")}
                       onClick={() => {
-                        // isChecked(selection.type, option.sortType)
-                        onGetSortValue(selection.type, option.sortType);
+                        onOptionClick(sectionIndex, optionIndex);
                       }}
                     >
                       {option.title}
                     </Link>
-                    {/* <FontAwesomeIcon
-                  icon={faCheck}
-                  className={cx("select__item--active")}
-                /> */}
+                    {option.isChecked ? (
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        className={cx("select__item--active")}
+                      />
+                    ) : null}
                   </li>
                 ))}
               </ul>

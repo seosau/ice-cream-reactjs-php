@@ -14,9 +14,9 @@ function Cart() {
   const [grandTotal, setGrandTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
-  const getProductsInCart = () => {
+  const getProductsInCart = async () => {
     setLoading(true);
-    axiosClient
+   await axiosClient
       .get("/cart")
       .then(({ data }) => {
         setProducts(data.cartList);
@@ -72,9 +72,8 @@ function Cart() {
       )
     );
   };
-  const handleUpdateCart = (cart_id, quantity) => {
-    debugger;
-    axiosClient
+  const handleUpdateCart = async (cart_id, quantity) => {
+   await axiosClient
       .put(`/cart/${cart_id}`,{ quantity})
       .then(({ data }) => {
         Alert("success", "Update quantity successfully");
@@ -83,7 +82,7 @@ function Cart() {
       })
       .catch((error) => console.log(error));
   };
-  const handleButtonDelete = (cart_id, product_id) => {
+  const handleButtonDelete = async (cart_id, product_id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -94,7 +93,7 @@ function Cart() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosClient
+         axiosClient
           .delete(`/cart/${cart_id}`)
           .then(({ data }) => {
             setCartIds(data.cartListIds);

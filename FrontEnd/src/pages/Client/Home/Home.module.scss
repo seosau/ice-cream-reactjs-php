@@ -491,9 +491,13 @@
     .taste2 .box-container .box {
         height: calc(100% - 2rem);
     }
+   
 }
 
 @media screen and (max-width: 430px) {
+    .box-container {
+        grid-template-columns: none;
+    }
     .slider-container {
         min-height: 40vh;
     }
