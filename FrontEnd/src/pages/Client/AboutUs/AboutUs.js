@@ -10,8 +10,9 @@ function AboutUs() {
   useEffect(() => {
     const btn = document.getElementsByClassName(cx("btn"));
     const slide = document.getElementById(cx("slide"));
-
+    const windowWidth = window.innerWidth;
     btn[0].addEventListener("click", function () {
+
       slide.style.transform = "translateX(0px)";
       for (let i = 0; i < 4; i++) {
         btn[i].id = cx("");
@@ -20,7 +21,10 @@ function AboutUs() {
     });
 
     btn[1].addEventListener("click", function () {
-      slide.style.transform = "translateX(-800px)";
+      if (windowWidth <= 430)
+        slide.style.transform = "translateX(-100vw)";
+      else
+        slide.style.transform = "translateX(-800px)";
       for (let i = 0; i < 4; i++) {
         btn[i].id = cx("");
       }
@@ -28,7 +32,10 @@ function AboutUs() {
     });
 
     btn[2].addEventListener("click", function () {
-      slide.style.transform = "translateX(-1600px)";
+      if (windowWidth <= 430)
+        slide.style.transform = "translateX(-200vw)";
+      else
+        slide.style.transform = "translateX(-1600px)";
       for (let i = 0; i < 4; i++) {
         btn[i].id = cx("");
       }
@@ -36,7 +43,10 @@ function AboutUs() {
     });
 
     btn[3].addEventListener("click", function () {
-      slide.style.transform = "translateX(-2400px)";
+      if (windowWidth <= 430)
+        slide.style.transform = "translateX(-300vw)";
+      else
+        slide.style.transform = "translateX(-2400px)";
       for (let i = 0; i < 4; i++) {
         btn[i].id = cx("");
       }
