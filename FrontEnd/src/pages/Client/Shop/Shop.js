@@ -21,13 +21,13 @@ function Shop() {
   const [params, setParams] = useState({});
   const currentURL = window.location.search;
   const isSort = currentURL.includes("sortBy");
-  const getProducts = (url = `/menu`) => {
+  const getProducts = async (url = `/menu`) => {
     setLoading(true);
     var payload = {};
     if (url.includes("viewproduct")) {
       payload = { ...params };
     }
-    axiosClient
+   await axiosClient
       .get(url, {
         params: payload,
       })
@@ -51,7 +51,9 @@ function Shop() {
       });
       onGetSortValue(sortBy, order);
     }
-    return;
+    else{
+      getProducts();
+    }
   };
   const onGetSortValue = (sortBy, order) => {
     setLoading(true);
@@ -90,15 +92,8 @@ function Shop() {
     return false;
   };
   useEffect(() => {
-    if (isSort === false) {
-      getProducts();
-    } else {
-      return;
-    }
-  }, []);
-  useEffect(() => {
     getProductsFromCurrentUrl();
-  }, []);
+  }, [currentURL]);
   const handleClickLike = (product) => {
     if (currentUser.id) {
       const payload = { ...product, user_id: currentUser.id };
@@ -232,8 +227,8 @@ function Shop() {
                     <div className={cx("content")}>
                       <img src={require("../../../assets/img/shape-19.png")} alt="Shape" className={cx("shap")} />
                       <div className={cx("price-name")}>
-                        <h2 className={cx("price")}>Price ${product.price}</h2>
-                        <h3 className={cx("name")}>{product.name}</h3>
+                        <h2 className={cx("name")}>{product.name}</h2>
+                        <h3 className={cx("price")}>Price ${product.price}</h3>
                       </div>
                       <div className={cx("flex-btn")}>
                         <Btn

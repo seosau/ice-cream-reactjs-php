@@ -19,13 +19,13 @@ function View1Product() {
   const [product, setProduct] = useState([]);
   const [meta, setMeta] = useState({});
   const [params, setParams] = useState({});
-  const getProducts = (url = `/menu`) => {
+  const getProducts = async (url = `/menu`) => {
     setLoading(true);
     var payload = {};
     if (url.includes("viewproduct")) {
       payload = { ...params };
     }
-    axiosClient
+   await axiosClient
       .get(url, {
         params: payload,
       })
@@ -38,10 +38,10 @@ function View1Product() {
         console.log(error);
       });
   };
-  const getProductById = (id = null) => {
+  const getProductById = async (id = null) => {
     let product_id = id ? id : productId;
     setLoading(true);
-    axiosClient
+   await axiosClient
       .get(`/menu/${product_id}`)
       .then(({ data }) => {
         setProduct(data.data[0]);

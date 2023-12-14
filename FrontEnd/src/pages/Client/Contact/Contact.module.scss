@@ -90,7 +90,7 @@
 }
 
 .form-container .register{
-    width: 60rem;
+    width: 50rem;
 }
 .form-container form .box{
     background-color: var(--white-alpha-25); 
@@ -150,6 +150,17 @@
     text-transform: uppercase; 
     color: var(--main-color);
     font-size: 1.5rem;
+}
+.box-map {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 50px;
+}
+.box-mapdetail {
+    flex: 0.9;
+    height: 500px;
 }
 .address .box .icon-style{
     font-size: 2.5rem;

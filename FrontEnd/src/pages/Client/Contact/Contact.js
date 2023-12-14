@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import className from "classnames/bind";
 import style from "./Contact.module.scss";
@@ -23,10 +23,10 @@ function Contact() {
     message: "",
   });
   const [errors, setErrors] = useState({});
-  const handleSubmitMessage = () => {
+  const handleSubmitMessage = async () => {
     if (currentUser.id) {
       const payload = { ...message };
-      axiosClient
+      await axiosClient
         .post("/message", payload)
         .then(({ data }) => {
           setMessage({ user_name: "", email: "", subject: "", message: "" });
@@ -46,6 +46,9 @@ function Contact() {
       navigate("/login");
     }
   };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className={cx("main-container")}>
       <div className={cx("banner")}>
@@ -107,7 +110,7 @@ function Contact() {
             alt="separator"
           />
         </div>
-        <form action="" method="post" className={cx("register")}>
+        <form className={cx("register")}>
           <div className={cx("input-field")}>
             <label>
               name <sup>*</sup>
@@ -161,7 +164,7 @@ function Contact() {
               type="text"
               name="subject"
               required
-              placeholder="reason..."
+              placeholder="enter your reason..."
               value={message.subject}
               onChange={(e) => {
                 if (errors?.subject) {
@@ -184,7 +187,7 @@ function Contact() {
               cols="30"
               rows="10"
               required
-              placeholder=""
+              placeholder="enter your comment..."
               value={message.message}
               onChange={(e) => {
                 if (errors?.message) {
@@ -197,7 +200,11 @@ function Contact() {
               <div className={cx("error")}>{errors.message}</div>
             ) : null}
           </div>
-          <Btn onclick={handleSubmitMessage} value="send message" />
+          <Btn
+            onclick={handleSubmitMessage}
+            value="send message"
+            style={{ width: "30%" }}
+          />
         </form>
       </div>
 
@@ -242,6 +249,15 @@ function Contact() {
               <p>icreamshop@gmail.com</p>
             </div>
           </div>
+        </div>
+        <div className={cx("box-map")}>
+          <iframe
+          className={cx("box-mapdetail")}
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.2311712352484!2d106.80047917586931!3d10.870014157458742!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317527587e9ad5bf%3A0xafa66f9c8be3c91!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBDw7RuZyBuZ2jhu4cgVGjDtG5nIHRpbiAtIMSQSFFHIFRQLkhDTQ!5e0!3m2!1svi!2s!4v1702533990688!5m2!1svi!2s"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
         </div>
       </div>
     </div>

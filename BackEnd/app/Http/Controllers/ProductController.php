@@ -21,14 +21,14 @@ class ProductController extends Controller
         $query = Product::orderBy('updated_at', 'desc');
 
         if ($user && $user->user_type === 'seller') {
-            $query->where('seller_id', $user->id)->with('seller');
+            $query->where('seller_id', $user->id);
         } elseif ($user && $user->user_type === 'admin') {
             // Do nothing specific for admin, as 'all' is the default.
         } else {
             $query->where('status', 'active');
         }
 
-        return ProductResource::collection($query->paginate(4));
+        return ProductResource::collection($query->paginate(12));
     }
     public function store(StoreProductRequest $request)
     {
@@ -92,9 +92,9 @@ class ProductController extends Controller
 
         $query = Product::query();
 
-        if ($user->user_type === 'seller') {
+        if ($user && $user->user_type === 'seller') {
             $query->where('seller_id', $user->id);
-        } elseif ($user->user_type === 'admin') {
+        } elseif ($user && $user->user_type === 'admin') {
             // Do nothing specific for admin, as 'all' is the default.
         } else {
             $query->where('status', 'active');
@@ -109,7 +109,7 @@ class ProductController extends Controller
             $query->orderBy($sortBy, $order);
         }
 
-        return ProductResource::collection($query->paginate(4));
+        return ProductResource::collection($query->paginate(12));
     }
     private function saveImage($image)
     {

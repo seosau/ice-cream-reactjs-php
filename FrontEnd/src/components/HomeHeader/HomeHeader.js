@@ -120,10 +120,10 @@ function HomeHeader({ children }) {
           </Link>
           <nav className={showNavBar ? navBarActive : navBarClass}>
             <Link to="/">home</Link>
-            <Link to="/about">about us</Link>
+            <Link to="/about">about</Link>
             <Link to="/shop">shop</Link>
             <Link to="/order">order</Link>
-            <Link to="/contact">contact us</Link>
+            <Link to="/contact">contact</Link>
           </nav>
           <Search
             classname={showSearchForm ? searchFormActive : searchFormClass}

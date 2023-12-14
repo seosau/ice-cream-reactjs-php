@@ -4,7 +4,6 @@ import Btn from "../Button/Btn";
 
 const cx = className.bind(style);
 function ProductListItem({ item, onDelete, url }) {
-  console.log(url);
   return (
     <div className={cx("box")}>
       {/*-----product image-----*/}

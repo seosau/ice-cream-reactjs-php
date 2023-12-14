@@ -67,7 +67,7 @@ function Home() {
     const categories = [
         {
             img: require("../../../assets/img/categories.jpg"),
-            title: "coconuts",
+            title: "coconut",
         },
         {
             img: require("../../../assets/img/categories0.jpg"),
@@ -165,7 +165,7 @@ function Home() {
                             <div className={cx("textBox")}>
                                 <h1 className={cx("title")}>{slide.title1}</h1>
                                 <h1 className={cx("title")}>{slide.title2}</h1>
-                                <Btn href="" value="shop now" style={{ width: "fit-content" }} />
+                                <Btn href="/shop" value="shop now" style={{ width: "fit-content" }} />
                             </div>
                             <div className={cx("imgBox")}>
                                 <img src={slide.imgSrc} alt="slider" />
@@ -209,7 +209,7 @@ function Home() {
                     {categories.map((category, index) => (
                         <div className={cx("box")} key={index}>
                             <img src={category.img} alt="category" />
-                            <Btn href="" value={category.title} />
+                            <Btn href={`/shop?sortBy=category&order=${category.title}`} value={category.title} style={{width:'100%'}}/>
                         </div>
                     ))}
                 </div>
@@ -246,7 +246,7 @@ function Home() {
                         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
                     </p>
                     <Btn
-                        href=""
+                        href="/shop"
                         value="shop now"
                         style={{
                             width: "fit-content",
@@ -262,7 +262,7 @@ function Home() {
                         <h1>find your taste of desserts</h1>
                         <p>Treat them to a delicious treat and send them some Luck'o the Irish too!</p>
                         <Btn
-                            href=""
+                            href="/shop"
                             style={{
                                 width: "fit-content",
                             }}
@@ -299,7 +299,7 @@ function Home() {
                         </h1>
                         <p>expired</p>
                         <Btn
-                            href=""
+                            href="/shop"
                             style={{
                                 width: "fit-content",
                             }}

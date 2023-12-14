@@ -188,7 +188,7 @@ function EditProduct() {
                 </p>
                 <input
                   type="file"
-                  name="image"
+                  name="product img"
                   /*fetch stock */
                   accept="image/*"
                   className={cx("box")}
@@ -196,7 +196,7 @@ function EditProduct() {
                 />
                 {product.image_url ? (
                   <img
-                    alt="product image"
+                    alt="product img"
                     className={cx("image")}
                     src={product.image_url}
                   />

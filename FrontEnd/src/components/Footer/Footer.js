@@ -54,9 +54,9 @@ function Footer() {
                         alt="logo" />
                     <p>We're always in search for talented and motivated people. Don't be shy introduce yourself</p>
                     <Btn
-                        href=""
-                        style={{}}
+                        href="/contact"
                         value="contact now"
+                        style={{width:'50%'}}
                     />
                 </div>
                 {

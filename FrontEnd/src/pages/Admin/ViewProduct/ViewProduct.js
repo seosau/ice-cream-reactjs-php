@@ -51,13 +51,6 @@ function ViewProduct() {
       getProducts();
     }
   };
-  // useEffect(() => {
-  //   if (isSort === false) {
-  //     getProducts();
-  //   } else {
-  //     return;
-  //   }
-  // }, []);
   useEffect(() => {
     getProductsFromCurrentUrl();
   }, [currentURL]);
@@ -100,7 +93,7 @@ function ViewProduct() {
     setParams({ sortBy, order });
     axiosClient
       .get(
-        currentURL.includes("seller")
+        currentPath.includes("seller")
           ? "/seller/viewproduct"
           : "/admin/viewproduct",
         {

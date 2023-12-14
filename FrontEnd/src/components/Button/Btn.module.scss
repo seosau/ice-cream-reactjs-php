@@ -1,4 +1,6 @@
 .btn {
+    display: block;
+    text-align: center;
     background-color: var(--white-alpha-25);
     border: 2px solid var(--white-alpha-40);
     backdrop-filter: var(--backdrop-filter);
@@ -10,11 +12,6 @@
     font-size: 20px;
     cursor: pointer;
     position: relative;
-    // margin: 0.5rem;
-    margin-top: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     user-select: none;
 }
 

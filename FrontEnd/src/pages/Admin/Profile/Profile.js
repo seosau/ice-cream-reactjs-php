@@ -8,7 +8,7 @@ import axiosClient from "../../../axiosClient/axios";
 const cx = className.bind(style);
 function Profile() {
   const [data, setData] = useState({});
-  const [loading, setLoaing] = useState(false);
+
   const currentPath = window.location.pathname;
   const { currentUser } = useStateContext();
   const image_url = currentUser.image_url
@@ -18,12 +18,10 @@ function Profile() {
     const url = currentPath.includes("admin")
       ? "/admin/dashboard"
       : "/seller/dashboard";
-    setLoaing(true);
     await axiosClient
       .get(url)
       .then(({ data }) => {
         setData(data);
-        setLoaing(false);
       })
       .catch((error) => {
         console.log(error);
@@ -31,7 +29,7 @@ function Profile() {
   };
   useEffect(() => {
     getData();
-  }, []);
+  }, [currentUser]);
   return (
     <div className={cx("container")}>
       <div className={cx("heading")}>
@@ -47,7 +45,7 @@ function Profile() {
             src={image_url}
           />
           <h3>{currentUser.name}</h3>
-          <span>{currentPath.includes('seller') ? 'seller' :'admin'}</span>
+          <span>{currentPath.includes("seller") ? "seller" : "admin"}</span>
           <Btn
             href={
               currentPath.includes("admin")

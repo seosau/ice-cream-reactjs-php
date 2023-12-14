@@ -92,14 +92,14 @@
   height: 80px;
   background-repeat: no-repeat;
   transform: scale(1);
+  background-color: transparent;
 }
 
 .products .box-container .box .content .price-name .price {
-  margin-left: 1rem;
-  font-size: 1.8rem;
+  font-size: 22px;
 }
 .products .box-container .box .content .price-name .name {
-  font-size: 1.5rem;
+  font-size: 24px;
 }
 .products .box-container .box .content .flex-btn {
   display: flex;

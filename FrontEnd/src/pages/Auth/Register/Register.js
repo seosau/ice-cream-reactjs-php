@@ -196,7 +196,7 @@ function Register() {
               {userDataRegister.image_url && (
                 <img
                   src={userDataRegister.image_url}
-                  alt="Image"
+                  alt="user img"
                   className={cx("img-choose")}
                 />
               )}
