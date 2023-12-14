@@ -21,7 +21,7 @@ function AboutUs() {
     });
 
     btn[1].addEventListener("click", function () {
-      if (windowWidth <= 430)
+      if (windowWidth <= 968)
         slide.style.transform = "translateX(-100vw)";
       else
         slide.style.transform = "translateX(-800px)";
@@ -32,7 +32,7 @@ function AboutUs() {
     });
 
     btn[2].addEventListener("click", function () {
-      if (windowWidth <= 430)
+      if (windowWidth <= 768)
         slide.style.transform = "translateX(-200vw)";
       else
         slide.style.transform = "translateX(-1600px)";
