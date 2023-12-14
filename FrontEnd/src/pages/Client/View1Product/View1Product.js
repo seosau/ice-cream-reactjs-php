@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import className from "classnames/bind";
 import style from "./View1Product.module.scss";
+import Swal from "sweetalert2";
 import { Btn, Alert, Loader } from "../../../components";
 import axiosClient from "../../../axiosClient/axios";
 import { useStateContext } from "../../../context/ContextProvider";
@@ -12,8 +13,14 @@ function View1Product() {
   let { state } = useLocation();
   const { productId } = useParams();
   const navigate = useNavigate();
-  const { currentUser, wishListIds, setWishListIds, cartIds, setCartIds } =
-    useStateContext();
+  const {
+    currentUser,
+    wishListIds,
+    setWishListIds,
+    cartIds,
+    setCartIds,
+    setQuantityCart,
+  } = useStateContext();
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState([]);
@@ -25,7 +32,7 @@ function View1Product() {
     if (url.includes("viewproduct")) {
       payload = { ...params };
     }
-   await axiosClient
+    await axiosClient
       .get(url, {
         params: payload,
       })
@@ -41,7 +48,7 @@ function View1Product() {
   const getProductById = async (id = null) => {
     let product_id = id ? id : productId;
     setLoading(true);
-   await axiosClient
+    await axiosClient
       .get(`/menu/${product_id}`)
       .then(({ data }) => {
         setProduct(data.data[0]);
@@ -102,12 +109,24 @@ function View1Product() {
     }
   };
   const handleClickCart = (product) => {
-    if (currentUser) {
-      const payload = { ...product, user_id: currentUser.id, quanity: 1 };
+    if (currentUser.id) {
+      if (product.stock === 0) {
+        Swal.fire({
+          title: "Sorry",
+          text: "This product will refill soon",
+          imageUrl: require("../../../assets/img/crying.png"),
+          imageWidth: 80,
+          imageHeight: 80,
+          imageAlt: "Custom image",
+        });
+        return;
+      }
+      const payload = { ...product, user_id: currentUser.id, quantity: 1 };
       axiosClient
         .post("/cart", payload)
         .then(({ data }) => {
-          setCartIds(data.cartIds);
+          setCartIds(data.cartListIds);
+          setQuantityCart(data.quantity);
           Alert("success", "Add to cart successfully");
         })
         .catch((error) => {
@@ -148,14 +167,14 @@ function View1Product() {
               >
                 {product?.stock > 0 ? "In Stock" : "Out of Stock"}
               </span>
-              <p className={cx("product-price")}>$ {product.price}</p>
+              <p className={cx("product-price")}>Price: ${product.price}</p>
               <h2>{product.name}</h2>
               <p className={cx("description-text")}>{product.product_detail}</p>
               <div className={cx("detail-btn")}>
                 <Btn
                   onclick={() => handleClickLike(product)}
                   style={{
-                    width: "272px",
+                    width: "35%",
                   }}
                   value={
                     <>
@@ -178,7 +197,7 @@ function View1Product() {
                 <Btn
                   onclick={() => handleClickCart(product)}
                   style={{
-                    width: "272px",
+                    width: "35%",
                   }}
                   value={
                     <>
@@ -236,16 +255,20 @@ function View1Product() {
                       </p>
                     </Link>
                     <div className={cx("content")}>
-                      <img src={require("../../../assets/img/shape-19.png")} alt="Shape" className={cx("shap")} />
+                      <img
+                        src={require("../../../assets/img/shape-19.png")}
+                        alt="Shape"
+                        className={cx("shap")}
+                      />
                       <div className={cx("price-name")}>
                         <h2 className={cx("price")}>Price ${product.price}</h2>
                         <h3 className={cx("name")}> {product.name}</h3>
                       </div>
                       <div className={cx("flex-btn")}>
                         <Btn
-                          href={``}
+                          href={`/checkout?from=menu&id=${product.id}`}
                           style={{
-                            width: "fit-content",
+                            width: "50%",
                           }}
                           value="Buy Now"
                         />

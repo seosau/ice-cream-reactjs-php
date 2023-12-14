@@ -32,23 +32,26 @@
     object-position: center; /* Đưa ảnh về giữa container */
 }
 .view-detail .main-box .detail-box .in-stock{
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     text-transform: capitalize;
     color: green;
 }
 .view-detail .main-box .detail-box .out-of-stock{
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     text-transform: capitalize;
     color: orange;
 }
-.view-detail .main-box .detail-box h2, .product-price{
+.view-detail .main-box .detail-box h2{
     font-weight: normal;
     margin-left: 0;
     margin-top: 2rem;
+    font-size: 1.5rem;
 }
 .view-detail .main-box .detail-box .product-price{
     font-size: 2rem;
     font-weight: 600;
+    margin-left: 0;
+    margin-top: 2rem;
 }
 .view-detail .main-box .detail-box h2{
     font-weight: bolder;
@@ -130,6 +133,7 @@
     height: 80px;
     background-repeat: no-repeat;
     transform: scale(1);
+    background-color: transparent;
 }
 
 .products .box-container .box .content .price-name .price{

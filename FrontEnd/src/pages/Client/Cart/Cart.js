@@ -83,7 +83,7 @@ function Cart() {
       })
       .catch((error) => console.log(error));
   };
-  const handleButtonDelete = (id) => {
+  const handleButtonDelete = (cart_id, product_id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -95,11 +95,11 @@ function Cart() {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosClient
-          .delete(`/cart/${id}`)
+          .delete(`/cart/${cart_id}`)
           .then(({ data }) => {
             setCartIds(data.cartListIds);
             setQuantityCart(data.quantity);
-            getProductsInCart();
+            setProducts(prevProducts => prevProducts.filter(product =>  product.product_id !== product_id))
             Swal.fire({
               title: "Deleted!",
               text: "Your product has been deleted.",
@@ -193,7 +193,7 @@ function Cart() {
                           <span> {product.price * product.quantity}$</span>
                         </p>
                         <Btn
-                          onclick={() => handleButtonDelete(product.cart_id)}
+                          onclick={() => handleButtonDelete(product.cart_id, product.product_id)}
                           style={{
                             width: "fit-content",
                           }}

@@ -112,7 +112,7 @@ function Search({ classname }) {
             <button
               className={cx("clear")}
               onClick={handleClear}
-              style={{ left: width * 0.66 }}
+              style={{ left: width * 0.65 }}
             >
               <FontAwesomeIcon icon={faCircleXmark} />
             </button>

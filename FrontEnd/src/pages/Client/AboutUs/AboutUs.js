@@ -59,10 +59,12 @@ function AboutUs() {
         <div className={cx("detail")}>
           <h1>About Us</h1>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing
-            <br />
-            elit, sed do eiusmod tempor incididunt ut labore et <br />
-            dolore magna aliqua.
+            Welcome to our virtual ice cream haven! Indulge in the finest frozen
+            treats, from classic Vanilla Bean to trendy delights. <br />
+            Order online, and we'll deliver premium ice cream straight to your
+            door. Immerse yourself in a world of flavor crafted for your
+            delight. <br />
+            Your journey into frozen bliss begins here!
           </p>
         </div>
       </div>
@@ -114,14 +116,14 @@ function AboutUs() {
           />
         </div>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-          nisi et dolor
-          <br />
-          ornare pellentesque. Nullam porttitor, odio id facilisis dapibus,
-          mauris dolor rhoncus
-          <br />
-          elit, ultricies nulla eros at dui.
-          <br />
+          Once upon a summer, our founder's childhood memories of chasing the
+          ice cream truck sparked a dream.<br/> Fueled by nostalgia, they envisioned
+          creating a haven where every scoop evoked the joy of those carefree
+          days. <br/>From that dream, our online ice cream emporium was born — a
+          place where families and friends could savor moments of delight. <br/>Each
+          flavor tells a tale of passion and craftsmanship, connecting us to the
+          sweet chapters of life.<br/> We continue to scoop happiness into every
+          order, spreading the magic of frozen bliss, one scoop at a time.
         </p>
         <Btn
           href={"/home"}
@@ -154,13 +156,13 @@ function AboutUs() {
                 alt="Shape"
                 className={cx("shap")}
               />
-              <h2>Ralph Johnson</h2>
-              <p>Coffee Chef</p>
+              <h2>Tran Ngo Gia Bao</h2>
+              <p>Founder</p>
             </div>
           </div>
           <div className={cx("box")}>
             <img
-              src={require("../../../assets/img/team-2.jpg")}
+              src={require("../../../assets/img/team-1.jpg")}
               className={cx("img")}
               alt="Team Member"
             />
@@ -170,8 +172,25 @@ function AboutUs() {
                 alt="Shape"
                 className={cx("shap")}
               />
-              <h2>Fiona Johnson</h2>
-              <p>Pastry Chef</p>
+              <h2>Huynh Sinh Truong</h2>
+              <p>Co-Founder</p>
+            </div>
+            
+          </div>
+          <div className={cx("box")}>
+            <img
+              src={require("../../../assets/img/team-3.jpg")}
+              className={cx("img")}
+              alt="Team Member"
+            />
+            <div className={cx("content")}>
+              <img
+                src={require("../../../assets/img/shape-19.png")}
+                alt="Shape"
+                className={cx("shap")}
+              />
+              <h2>Dang Quoc Duy</h2>
+              <p>Co-Founder</p>
             </div>
           </div>
           <div className={cx("box")}>
@@ -186,8 +205,8 @@ function AboutUs() {
                 alt="Shape"
                 className={cx("shap")}
               />
-              <h2>Tom Knelltonns</h2>
-              <p>Coffee Chef</p>
+              <h2>Ma Seo Sau</h2>
+              <p>Co-Founder</p>
             </div>
           </div>
         </div>
@@ -204,21 +223,33 @@ function AboutUs() {
           </div>
           <ol>
             <li>
-              <h2>   <FontAwesomeIcon icon={faMedal} className={cx("icon-style")} />Quality Ingredients: </h2>
+              <h2>
+                {" "}
+                <FontAwesomeIcon icon={faMedal} className={cx("icon-style")} />
+                Quality Ingredients:{" "}
+              </h2>
               <p>
                 Ensure the use of premium, fresh ingredients to achieve the rich
                 flavor and smooth texture of fresh cream.
               </p>
             </li>
             <li>
-              <h2>  <FontAwesomeIcon icon={faMedal} className={cx("icon-style")} />Hygienic Processing: </h2>
+              <h2>
+                {" "}
+                <FontAwesomeIcon icon={faMedal} className={cx("icon-style")} />
+                Hygienic Processing:{" "}
+              </h2>
               <p>
                 Adhere to stringent hygiene standards throughout the production
                 process to guarantee a safe and contaminant-free final product.
               </p>
             </li>
             <li>
-              <h2>  <FontAwesomeIcon icon={faMedal} className={cx("icon-style")} />Consistent Churning Process: </h2>
+              <h2>
+                {" "}
+                <FontAwesomeIcon icon={faMedal} className={cx("icon-style")} />
+                Consistent Churning Process:
+              </h2>
               <p>
                 Implement a precise churning process to maintain consistent
                 creaminess and prevent ice crystal formation in every batch of
@@ -226,7 +257,11 @@ function AboutUs() {
               </p>
             </li>
             <li>
-              <h2>  <FontAwesomeIcon icon={faMedal} className={cx("icon-style")} />Strict Temperature Control: </h2>
+              <h2>
+                {" "}
+                <FontAwesomeIcon icon={faMedal} className={cx("icon-style")} />
+                Strict Temperature Control:
+              </h2>
               <p>
                 Monitor and control temperature conditions meticulously to
                 preserve the integrity of the cream and achieve optimal texture
@@ -234,7 +269,10 @@ function AboutUs() {
               </p>
             </li>
             <li>
-              <h2><FontAwesomeIcon icon={faMedal} className={cx("icon-style")} />Artisanal Craftsmanship: </h2>
+              <h2>
+                <FontAwesomeIcon icon={faMedal} className={cx("icon-style")} />
+                Artisanal Craftsmanship:{" "}
+              </h2>
               <p>
                 Embrace artisanal techniques to create a unique and delightful
                 fresh cream experience, meeting the highest standards of taste
