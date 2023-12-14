@@ -9,15 +9,18 @@ const cx = className.bind(style);
 function Profile() {
   const [data, setData] = useState({});
   const [loading, setLoaing] = useState(false);
-
+  const currentPath = window.location.pathname;
   const { currentUser } = useStateContext();
   const image_url = currentUser.image_url
     ? currentUser.image_url
     : require("../../../assets/img/avt.png");
-  useEffect(() => {
+  const getData = async () => {
+    const url = currentPath.includes("admin")
+      ? "/admin/dashboard"
+      : "/seller/dashboard";
     setLoaing(true);
-    axiosClient
-      .get("/admin/dashboard")
+    await axiosClient
+      .get(url)
       .then(({ data }) => {
         setData(data);
         setLoaing(false);
@@ -25,6 +28,9 @@ function Profile() {
       .catch((error) => {
         console.log(error);
       });
+  };
+  useEffect(() => {
+    getData();
   }, []);
   return (
     <div className={cx("container")}>
@@ -41,14 +47,31 @@ function Profile() {
             src={image_url}
           />
           <h3>{currentUser.name}</h3>
-          <span>seller</span>
-          <Btn href="/admin/updateprofile" value="update your profile" />
+          <span>{currentPath.includes('seller') ? 'seller' :'admin'}</span>
+          <Btn
+            href={
+              currentPath.includes("admin")
+                ? "/admin/updateprofile"
+                : "/seller/updateprofile"
+            }
+            value="update your profile"
+          />
         </div>
         <div className={cx("flex")}>
           <div className={cx("box")}>
-            <span>{/*fetch total produts*/}{data.totalProducts}</span>
+            <span>
+              {/*fetch total produts*/}
+              {data.totalProducts}
+            </span>
             <p>Total Products</p>
-            <Btn href="/admin/viewproduct" value="view your products" />
+            <Btn
+              href={
+                currentPath.includes("admin")
+                  ? "/admin/viewproduct"
+                  : "/seller/viewproduct"
+              }
+              value="view your products"
+            />
           </div>
           <div className={cx("box")}>
             <span>
@@ -57,7 +80,12 @@ function Profile() {
             </span>
             <p>Total Orders Placed</p>
 
-            <Btn href="/admin/order" value="view all orders" />
+            <Btn
+              href={
+                currentPath.includes("admin") ? "/admin/order" : "/seller/order"
+              }
+              value="view all orders"
+            />
           </div>
         </div>
       </div>

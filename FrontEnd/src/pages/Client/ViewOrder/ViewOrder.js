@@ -32,35 +32,40 @@ function ViewOrder() {
       });
   }, []);
   const handleEventUpdateOrder = (orderId) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, cancel it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const payload = {
-          ...orderInfo,
-          status:
-            orderInfo.status === "in progress" ? "canceled" : "in progress",
-        };
-        axiosClient
-          .put(`/order/${orderId}`, payload)
-          .then(({ data }) => {
-            Swal.fire({
-              title: "Your order have been canceled!",
-              icon: "success",
+    if (orderInfo.status !== "canceled") {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, cancel it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const payload = {
+            ...orderInfo,
+            status:
+              orderInfo.status === "in progress" ? "canceled" : "in progress",
+          };
+          axiosClient
+            .put(`/order/${orderId}`, payload)
+            .then(({ data }) => {
+              Swal.fire({
+                title: "Your order have been canceled!",
+                icon: "success",
+              });
+              navigate("/order");
+            })
+            .catch((error) => {
+              console.log(error);
             });
-            navigate("/order");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    });
+        }
+      });
+    }
+    else {
+      navigate(`/checkout?from=order&id=${orderId}`)
+    }
   };
 
   return (
@@ -120,7 +125,6 @@ function ViewOrder() {
                 </p>
                 {orderInfo.status?.toLowerCase() === "delivered" ? null : (
                   <Btn
-                    href=""
                     value={
                       orderInfo.status === "canceled" ? "order again" : "cancel"
                     }

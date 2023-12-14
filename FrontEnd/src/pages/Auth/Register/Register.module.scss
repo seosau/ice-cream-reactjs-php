@@ -1,5 +1,6 @@
 .form-container {
     display: flex;
+    width: 100%;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
@@ -21,15 +22,11 @@
 // .form-container form .flex .col {
 //     flex: 1 1 25rem;
 // }
-.row {
-    // display: flex;
-    // justify-content: space-between;
-}
 .input-field {
     // width: 80%;
 }
 .form-container .register {
-    width: 60rem;
+    width: 50rem;
 }
 .form-container .register .img-box {
     text-align: center;

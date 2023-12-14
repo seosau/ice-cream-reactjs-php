@@ -32,6 +32,8 @@ function Header({ children }) {
   const [showSideBar, setShowSideBar] = useState(false);
   const { currentUser, setcurrentUser, userToken, setUserToken } =
     useStateContext();
+  const currentURL = window.location.pathname;
+
   const image_url = currentUser.image_url
     ? currentUser.image_url
     : require("../../assets/img/avt.jpg");
@@ -51,7 +53,7 @@ function Header({ children }) {
     handleResize();
     if (userToken) {
       axiosClient
-        .get("/admin")
+        .get(currentURL.includes("seller") ? "/seller" : "/admin")
         .then(({ data }) => {
           setcurrentUser(data);
         })
@@ -63,9 +65,11 @@ function Header({ children }) {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  const handleLogout = () => {
+  const handleLogout = (
+    url = currentURL.includes("seller") ? "/seller/logout" : "/admin/logout"
+  ) => {
     axiosClient
-      .post("/admin/logout")
+      .post(url)
       .then((res) => {
         setcurrentUser({});
         setUserToken(null);
@@ -120,7 +124,11 @@ function Header({ children }) {
                   />
                   <p className={cx("profile-name")}>{currentUser.name}</p>
                   <div className={cx("flex-btn")}>
-                    <Btn href="/admin/profile" onclick={() => handleShowProfile()} value="profile"></Btn>
+                    <Btn
+                      href={currentURL.includes('seller') ? "/seller/profile" : '/admin/profile'}
+                      onclick={() => handleShowProfile()}
+                      value="profile"
+                    ></Btn>
                     <Btn value="logout" onclick={handleLogout}></Btn>
                   </div>
                 </div>
@@ -128,8 +136,8 @@ function Header({ children }) {
                 <>
                   <p className={cx("text")}>Please register or login</p>
                   <div className={cx("flex-btn")}>
-                    <Btn href="/admin/login" value="login"></Btn>
-                    <Btn href="/admin/register" value="register"></Btn>
+                    <Btn href="/seller/login" value="login"></Btn>
+                    <Btn href="/seller/register" value="register"></Btn>
                   </div>
                 </>
               )}
@@ -153,7 +161,7 @@ function Header({ children }) {
             <div className={cx("navbar")}>
               <ul>
                 <li>
-                  <Link to="/admin/dashboard">
+                  <Link to={currentURL.includes('seller') ? "/seller/dashboard" : '/admin/dashboard'}>
                     <FontAwesomeIcon
                       className={cx("sidebar-icon")}
                       icon={faHome}
@@ -162,16 +170,16 @@ function Header({ children }) {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/admin/addproduct">
+                  <Link to={currentURL.includes('seller') ? "/seller/addproduct" : '/admin/addstaff'}>
                     <FontAwesomeIcon
                       className={cx("sidebar-icon")}
                       icon={faFileImport}
                     />
-                    <p>add products </p>
+                    <p>{currentURL.includes('seller') ? 'add products' : 'add sellers' }</p>
                   </Link>
                 </li>
                 <li>
-                  <Link to="/admin/viewproduct">
+                  <Link to={currentURL.includes('seller') ? "/seller/viewproduct" : '/admin/viewproduct'}>
                     <FontAwesomeIcon
                       className={cx("sidebar-icon")}
                       icon={faEye}
@@ -180,7 +188,7 @@ function Header({ children }) {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/admin/profile">
+                  <Link to={currentURL.includes('seller') ? "/seller/profile" : '/admin/profile'}>
                     <FontAwesomeIcon
                       className={cx("sidebar-icon")}
                       icon={faUserPlus}

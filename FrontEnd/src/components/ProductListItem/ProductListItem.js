@@ -3,20 +3,17 @@ import style from "./ProductListItem.module.scss";
 import Btn from "../Button/Btn";
 
 const cx = className.bind(style);
-function ProductListItem({item, onDelete}) {
+function ProductListItem({ item, onDelete, url }) {
+  console.log(url);
   return (
     <div className={cx("box")}>
       {/*-----product image-----*/}
-      <img
-        alt=""
-        src={item.image_url}
-        className={cx("image")}
-      />
+      <img alt="" src={item.image_url} className={cx("image")} />
       <div
         className={cx("status")}
-        style={{ color: item.status ==="active" ? "limegreen" : "coral" }}
+        style={{ color: item.status === "active" ? "limegreen" : "coral" }}
       >
-       { item.status}
+        {item.status}
       </div>
       {/*-----product price-----*/}
       <div className={cx("price")}>${item.price}</div>
@@ -32,7 +29,11 @@ function ProductListItem({item, onDelete}) {
             style={{
               width: "30%",
             }}
-            href={`/admin/editproduct/${item.id}`}
+            href={
+              url.includes("seller")
+                ? `/seller/editproduct/${item.id}`
+                : `/admin/editproduct/${item.id}`
+            }
             value={"edit"}
           />
 
@@ -48,7 +49,11 @@ function ProductListItem({item, onDelete}) {
             style={{
               width: "30%",
             }}
-            href={`/admin/productdetail/${item.id}`}
+            href={
+              url.includes("seller")
+                ? `/seller/productdetail/${item.id}`
+                : `/admin/productdetail/${item.id}`
+            }
             value={"description"}
           />
         </div>

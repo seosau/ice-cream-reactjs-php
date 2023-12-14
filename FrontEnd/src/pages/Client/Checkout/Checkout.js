@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import className from "classnames/bind";
 import style from "./Checkout.module.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { Alert, Btn, Loader } from "../../../components";
 import { useStateContext } from "../../../context/ContextProvider";
 import axiosClient from "../../../axiosClient/axios";
@@ -36,16 +38,33 @@ export default function Checkout() {
       .catch((error) => console.log(error));
   };
   const handleTotalPrice = () => {
-    let total = 0;
-    products.forEach((product) => {
-      total += product.price * product.quantity;
-    });
-    setGrandTotal(total);
+    const total = products.reduce((accumulator, product) => {
+      return accumulator + product.price * product.quantity;
+    }, 0);
+    setGrandTotal(total.toFixed(1));
+  };
+  const handleQuantity = (number, id) => {
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.product_id === id
+          ? {
+              ...product,
+              quantity:
+                number === 1
+                  ? Math.min(product.quantity + 1, product.stock)
+                  : number === -1
+                  ? Math.max(product.quantity - 1, 1)
+                  : Math.min(Math.max(number, 1), product.stock),
+            }
+          : product
+      )
+    );
   };
   const handleSubmitOrder = () => {
     if (id && from === "order") {
       const payload = {
         ...orderData,
+        ...products[0],
         user_id: currentUser.id,
         status: "in progress",
       };
@@ -94,7 +113,7 @@ export default function Checkout() {
       axiosClient
         .get(`/menu/${id}`)
         .then(({ data }) => {
-          setProducts([{...data.data[0],quantity:1, product_id:id}]);
+          setProducts([{ ...data.data[0], quantity: 1, product_id: id }]);
           setLoading(false);
         })
         .catch((error) => {
@@ -134,11 +153,34 @@ export default function Checkout() {
                   alt={product.name}
                   className={cx("")}
                 />
-                <div className={cx("")}>
+                <div className={cx("product-info")}>
                   <h3 className={cx("name")}>{product.name}</h3>
-                  <p className={cx("price")}>
-                    {product.price}$ X {product.quantity}
-                  </p>
+                  <span className={cx("price")}>{product.price}$ X</span>
+                  <div className={cx("quantity")}>
+                    <button
+                      className={cx("btn-quantity", "quanity-item")}
+                      onClick={() => handleQuantity(-1, product.product_id)}
+                    >
+                      <FontAwesomeIcon icon={faMinus} color={"#da6285"} />
+                    </button>
+                    <input
+                      className={cx("quantity-input")}
+                      type="text"
+                      value={product.quantity}
+                      onChange={(e) =>
+                        handleQuantity(
+                          Number(e.target.value),
+                          product.product_id
+                        )
+                      }
+                    />
+                    <button
+                      className={cx("btn-quantity")}
+                      onClick={() => handleQuantity(1, product.product_id)}
+                    >
+                      <FontAwesomeIcon icon={faPlus} color={"#da6285"} />
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

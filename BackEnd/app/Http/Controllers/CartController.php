@@ -15,7 +15,7 @@ class CartController extends Controller
         $cartList = Cart::query()
             ->join("products", "carts.product_id", "products.id")
             ->where('carts.user_id', $user->id)
-            ->get(['products.*', 'carts.quantity']);
+            ->get(['products.*', 'carts.quantity', 'carts.id as cartId']);
 
         return  [
             'cartList' =>  CartResource::collection($cartList),
@@ -47,39 +47,45 @@ class CartController extends Controller
             "quantity" =>  $quantity,
         ];
     }
-    public function update(Request $request)
+    public function update(Request $request, $cartItemId)
     {
         $user = $request->user();
         $data = $request->all();
-        Cart::query()
-            ->where("user_id", $user->id)
-            ->where("product_id", $data['product_id'])
+        Cart::where("user_id", $user->id)
+            ->where("id", $cartItemId)
             ->update(["quantity" => $data['quantity']]);
-        $cartList = Cart::query()
-            ->join("products", "carts.product_id", "=", "products.id")
+        $cartList = Cart::join("products", "carts.product_id", "=", "products.id")
             ->where('carts.user_id', $user->id)
-            ->get(['products.*', 'carts.quantity']);
-        $quantity = Cart::query()->where("user_id", $user->id)->sum("quantity");
+            ->get(['products.*', 'carts.quantity', 'carts.id as cartId']);
+        $quantity = Cart::where("user_id", $user->id)->sum("quantity");
         return  [
             'cartList' =>  CartResource::collection($cartList),
             "quantity" =>  $quantity,
         ];
     }
-    public function destroy(Request $request, $product_id)
+    public function destroy(Request $request, $cartItemId)
     {
         $user = $request->user();
-        $user_id = (string)$user->id;
-        Cart::query()
-            ->where("user_id",  $user_id)
-            ->where("product_id", $product_id)
-            ->delete();
-        $cartListIds = Cart::query()->select('product_id')
-            ->where("user_id", $user->id)
-            ->get();
-        $quantity = Cart::query()->where("user_id", $user->id)->sum("quantity");
+
+        $cartitem = Cart::find($cartItemId);
+        if (!$cartitem) {
+            return abort(404, 'Cart item not found');
+        }
+
+        if ($user->id !== $cartitem->user_id) {
+            return abort(403, 'Unauthorized action');
+        }
+
+        $cartitem->delete();
+
+        $cartListIds = Cart::where("user_id", $user->id)->pluck('product_id');
+
+        $quantity = Cart::where("user_id", $user->id)->sum("quantity");
+
         return [
             "cartListIds" => $cartListIds,
             "quantity" =>  $quantity,
+            "message" => "Cart item deleted successfully",
         ];
     }
     public function getQuantity(Request $request)

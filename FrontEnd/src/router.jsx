@@ -104,13 +104,64 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        path: "/admin/login",
+        path: "/seller/login",
         element: <Login />,
       },
       {
-        path: "/admin/register",
-        element: <Register />,
+        path: "/admin/login",
+        element: <Login />,
       },
+    ],
+  },
+  {
+    path: "/seller",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "/seller/dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "/seller",
+        element: <Navigate to="/seller/dashboard" />,
+      },
+      {
+        path: "/seller/addproduct",
+        element: <AddProduct />,
+      },
+      {
+        path: "/seller/viewproduct",
+        element: <ViewProduct />,
+      },
+      {
+        path: "/seller/productdetail/:id",
+        element: <ProductDetail />,
+      },
+      {
+        path: "/seller/editproduct/:id",
+        element: <EditProduct />,
+      },
+      {
+        path: "/seller/profile",
+        element: <Profile />,
+      },
+      {
+        path: "/seller/updateprofile",
+        element: <UpdateProfile />,
+      },
+      {
+        path: "/seller/useraccount",
+        element: <UserAccount />,
+      },
+      {
+        path: "/seller/message",
+        element: <Message />,
+      },
+      {
+        path: "/seller/order",
+        element: <Order />,
+      },
+     
     ],
   },
   {
@@ -154,14 +205,21 @@ const router = createBrowserRouter([
         element: <UserAccount />,
       },
       {
+        path: "/admin/staffaccount",
+        element: <UserAccount />,
+      },
+      {
         path: "/admin/message",
         element: <Message />,
+      },
+      {
+        path: "/admin/addstaff",
+        element: <Register />,
       },
       {
         path: "/admin/order",
         element: <Order />,
       },
-     
     ],
   },
  

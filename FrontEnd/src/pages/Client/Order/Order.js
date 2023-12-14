@@ -100,9 +100,8 @@ function Order() {
                         src={require("../../../assets/img/shape-19.png")}
                         className={cx("sharp")}
                       />
-                      <div className={cx("flex-btn")}>
+                      <div className={cx("")}>
                         <h3 className={cx("name")}>
-                          {" "}
                           {orderInfo.product_name}
                         </h3>
                         <p className={cx("price")}>Price: {orderInfo.price}$</p>

@@ -10,12 +10,19 @@ function ProductDetail() {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState({});
+  const currentPath = window.location.pathname;
   useEffect(() => {
     setLoading(true);
-    axiosClient.get(`/admin/product/${id}`).then(({ data }) => {
-      setProduct(data.data);
-      setLoading(false);
-    });
+    axiosClient
+      .get(
+        currentPath.includes("seller")
+          ? `/seller/product/${id}`
+          : `/admin/product/${id}`
+      )
+      .then(({ data }) => {
+        setProduct(data.data);
+        setLoading(false);
+      });
   }, []);
   return (
     <div className={cx("container")}>
@@ -51,7 +58,7 @@ function ProductDetail() {
                 style={{
                   width: "40%",
                 }}
-                href={`/admin/editproduct/${id}`}
+                href={`/seller/editproduct/${id}`}
                 value={"edit"}
               />
 
@@ -59,7 +66,7 @@ function ProductDetail() {
                 style={{
                   width: "40%",
                 }}
-                href="/admin/viewproduct"
+                href={currentPath.includes('seller') ? "/seller/viewproduct" : '/admin/viewproduct'}
                 value={"go back"}
               />
             </div>

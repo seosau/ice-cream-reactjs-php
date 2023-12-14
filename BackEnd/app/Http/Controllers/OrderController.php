@@ -7,7 +7,9 @@ use App\Http\Requests\OrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -16,20 +18,22 @@ class OrderController extends Controller
         $user = $request->user();
         $status = $request->input('status');
         $payment_status = $request->input('payment_status');
-        $query = Order::join('products', 'products.id', 'orders.product_id');
+        $query = Order::join('products', 'products.id', 'orders.product_id')
+            ->join('sellers', 'sellers.id', 'orders.seller_id');
         if ($user->user_type === 'client') {
             $orderListQuery = $query
-                ->where('orders.user_id', $user->id);
+                ->where('orders.user_id', $user->id); 
         } else {
-            $orderListQuery = $query
-                ->where('orders.seller_id', $user->id)
-                ->where('orders.status', '=',   $status ? $status : 'in progress')
+            if ($user->user_type === 'seller') {
+                $orderListQuery = $query->where('orders.seller_id', $user->id);
+            }
+            $orderListQuery = $query->where('orders.status', '=',   $status ? $status : 'in progress')
                 ->where('orders.payment_status', '=', $payment_status ? $payment_status : 'pending');
         }
 
         $orderList =  $orderListQuery
             ->orderBy('updated_at', 'desc')
-            ->get(['orders.*', 'products.name as product_name', 'products.image']);
+            ->get(['orders.*', 'products.name as product_name', 'products.image' ,'sellers.name as seller_name']);
 
         return [
             'orderList' => OrderResource::collection($orderList)
@@ -69,16 +73,21 @@ class OrderController extends Controller
     {
         $data = $orderRequest->validated();
         $order->update($data);
+        Product::where('seller_id',  $order['seller_id'])
+            ->where('id', $order['product_id'])
+            ->update([
+                'stock' => DB::raw('stock - ' . $order['quantity'])
+            ]);
+
         return [
             'success' => true
         ];
     }
     public function show($id)
     {
-        return OrderResource::collection(Order::query()
-            ->join('products', 'products.id', 'orders.product_id')
+        return OrderResource::collection(Order::join('products', 'products.id', 'orders.product_id')
             ->where('orders.id', $id)
-            ->get(['orders.*', 'products.name as product_name', 'products.image']));
+            ->get(['orders.*', 'products.name as product_name', 'products.image', 'products.stock']));
     }
     public function destroy(Order $order, Request $request)
     {

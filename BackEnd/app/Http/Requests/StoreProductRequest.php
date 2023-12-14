@@ -32,7 +32,8 @@ class StoreProductRequest extends FormRequest
         return [
             'seller_id' => 'exists:sellers,id',
             'name' => 'required|string',
-            'price' => 'required|integer',
+            'price' => 'required|numeric ',
+            'category' => 'string',
             'image' => 'required|string',
             'stock' => 'required|integer',
             'product_detail' => 'required|string',

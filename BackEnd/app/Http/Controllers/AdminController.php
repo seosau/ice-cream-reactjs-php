@@ -3,83 +3,43 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ProductResource;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Requests\RegisterRequest;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Str;
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterRequest;
-use App\Http\Requests\UpdateProfileRequest;
+use App\Models\Admin;
 use App\Models\Seller;
 use App\Models\User;
+use App\Models\Cart;
+use App\Models\Order;
+use App\Models\WishList;
 
 class AdminController extends Controller
 {
-    public function register(RegisterRequest $request)
-    {
-        $data = $request->validated();
-        $hasImg = array_key_exists("image", $data);
-        if ($hasImg) {
-            $relativePath = $this->saveImage($data['image']);
-            $data['image'] = $relativePath;
-        }
-        $seller = Seller::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'image' =>  $hasImg ? $data['image'] : null,
-        ]);
-        $token = $seller->createToken('main')->plainTextToken;
-        return response([
-            'seller' => $seller,
-            'token' => $token
-        ]);
-    }
     public function login(LoginRequest $request)
     {
         $credentials = $request->validated();
-        if (!Auth::guard('seller')->attempt($credentials)) {
+        if (!Auth::guard('admin')->attempt($credentials)) {
             return response([
                 'error' => 'The Provided credentials are not correct',
             ], 422);
         }
-        $seller = Auth::guard('seller')->user();
+        $admin = Auth::guard('admin')->user();
 
-        if ($seller instanceof Seller) {
-            $token =  $seller->createToken('main')->plainTextToken;
+        if ($admin instanceof Admin) {
+            $token = $admin->createToken('main')->plainTextToken;
         }
         return response([
-            'user' => $seller,
+            'user' =>  $admin,
             'token' =>  $token
         ]);
-    }
-
-    public function logout(Request $request)
-    {
-        $seller = Auth::guard('seller')->user();
-        if ($seller instanceof Seller) {
-            $request->$seller->currentAccessToken()->delete();
-        }
-        return response(
-            [
-                'sucess' => true,
-            ]
-        );
-    }
-    public function admin(Request $request)
-    {
-        $user = $request->user();
-        return [
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-            'image_url' => $user->image ? URL::to($user->image) : null,
-            'user_type' => $user->user_type,
-        ];
     }
     public function update(UpdateProfileRequest $request)
     {
@@ -112,14 +72,94 @@ class AdminController extends Controller
             ]
         );
     }
-    public  function getAllUsers(Request $request)
+    public function logout(Request $request)
+    {
+        $admin = Auth::guard('admin')->user();
+        if ($admin instanceof Admin) {
+            $request->$admin->currentAccessToken()->delete();
+        }
+        return response(
+            [
+                'sucess' => true,
+            ]
+        );
+    }
+    public function admin(Request $request)
+    {
+        $user = $request->user();
+        return [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'image_url' => $user->image ? URL::to($user->image) : null,
+            'user_type' => $user->user_type,
+        ];
+    }
+    public function addseller(RegisterRequest $request)
+    {
+        $data = $request->validated();
+
+        if ($data['image']) {
+            $relativePath = $this->saveImage($data['image']);
+            $data['image'] = $relativePath;
+        }
+        $seller = Seller::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+            'image' =>  $data['image'] ? $data['image'] : null,
+        ]);
+        $token = $seller->createToken('main')->plainTextToken;
+        return response([
+            'seller' => $seller,
+            'token' => $token
+        ]);
+    }
+    public function getAllUsers(Request $request)
     {
         $user = $request->user();
         if ($user->user_type === 'client') {
             return abort(403, 'Unauthorized action');
         }
-        $data = User::query()->get(['id', 'name', 'email', 'image']);
-        return $data;
+        $allUsersInfo = User::leftJoin('orders', 'users.id', '=', 'orders.user_id')
+            ->groupBy('users.id', 'users.name', 'users.email', 'users.image')
+            ->get([
+                'users.id',
+                'users.name',
+                'users.email',
+                'users.image',
+                DB::raw('COALESCE(count(orders.product_id), 0) as orderQuantity')
+            ]);
+        return $allUsersInfo;
+    }
+    public function getAllSellers(Request $request)
+    {
+        $user = $request->user();
+        if ($user->user_type === 'client') {
+            return abort(403, 'Unauthorized action');
+        }
+        $allSellersInfo = Seller::leftJoin('orders', 'sellers.id', '=', 'orders.user_id')
+            ->groupBy('sellers.id', 'sellers.name', 'sellers.email', 'sellers.image')
+            ->get([
+                'sellers.id',
+                'sellers.name',
+                'sellers.email',
+                'sellers.image',
+                DB::raw('COALESCE(SUM(CASE WHEN orders.status = "delivered" THEN 1 ELSE 0 END), 0) as orderQuantity')
+            ]);
+        return   $allSellersInfo;
+    }
+    public function deleteUser(Request $request, $user_id)
+    {
+        $user =  $request->user();
+        if ($user->user_type === 'admin') {
+            User::where('id', $user_id)->delete();
+            WishList::where('user_id', $user_id)->delete();
+            Cart::where('user_id', $user_id)->delete();
+            Order::where('user_id', $user_id)->delete();
+            return [200, 'delete user success'];
+        }
+        return abort(403, 'Unathorized action');
     }
     private function saveImage($image)
     {

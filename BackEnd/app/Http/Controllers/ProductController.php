@@ -17,15 +17,18 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Product::where('status', 'active')->orderBy('created_at', 'desc');
-
         $user = $request->user();
+        $query = Product::orderBy('updated_at', 'desc');
+
         if ($user && $user->user_type === 'seller') {
-            $query->where('seller_id', $user->id);
+            $query->where('seller_id', $user->id)->with('seller');
+        } elseif ($user && $user->user_type === 'admin') {
+            // Do nothing specific for admin, as 'all' is the default.
+        } else {
+            $query->where('status', 'active');
         }
-        return ProductResource::collection(
-            $query->paginate(4)
-        );
+
+        return ProductResource::collection($query->paginate(4));
     }
     public function store(StoreProductRequest $request)
     {
@@ -86,22 +89,27 @@ class ProductController extends Controller
         $user = $request->user();
         $sortBy = $request->input('sortBy');
         $order = $request->input('order');
-    
-        $query = Product::where('status', 'active');
-    
-        if ($user && $user->user_type === 'seller') {
+
+        $query = Product::query();
+
+        if ($user->user_type === 'seller') {
             $query->where('seller_id', $user->id);
+        } elseif ($user->user_type === 'admin') {
+            // Do nothing specific for admin, as 'all' is the default.
+        } else {
+            $query->where('status', 'active');
         }
-    
-        if ($sortBy === 'price') {
-            $query->orderBy($sortBy, $order);
-        } elseif ($sortBy === 'status') {
+
+        // Chống SQL Injection
+        if ($sortBy === 'status') {
             $query->where($sortBy, $order);
+        } elseif ($sortBy === 'category') {
+            $query->where('category', $order);
+        } elseif ($sortBy === 'price') {
+            $query->orderBy($sortBy, $order);
         }
-    
-        return ProductResource::collection(
-            $query->paginate(4)
-        );
+
+        return ProductResource::collection($query->paginate(4));
     }
     private function saveImage($image)
     {

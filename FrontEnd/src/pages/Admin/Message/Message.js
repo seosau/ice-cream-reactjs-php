@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"; 
+import { useState, useEffect } from "react";
 import className from "classnames/bind";
 import style from "./Message.module.scss";
 import Swal from "sweetalert2";
@@ -8,10 +8,14 @@ const cx = className.bind(style);
 function Message() {
   const [mesages, setMessages] = useState([]);
   const [loading, setLoaing] = useState(false);
-  const getMessages = () => {
+  const currentURL = window.location.pathname;
+  const url = currentURL.includes("seller")
+  ? "/seller/message"
+  : "/admin/message";
+  const getMessages = async () => {
     setLoaing(true);
-    axiosClient
-      .get("/message")
+    await axiosClient
+      .get(url)
       .then(({ data }) => {
         setMessages(data);
         setLoaing(false);
@@ -30,9 +34,9 @@ function Message() {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosClient
-          .delete(`/message/${messageId}`)
+          .delete(`${url}/${messageId}`)
           .then(({ data }) => {
-            getMessages();
+            setMessages(prevMessages => prevMessages.filter((message) => message.id !== messageId ));
             Swal.fire({
               title: "Deleted!",
               text: "This message was deleted!",

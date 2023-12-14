@@ -5,6 +5,9 @@ function DefaultLayout() {
   const { userToken, currentUser } = useStateContext();
   if (userToken) {
     if (currentUser.user_type === "seller") {
+      return <Navigate to="/seller" />;
+    }
+    else if (currentUser.user_type === "admin") {
       return <Navigate to="/admin" />;
     }
   } 

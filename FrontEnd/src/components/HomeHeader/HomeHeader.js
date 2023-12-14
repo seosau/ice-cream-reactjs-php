@@ -7,10 +7,13 @@ import {
   faSearch,
   faHeart,
   faShoppingCart,
+  faCircleXmark,
+  faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
+import HeadlessTippy from "@tippyjs/react/headless";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Btn from "../Button/Btn";
+import { Btn, Search } from "../../components";
 import { useStateContext } from "../../context/ContextProvider";
 import axiosClient from "../../axiosClient/axios";
 import Alert from "../Alert/Alert";
@@ -37,7 +40,6 @@ function HomeHeader({ children }) {
     : require("../../assets/img/avt.jpg");
   const [showNavBar, setShowNavBar] = useState(false);
   const [showSearchForm, setShowSeachForm] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
   const [showProfile, setShowProfile] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
@@ -91,16 +93,6 @@ function HomeHeader({ children }) {
     setShowSeachForm(!showSearchForm);
   };
 
-  const handleSearchChange = (event) => {
-    setSearchValue(event.target.value);
-  };
-  const onSearch = (e) => {
-    e.preventDefault();
-    if (searchValue === "") {
-      return;
-    }
-    return navigate(`/searchresult/${searchValue}`);
-  };
   const handleLogout = () => {
     axiosClient
       .post("/logout")
@@ -133,20 +125,9 @@ function HomeHeader({ children }) {
             <Link to="/order">order</Link>
             <Link to="/contact">contact us</Link>
           </nav>
-          <form className={showSearchForm ? searchFormActive : searchFormClass}>
-            <input
-              type="text"
-              name="search_product"
-              placeholder="Search product..."
-              value={searchValue}
-              onChange={handleSearchChange}
-              required
-              maxLength="100"
-            />
-            <button id="search_product_btn" onClick={(e) => onSearch(e)}>
-              <FontAwesomeIcon icon={faSearch} className={cx("icon-style")} />
-            </button>
-          </form>
+          <Search
+            classname={showSearchForm ? searchFormActive : searchFormClass}
+          />
           <div className={cx("icons")}>
             <div id={cx("menu-btn")}>
               <FontAwesomeIcon
@@ -164,14 +145,14 @@ function HomeHeader({ children }) {
             </div>
             <Link to="/favourite">
               <FontAwesomeIcon icon={faHeart} className={cx("icon-style")} />
-              <sup>{wishListIds?.length}</sup>
+              {wishListIds?.length > 0 ? <sup>{wishListIds.length}</sup> : null}
             </Link>
             <Link to="/cart">
               <FontAwesomeIcon
                 icon={faShoppingCart}
                 className={cx("icon-style")}
               />
-              <sup>{quantityCart}</sup>
+              {quantityCart > 0 ? <sup>{quantityCart}</sup> : null}
             </Link>
             <div id="user-btn">
               <FontAwesomeIcon

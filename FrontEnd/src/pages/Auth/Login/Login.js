@@ -25,7 +25,7 @@ function Login() {
         setUserToken(data.token);
         setcurrentUser(data.user);
       })
-      .catch((error) => {
+      .catch((error) => { 
         if (error.response.data.errors) {
           let finalErrors = error.response.data.errors;
           setErrors(finalErrors);
@@ -104,7 +104,7 @@ function Login() {
         </div>
         <p className={cx("link")}>
           do not have an account?
-          <Link to={pathname.includes("admin") ? "/admin/register" :"/register"}>register now</Link>
+          <Link to={pathname.includes("seller") ? "/seller/register" :"/register"}>register now</Link>
         </p>
 
         <Btn value="Login now" onclick={onSubmit}></Btn>

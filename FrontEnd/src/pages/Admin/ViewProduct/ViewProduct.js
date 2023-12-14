@@ -15,18 +15,19 @@ function ViewProduct() {
   const [loading, setLoading] = useState(false);
   const [meta, setMeta] = useState({});
   const [params, setParams] = useState({});
-
   const currentURL = window.location.search;
-  console.log(currentURL)
+  const currentPath = window.location.pathname;
   const isSort = currentURL.includes("sortBy");
-  const getProducts = (url = `/admin/product`) => {
+  const getProducts = (
+    url = currentPath.includes("seller") ? "/seller/product" : "/admin/product"
+  ) => {
     setLoading(true);
     var payload = {};
     if (url.includes("viewproduct")) {
       payload = { ...params };
     }
     axiosClient
-      .get(url, {params: payload })
+      .get(url, { params: payload })
       .then(({ data }) => {
         setProducts(data.data);
         setMeta(data.meta);
@@ -46,16 +47,17 @@ function ViewProduct() {
         order: order,
       });
       onGetSortValue(sortBy, order);
-    }
-    return;
-  };
-  useEffect(() => {
-    if (isSort === false) {
-      getProducts();
     } else {
-      return;
+      getProducts();
     }
-  }, []);
+  };
+  // useEffect(() => {
+  //   if (isSort === false) {
+  //     getProducts();
+  //   } else {
+  //     return;
+  //   }
+  // }, []);
   useEffect(() => {
     getProductsFromCurrentUrl();
   }, [currentURL]);
@@ -75,7 +77,7 @@ function ViewProduct() {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosClient
-          .delete(`/admin/product/${id}`)
+          .delete(`/seller/product/${id}`)
           .then((res) => {
             getProducts();
             Swal.fire({
@@ -97,12 +99,17 @@ function ViewProduct() {
     setLoading(true);
     setParams({ sortBy, order });
     axiosClient
-      .get(`/admin/viewproduct`, {
-        params: {
-          sortBy: sortBy,
-          order: order,
-        },
-      })
+      .get(
+        currentURL.includes("seller")
+          ? "/seller/viewproduct"
+          : "/admin/viewproduct",
+        {
+          params: {
+            sortBy: sortBy,
+            order: order,
+          },
+        }
+      )
       .then(({ data }) => {
         setProducts(data.data);
         setMeta(data.meta);
@@ -132,6 +139,7 @@ function ViewProduct() {
             {products.length > 0 ? (
               products.map((product) => (
                 <ProductListItem
+                  url={currentPath}
                   item={product}
                   onDelete={onDelete}
                   key={product.id}
@@ -146,7 +154,7 @@ function ViewProduct() {
                     flex: 1,
                   }}
                   value={"add product"}
-                  href={"/admin/addproduct"}
+                  href={"/seller/addproduct"}
                 />
               </div>
             )}

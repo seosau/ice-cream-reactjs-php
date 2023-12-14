@@ -129,5 +129,35 @@
     font-size: 1.8rem;
     text-align: center;
 }
+.quantity {
+    display: flex;
+    flex: 0.5;
+    justify-content: space-around;
+    align-items: center;
+}
+.quantity-input {
+    width: 40px !important;
+    height: 40px !important;
+    padding: 5px 10px !important;
+    border: none !important;
+    border-radius: 12px !important;
+    text-align: center;
+}
+.btn-quantity {
+    padding: 11px 13px;
+    background-color: var(--white-alpha-25);
+    box-shadow: var(--box-shadow);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+}
+.btn-quantity:hover {
+    opacity: 0.6;
+}
+.btn-quantity:active {
+   background-color: #fdcedc;
 
-
+}
+.sub-total {
+    font-size: 18px;
+}

@@ -12,9 +12,9 @@ class WishListController extends Controller
     public function index(Request $request)
     {
         $user  = $request->user();
-        $wishlists = WishList::query()->join("products", "wish_lists.product_id", "=", "products.id")
+        $wishlists = WishList::join("products", "wish_lists.product_id", "=", "products.id")
             ->where('wish_lists.user_id', $user->id)
-            ->getModels('products.*');
+            ->getModels(['products.*','wish_lists.id as wishlist_id']);
 
         return  [
             'wishlists' =>  WishListResource::collection($wishlists),

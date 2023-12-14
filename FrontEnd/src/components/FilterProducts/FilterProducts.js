@@ -39,6 +39,31 @@ function FilterProducts({ meta, onPageClick, onGetSortValue }) {
         },
       ],
     },
+    {
+      type: "category",
+      options: [
+        {
+          sortType: "corn",
+          title: "Category: Corn",
+          isChecked: false,
+        },
+        {
+          sortType: "coconut",
+          title: "Category: Coconut",
+          isChecked: false,
+        },
+        {
+          sortType: "strawberry",
+          title: "Category: Strawberry",
+          isChecked: false,
+        },
+        {
+          sortType: "chocolate",
+          title: "Category: Chocolate",
+          isChecked: false,
+        },
+      ],
+    },
   ];
   // const isChecked = (sortBy, order) => {
   //   selections.forEach(selection => {

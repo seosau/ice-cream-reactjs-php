@@ -15,6 +15,7 @@ function AddProduct() {
   const [product, setProduct] = useState({
     name: "",
     price: "",
+    category: "corn",
     product_detail: "",
     stock: "",
     image: "",
@@ -43,11 +44,12 @@ function AddProduct() {
     }
     delete payload.image_url;
     await axiosClient
-      .post("/admin/product", payload)
+      .post("/seller/product", payload)
       .then((res) => {
         setProduct({
           name: "",
           price: "",
+          category: "corn",
           product_detail: "",
           stock: "",
           image: "",
@@ -60,7 +62,6 @@ function AddProduct() {
         if (error.response) {
           setErrors(error.response.data.errors);
         }
-        // Alert("error", "Something went wrong");
       });
   };
   const addProduct = () => {
@@ -133,6 +134,24 @@ function AddProduct() {
             {errors?.price ? (
               <div className={cx("error")}>{errors?.price}</div>
             ) : null}
+          </div>
+          <div className={inputField}>
+            <p>
+              product category<span>*</span>
+            </p>
+            <select
+              name="category"
+              className={cx("box")}
+              onChange={(e) =>
+                setProduct({ ...product, category: e.target.value })
+              }
+              value={product.category}
+            >
+              <option value="corn">corn</option>
+              <option value="coconut">coconut</option>
+              <option value="chocolate">chocolate</option>
+              <option value="strawberry">strawberry</option>
+            </select>
           </div>
           <div className={inputField}>
             <p>

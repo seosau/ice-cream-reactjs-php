@@ -16,15 +16,27 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $totalProducts = Product::query()->where("seller_id", $user->id)->count();
-        $totalActiveProducts = Product::query()->where("seller_id", $user->id)->where("status", "=", "active")->count();
-        $totalIactiveProducts = Product::query()->where("seller_id", $user->id)->where("status", "=", "inactive")->count();
-        $totalUserAccounts = User::query()->count();
-        $totalSellerAccounts = Seller::query()->count();
-        $totalMessage = Message::query()->count();
-        $totalOrderPlaced = Order::query()->where('seller_id', $user->id)->where('status', '!=', 'canceled')->count();
-        $totalOrderCanceld = Order::query()->where('seller_id', $user->id)->where('status', '=', 'canceled')->count();
-        $totalOrderConfirmed = Order::query()->where('seller_id', $user->id)->where('status', '=', 'delivered')->count();
+        if ($user->user_type === 'seller') {
+            $totalProducts = Product::where("seller_id", $user->id)->count();
+            $totalActiveProducts = Product::where("seller_id", $user->id)->where("status", "=", "active")->count();
+            $totalIactiveProducts = Product::where("seller_id", $user->id)->where("status", "=", "inactive")->count();
+            $totalUserAccounts = null;
+            $totalSellerAccounts = null;
+            $totalMessage = Message::count();
+            $totalOrderPlaced = Order::where('seller_id', $user->id)->where('status', '!=', 'canceled')->count();
+            $totalOrderCanceld = Order::where('seller_id', $user->id)->where('status', '=', 'canceled')->count();
+            $totalOrderConfirmed = Order::where('seller_id', $user->id)->where('status', '=', 'delivered')->count();
+        } else if ($user->user_type === 'admin') {
+            $totalProducts = Product::count();
+            $totalActiveProducts = Product::where("status", "=", "active")->count();
+            $totalIactiveProducts = Product::where("status", "=", "inactive")->count();
+            $totalUserAccounts = User::count();
+            $totalSellerAccounts = Seller::count();
+            $totalMessage = Message::count();
+            $totalOrderPlaced = Order::where('status', '!=', 'canceled')->count();
+            $totalOrderCanceld = Order::where('status', '=', 'canceled')->count();
+            $totalOrderConfirmed = Order::where('status', '=', 'delivered')->count();
+        }
         return [
             'totalProducts' => $totalProducts,
             'totalActiveProducts' => $totalActiveProducts,
@@ -35,7 +47,6 @@ class DashboardController extends Controller
             'totalOrderPlaced' => $totalOrderPlaced,
             'totalOrderCanceld' => $totalOrderCanceld,
             'totalOrderConfirmed' => $totalOrderConfirmed,
-
         ];
     }
 }

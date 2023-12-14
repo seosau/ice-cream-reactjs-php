@@ -13,9 +13,10 @@ function Btn({ value, style, href, onclick }) {
             {value}
         </Link>
     ) : (
-        <div onClick={onclick ? (e) => handleClick(e) : null} href={href} style={style ? style : { flex: 1, width: "auto" }} className={cx("btn")}>
+        <button onClick={onclick ? (e) => {e.preventDefault();
+         handleClick(e)} : null} style={style ? style : { width: '100%' }} className={cx("btn")}>
             {value}
-        </div>
+        </button>
     );
 }
 

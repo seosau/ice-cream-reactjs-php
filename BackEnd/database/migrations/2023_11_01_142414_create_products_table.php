@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\Seller::class, "seller_id");
             $table->string('name',100);
-            $table->integer('price')->unsigned();
+            $table->float('price')->unsigned();
+            $table->string('category',50);
             $table->string('image',100);
             $table->integer('stock');
             $table->string("product_detail",1000);

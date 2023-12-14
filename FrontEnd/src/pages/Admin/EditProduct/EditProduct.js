@@ -9,9 +9,10 @@ import { useStateContext } from "../../../context/ContextProvider";
 const cx = className.bind(style);
 function EditProduct() {
   const { id } = useParams();
+  const currentPath = window.location.pathname;
   const { currentUser } = useStateContext();
   const [loading, setLoading] = useState(false);
-  const[errors,setErrors] = useState({});
+  const [errors, setErrors] = useState({});
   const [product, setProduct] = useState({
     name: "",
     price: "",
@@ -42,13 +43,17 @@ function EditProduct() {
     }
     delete payload.image_url;
     await axiosClient
-      .put(`/admin/product/${id}`, payload)
+      .put(`/seller/product/${id}`, payload)
       .then((res) => {
-        navigate("/admin/viewproduct");
+        navigate(
+          currentPath.includes("seller")
+            ? "/seller/viewproduct"
+            : "/admin/viewproduct"
+        );
         Alert("success", "update product successfully");
       })
       .catch((error) => {
-        if(error.response) {
+        if (error.response) {
           setErrors(error.response.data.error);
         }
         Alert("error", "Something went wrong");
@@ -57,10 +62,16 @@ function EditProduct() {
 
   useEffect(() => {
     setLoading(true);
-    axiosClient.get(`/admin/product/${id}`).then(({ data }) => {
-      setProduct(data.data);
-      setLoading(false);
-    });
+    axiosClient
+      .get(
+        currentPath.includes("seller")
+          ? `/seller/product/${id}`
+          : `/admin/product/${id}`
+      )
+      .then(({ data }) => {
+        setProduct(data.data);
+        setLoading(false);
+      });
   }, []);
   const inputField = cx("input-field");
   return (
@@ -87,16 +98,8 @@ function EditProduct() {
                   }
                   value={product.status}
                 >
-                  <option
-                    value={product.status === "active" ? "active" : "inactive"}
-                  >
-                    {product.status === "active" ? "active" : "inactive"}
-                  </option>
-                  <option
-                    value={product.status !== "active" ? "active" : "inactive"}
-                  >
-                    {product.status !== "active" ? "active" : "inactive"}
-                  </option>
+                  <option value="active">active</option>
+                  <option value="inactive">inactive</option>
                 </select>
               </div>
               <div className={inputField}>
@@ -128,6 +131,24 @@ function EditProduct() {
                     setProduct({ ...product, price: Number(e.target.value) })
                   }
                 />
+              </div>
+              <div className={inputField}>
+                <p>
+                  product category<span>*</span>
+                </p>
+                <select
+                  name="category"
+                  className={cx("box")}
+                  onChange={(e) =>
+                    setProduct({ ...product, category: e.target.value })
+                  }
+                  value={product.category}
+                >
+                  <option value="corn">corn</option>
+                  <option value="coconut">coconut</option>
+                  <option value="chocolate">chocolate</option>
+                  <option value="strawberry">strawberry</option>
+                </select>
               </div>
               <div className={inputField}>
                 <p>
@@ -191,7 +212,11 @@ function EditProduct() {
                   <Btn
                     value={"go back"}
                     style={{ width: "49%", height: "3rem" }}
-                    href={"/admin/viewproduct"}
+                    href={
+                      currentPath.includes("seller")
+                        ? "/seller/viewproduct"
+                        : "/admin/viewproduct"
+                    }
                   />
                 </div>
               </div>

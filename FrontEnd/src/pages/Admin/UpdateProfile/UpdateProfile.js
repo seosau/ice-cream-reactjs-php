@@ -7,10 +7,11 @@ import axiosClient from "../../../axiosClient/axios";
 import { useStateContext } from "../../../context/ContextProvider";
 const cx = className.bind(style);
 function UpdateProfile() {
+  const navigate = useNavigate();
   const { currentUser, setcurrentUser } = useStateContext();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
-  const navigate = useNavigate();
+  const currentURL = window.location.pathname;
   const [userDataUpdate, setUserDataUpdate] = useState({
     name: "",
     email: "",
@@ -23,9 +24,8 @@ function UpdateProfile() {
   useEffect(() => {
     setLoading(true);
     axiosClient
-      .get("/admin")
+      .get(currentURL.includes("seller") ? "seller" : "admin")
       .then(({ data }) => {
-        console.log(data);
         setUserDataUpdate(data);
         setLoading(false);
       })
@@ -55,14 +55,16 @@ function UpdateProfile() {
       payload.image = payload.image_url;
     }
     delete payload.image_url;
-    console.log(payload);
+   const url = currentURL.includes("seller")
+      ? "/seller/updateprofile"
+      : "/admin/updateprofile";
     await axiosClient
-      .post(`/admin/updateprofile`, payload)
+      .post(url, payload)
       .then(({ data }) => {
-        console.log(data)
+        console.log(data);
         setcurrentUser(data);
         Alert("success", "Update Successfully", "Have a nice day");
-        navigate("/admin/dashboard");
+        navigate(url.includes('seller') ? "/seller/dashboard" : '/admin/dashboard');
       })
       .catch((error) => {
         if (error.response) {
@@ -86,7 +88,14 @@ function UpdateProfile() {
         <div className={cx("form-container")}>
           <form className={cx("form")} method="put">
             <div className={cx("img-box")}>
-              <img src={userDataUpdate.image_url? userDataUpdate.image_url:user_img_url } alt="image" />
+              <img
+                src={
+                  userDataUpdate.image_url
+                    ? userDataUpdate.image_url
+                    : user_img_url
+                }
+                alt="image"
+              />
             </div>
             <div className={cx("flex")}>
               <div className={cx("col")}>
@@ -200,7 +209,7 @@ function UpdateProfile() {
             </div>
             <div className={cx("flex-btn")}>
               <Btn value={"update profile"} onclick={onUpdate} />
-              <Btn href="/admin/dashboard" value="Go Back"></Btn>
+              <Btn href="/seller/dashboard" value="Go Back"></Btn>
             </div>
           </form>
         </div>

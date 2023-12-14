@@ -29,9 +29,10 @@ class OrderRequest extends FormRequest
             'user_id' => 'integer',
             'user_name' => 'string|required',
             'email' => 'string|email|required',
-            'stock' => 'integer',
+            'stock' => 'integer|nullable',
             'status' => 'string|nullable',
-            'payment_status' => 'string|nullable'
+            'payment_status' => 'string|nullable',
+            'quantity' => 'nullable|integer',
         ];
     }
     public function messages(): array

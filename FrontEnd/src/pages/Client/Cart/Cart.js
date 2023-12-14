@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import className from "classnames/bind";
 import style from "./Cart.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import { Alert, Btn, Loader } from "../../../components";
 import axiosClient from "../../../axiosClient/axios";
@@ -25,31 +25,61 @@ function Cart() {
       .catch((error) => console.log(error));
   };
   const handleTotalPrice = () => {
-    let total = 0;
-    products.forEach((product) => {
-      total += product.price * product.quantity;
-    });
+    const total = products.reduce((accumulator, product) => {
+      return accumulator + product.price * product.quantity;
+    }, 0);
     setGrandTotal(total);
   };
-  const handleQuantity = (e, id) => {
-    setProducts((prevProducts) => {
-      return prevProducts.map((product) => {
-        if (product.product_id === id) {
-          return { ...product, quantity: Number(e.target.value) };
-        }
-        return product;
-      });
-    });
+  // const handleQuantity = (number, id) => {
+  //   setProducts((prevProducts) => {
+  //     return prevProducts.map((product) => {
+  //       if (product.product_id === id) {
+  //         if (number === 1 || number === -1) {
+  //           return {
+  //             ...product,
+  //             quantity:
+  //               product.quantity + number <= 0
+  //                 ? 1
+  //                 : product.quantity + number > product.stock
+  //                 ? product.stock
+  //                 : product.quantity + number,
+  //           };
+  //         }
+  //         return {
+  //           ...product,
+  //           quantity:
+  //             number > 0 && number <= product.stock ? number : product.quantity,
+  //         };
+  //       }
+  //       return product;
+  //     });
+  //   });
+  // };
+  const handleQuantity = (number, id) => {
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.product_id === id
+          ? {
+              ...product,
+              quantity:
+                number === 1
+                  ? Math.min(product.quantity + 1, product.stock)
+                  : number === -1
+                  ? Math.max(product.quantity - 1, 1)
+                  : Math.min(Math.max(number, 1), product.stock),
+            }
+          : product
+      )
+    );
   };
-  const handleUpdateCart = (index, product) => {
-    setLoading(true);
+  const handleUpdateCart = (cart_id, quantity) => {
+    debugger;
     axiosClient
-      .put(`/cart/${index}`, product)
+      .put(`/cart/${cart_id}`,{ quantity})
       .then(({ data }) => {
         Alert("success", "Update quantity successfully");
         setProducts(data.cartList);
         setQuantityCart(data.quantity);
-        setLoading(false);
       })
       .catch((error) => console.log(error));
   };
@@ -119,21 +149,38 @@ function Cart() {
                       <h3>{product.name}</h3>
                       <div className={cx("flex-btn")}>
                         <p className={cx("price")}>Price: ${product.price}</p>
-                        <input
-                          type="number"
-                          name="quantity"
-                          required
-                          min="1"
-                          max={product.stock}
-                          maxLength="2"
-                          value={product.quantity}
-                          className={cx("quantity", "box")}
-                          onChange={(e) =>
-                            handleQuantity(e, product.product_id)
-                          }
-                        />
+                        <div className={cx("quantity")}>
+                          <button
+                            className={cx("btn-quantity", "quanity-item")}
+                            onClick={() =>
+                              handleQuantity(-1, product.product_id)
+                            }
+                          >
+                            <FontAwesomeIcon icon={faMinus} color={"#da6285"} />
+                          </button>
+                          <input
+                            className={cx("quantity-input")}
+                            type="text"
+                            value={product.quantity}
+                            onChange={(e) =>
+                              handleQuantity(
+                                Number(e.target.value),
+                                product.product_id
+                              )
+                            }
+                          />
+                          <button
+                            className={cx("btn-quantity")}
+                            onClick={() =>
+                              handleQuantity(1, product.product_id)
+                            }
+                          >
+                            <FontAwesomeIcon icon={faPlus} color={"#da6285"} />
+                          </button>
+                        </div>
+
                         <Btn
-                          onclick={() => handleUpdateCart(index + 1, product)}
+                          onclick={() => handleUpdateCart(product.cart_id, product.quantity)}
                           style={{
                             width: "fit-content",
                           }}
@@ -143,10 +190,10 @@ function Cart() {
                       <div className={cx("flex-btn")}>
                         <p className={cx("sub-total")}>
                           Sub total:
-                          <span>{product.price * product.quantity}</span>
+                          <span> {product.price * product.quantity}$</span>
                         </p>
                         <Btn
-                          onclick={() => handleButtonDelete(product.product_id)}
+                          onclick={() => handleButtonDelete(product.cart_id)}
                           style={{
                             width: "fit-content",
                           }}
