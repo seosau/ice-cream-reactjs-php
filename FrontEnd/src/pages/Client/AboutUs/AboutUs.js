@@ -10,8 +10,9 @@ function AboutUs() {
   useEffect(() => {
     const btn = document.getElementsByClassName(cx("btn"));
     const slide = document.getElementById(cx("slide"));
-
+    const windowWidth = window.innerWidth;
     btn[0].addEventListener("click", function () {
+
       slide.style.transform = "translateX(0px)";
       for (let i = 0; i < 4; i++) {
         btn[i].id = cx("");
@@ -20,7 +21,10 @@ function AboutUs() {
     });
 
     btn[1].addEventListener("click", function () {
-      slide.style.transform = "translateX(-800px)";
+      if (windowWidth <= 968)
+        slide.style.transform = "translateX(-100vw)";
+      else
+        slide.style.transform = "translateX(-800px)";
       for (let i = 0; i < 4; i++) {
         btn[i].id = cx("");
       }
@@ -28,7 +32,10 @@ function AboutUs() {
     });
 
     btn[2].addEventListener("click", function () {
-      slide.style.transform = "translateX(-1600px)";
+      if (windowWidth <= 768)
+        slide.style.transform = "translateX(-200vw)";
+      else
+        slide.style.transform = "translateX(-1600px)";
       for (let i = 0; i < 4; i++) {
         btn[i].id = cx("");
       }
@@ -36,7 +43,10 @@ function AboutUs() {
     });
 
     btn[3].addEventListener("click", function () {
-      slide.style.transform = "translateX(-2400px)";
+      if (windowWidth <= 430)
+        slide.style.transform = "translateX(-300vw)";
+      else
+        slide.style.transform = "translateX(-2400px)";
       for (let i = 0; i < 4; i++) {
         btn[i].id = cx("");
       }
@@ -297,7 +307,7 @@ function AboutUs() {
               <div className={cx("user-img")}>
                 <img
                   src={require("../../../assets/img/testimonial (1).jpg")}
-                  alt="User Image"
+                  alt="User img"
                 />
               </div>
             </div>
@@ -314,7 +324,7 @@ function AboutUs() {
               <div className={cx("user-img")}>
                 <img
                   src={require("../../../assets/img/testimonial (2).jpg")}
-                  alt="User Image"
+                  alt="User img"
                 />
               </div>
             </div>
@@ -331,7 +341,7 @@ function AboutUs() {
               <div className={cx("user-img")}>
                 <img
                   src={require("../../../assets/img/testimonial (3).jpg")}
-                  alt="User Image"
+                  alt="User img"
                 />
               </div>
             </div>
@@ -348,7 +358,7 @@ function AboutUs() {
               <div className={cx("user-img")}>
                 <img
                   src={require("../../../assets/img/testimonial (4).jpg")}
-                  alt="User Image"
+                  alt="User img"
                 />
               </div>
             </div>
@@ -376,7 +386,7 @@ function AboutUs() {
               <div className={cx("img-box")}>
                 <img
                   src={require("../../../assets/img/mission.webp")}
-                  alt="Mission Image"
+                  alt="Mission img"
                 />
               </div>
               <div>
@@ -391,7 +401,7 @@ function AboutUs() {
               <div className={cx("img-box")}>
                 <img
                   src={require("../../../assets/img/mission1.webp")}
-                  alt="Mission Image"
+                  alt="Mission img"
                 />
               </div>
               <div>
@@ -406,7 +416,7 @@ function AboutUs() {
               <div className={cx("img-box")}>
                 <img
                   src={require("../../../assets/img/mission0.jpg")}
-                  alt="Mission Image"
+                  alt="Mission img"
                 />
               </div>
               <div>
@@ -421,7 +431,7 @@ function AboutUs() {
               <div className={cx("img-box")}>
                 <img
                   src={require("../../../assets/img/mission2.webp")}
-                  alt="Mission Image"
+                  alt="Mission img"
                 />
               </div>
               <div>

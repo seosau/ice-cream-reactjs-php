@@ -18,7 +18,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $query = Product::orderBy('updated_at', 'desc');
+        $query = Product::orderBy('updated_at', 'asc');
 
         if ($user && $user->user_type === 'seller') {
             $query->where('seller_id', $user->id);
@@ -100,14 +100,20 @@ class ProductController extends Controller
             $query->where('status', 'active');
         }
 
-        // Chống SQL Injection
         if ($sortBy === 'status') {
             $query->where($sortBy, $order);
         } elseif ($sortBy === 'category') {
             $query->where('category', $order);
         } elseif ($sortBy === 'price') {
             $query->orderBy($sortBy, $order);
+        } elseif ($sortBy === 'newest') {
+            $query->orderBy('updated_at', 'desc');
+        } elseif ($sortBy === 'bestsale') {
+            $query->where('stock', '<', 10);
+        } else {
+           
         }
+
 
         return ProductResource::collection($query->paginate(12));
     }
