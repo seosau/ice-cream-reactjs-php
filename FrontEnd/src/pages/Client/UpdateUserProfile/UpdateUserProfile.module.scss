@@ -180,3 +180,15 @@ input[type="submit"]:hover {
     font-size: 1.2rem;
     color: red;
 }
+
+//responsive ======================================================================================
+@media (max-width: 1300px) {
+    .form-container .register {
+        width: 80%; 
+    }
+}
+@media (max-width: 500px) {
+    .form-container .register {
+        width: 95%;
+    }
+}

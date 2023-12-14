@@ -248,7 +248,7 @@ function UpdateUserProfile() {
               onChange={(e) => onImageChoose(e)}
             />
           </div>
-          <Btn value={"update now"} onclick={onUpdate}></Btn>
+          <Btn value={"update now"} onclick={onUpdate} style={{ width: "100%" }}></Btn>
         </form>
       )}
     </div>
