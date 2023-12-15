@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import className from "classnames/bind";
 import style from "./Favourite.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping, faEye, faX } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faX } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import { Btn, Loader, Alert } from "../../../components";
 import axiosClient from "../../../axiosClient/axios";
@@ -10,7 +11,7 @@ import { useStateContext } from "../../../context/ContextProvider";
 const cx = className.bind(style);
 
 function Favourite() {
-  const { currentUser, setCartIds, setQuantityCart } = useStateContext();
+  const { currentUser, setCartIds, setQuantityCart,cartIds, } = useStateContext();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const { setWishListIds } = useStateContext();
@@ -44,8 +45,9 @@ function Favourite() {
           .delete(`/wishlists/${id}`)
           .then(({ data }) => {
             setWishListIds(data.wishListIds);
-            // getProductsInWishList();
-            setProducts(prevProducts => prevProducts.filter(product => product.product_id !== id));
+            setProducts((prevProducts) =>
+              prevProducts.filter((product) => product.product_id !== id)
+            );
             Swal.fire({
               title: "Deleted!",
               text: "Your product has been deleted.",
@@ -60,6 +62,13 @@ function Favourite() {
           });
       }
     });
+  };
+  const handleCheckProductInCart = (product_id) => {
+    const isCartInMenu = cartIds?.some((item) => {
+      return item.product_id == product_id;
+    });
+    if (isCartInMenu) return true;
+    return false;
   };
   const handleClickCart = (product) => {
     if (product.stock === 0) {
@@ -109,7 +118,9 @@ function Favourite() {
               {products.length > 0 ? (
                 products.map((product, index) => (
                   <div key={index} className={cx("box")}>
-                    <img src={product.image_url} alt="product" />
+                    <Link to={`/shop/view1product/${product.product_id}`}>
+                      <img src={product.image_url} alt="product" />
+                    </Link>
                     <div className={cx("content")}>
                       <img
                         alt=""
@@ -124,26 +135,35 @@ function Favourite() {
                           style={{
                             width: "fit-content",
                           }}
-                          value={<FontAwesomeIcon icon={faCartShopping} />}
+                          value={
+                            <>
+                              {handleCheckProductInCart(product.product_id)
+                                ? "Already In Cart"
+                                : "Add To Cart"}
+        
+                              <FontAwesomeIcon
+                                icon={faCartShopping}
+                                className={cx("detail-icon-style")}
+                                color={
+                                  handleCheckProductInCart(product.product_id)
+                                    ? "#da6285"
+                                    : "#808080"
+                                }
+                              />
+                            </>
+                          }
                         />
-                        <Btn
-                          href={`/shop/view1product/${product.product_id}`}
-                          style={{
-                            width: "fit-content",
-                          }}
-                          value={<FontAwesomeIcon icon={faEye} />}
-                        />
+                      </div>
+                      <div className={cx("flex-btn")}>
                         <Btn
                           onclick={() => handleButtonDelete(product.product_id)}
                           style={{
                             width: "fit-content",
                           }}
-                          value={<FontAwesomeIcon icon={faX} />}
+                          value={"Delete"}
                         />
-                      </div>
-                      <div className={cx("flex-btn")}>
                         <Btn
-                          href=""
+                          href={`/checkout?from=menu&id=${product.product_id}`}
                           style={{
                             width: "fit-content",
                           }}

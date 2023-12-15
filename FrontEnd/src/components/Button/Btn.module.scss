@@ -1,7 +1,7 @@
 .btn {
     display: block;
     text-align: center;
-    background-color: var(--white-alpha-25);
+    background-color: var(--white-alcpha-25);
     border: 2px solid var(--white-alpha-40);
     backdrop-filter: var(--backdrop-filter);
     box-shadow: var(--box-shadow);
@@ -14,9 +14,10 @@
     position: relative;
     user-select: none;
     margin-top: 10px;
+    min-width: 20%;
 }
-.btn .btn {
-    margin-left: 10px;
+.btn.btn {
+    margin-right: 10px;
 }
 .btn::before {
     position: absolute;

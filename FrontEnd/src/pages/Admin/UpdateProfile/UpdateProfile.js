@@ -86,7 +86,7 @@ function UpdateProfile() {
       {loading && <Loader />}
       {!loading && (
         <div className={cx("form-container")}>
-          <form className={cx("form")} method="put">
+          <form className={cx("form")}>
             <div className={cx("img-box")}>
               <img
                 src={

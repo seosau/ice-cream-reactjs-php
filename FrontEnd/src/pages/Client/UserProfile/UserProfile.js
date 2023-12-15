@@ -1,35 +1,36 @@
 import className from "classnames/bind";
 import { Btn } from "../../../components";
-import style from "./UserProfile.module.scss"
-import { useState } from "react";
+import style from "./UserProfile.module.scss";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFolderMinus,
-  faMessage,
-} from "@fortawesome/free-solid-svg-icons";
+import { faFolderMinus, faMessage } from "@fortawesome/free-solid-svg-icons";
+import { useStateContext } from "../../../context/ContextProvider";
+import axiosClient from "../../../axiosClient/axios";
 const cx = className.bind(style);
 
 function UserProfile() {
-  const [user, setUser] = useState({
-    id: 1,
-    img: require("../../../assets/img/user.jpg"),
-    name: 'Alexander User',
-    email: 'alexander_user@gmail.com',
-    password: '12345',
-    totalOrders: 6,
-    totalMessages: 2,
-  });
+  const { currentUser } = useStateContext();
+  const [user, setUser] = useState({...currentUser});
+  const image_url = currentUser.image_url
+    ? currentUser.image_url
+    : require("../../../assets/img/avt.png");
+  useEffect(() => {
+    setUser({...currentUser})
+  }, [currentUser]);
   return (
     <div className={cx("main-container")}>
-      <div className={cx("banner")}>
+      {/* <div className={cx("banner")}>
         <div className={cx("detail")}>
           <h1>Profile</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing<br />
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing
+            <br />
             elit, sed do eiusmod tempor incididunt ut labore et <br />
-            dolore magna aliqua.</p>
+            dolore magna aliqua.
+          </p>
         </div>
-      </div>
+      </div> */}
       <div className={cx("profile")}>
         <div className={cx("heading")}>
           <h1>profile details</h1>
@@ -37,7 +38,7 @@ function UserProfile() {
         </div>
         <div className={cx("details")}>
           <div className={cx("user")}>
-            <img src={user.img} />
+            <img src={image_url} />
             <h3>{user.name}</h3>
             <p>{user.email}</p>
             <Btn
@@ -51,7 +52,10 @@ function UserProfile() {
           <div className={cx("box-container")}>
             <div className={cx("box")}>
               <div className={cx("flex")}>
-                <FontAwesomeIcon icon={faFolderMinus} className={cx("iconStyle")} />
+                <FontAwesomeIcon
+                  icon={faFolderMinus}
+                  className={cx("iconStyle")}
+                />
                 <h3>{user.totalOrders}</h3>
               </div>
               <Btn
@@ -79,7 +83,7 @@ function UserProfile() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default UserProfile;

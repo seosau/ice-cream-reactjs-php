@@ -173,9 +173,9 @@ function View1Product() {
               <div className={cx("detail-btn")}>
                 <Btn
                   onclick={() => handleClickLike(product)}
-                  style={{
-                    width: "35%",
-                  }}
+                  // style={{
+                  //   width: "35%",
+                  // }}
                   value={
                     <>
                       {handleCheckProductInWishList(product.id)
@@ -196,9 +196,9 @@ function View1Product() {
                 />
                 <Btn
                   onclick={() => handleClickCart(product)}
-                  style={{
-                    width: "35%",
-                  }}
+                  // style={{
+                  //   width: "35%",
+                  // }}
                   value={
                     <>
                       {handleCheckProductInCart(product.id)

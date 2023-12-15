@@ -221,7 +221,7 @@ function Cart() {
               style={{
                 width: "fit-content",
               }}
-              value="Proceed to checkout"
+              value="Checkout"
             />
           </div>
         ) : null}

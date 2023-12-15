@@ -15,12 +15,12 @@ function FilterProducts({
   const [btnSorts, setBtnSorts] = useState([
     {
       title: "Latest",
-      sortBy:'newest',
+      sortBy: "newest",
       isChecked: false,
     },
     {
       title: "Hot Sale",
-      sortBy:'bestsale',
+      sortBy: "bestsale",
       isChecked: false,
     },
   ]);
@@ -109,20 +109,22 @@ function FilterProducts({
     <div className={cx("container")}>
       <div className={cx("sort-choice")}>
         <p className={cx("sort-text")}>Sorted by</p>
-        {btnSorts.map((btnSort, index) => (
-          <Link
-            className={cx("btn-sort", { active: btnSort.isChecked })}
-            key={index}
-            onClick={() => {
-              onActive(index);
-            }}
-            to={`?sortBy=${btnSort.sortBy}&order='ctime'`}
-          >
-            {btnSort.title}
-          </Link>
-        ))}
+        {btnSorts.map((btnSort, index) => {
+          return isClient ? (
+            <Link
+              className={cx("btn-sort", { active: btnSort.isChecked })}
+              key={index}
+              onClick={() => {
+                onActive(index);
+              }}
+              to={`?sortBy=${btnSort.sortBy}&order='ctime'`}
+            >
+              {btnSort.title}
+            </Link>
+          ) : null;
+        })}
         {selectedOptions.map((selection, sectionIndex) => {
-          return isClient && selection.type !== "status" ? (
+          return !isClient || selection.type !== "status" ? (
             <div className={cx("select")} key={sectionIndex}>
               <span className={cx("select__label")}>{selection.type}</span>
               <FontAwesomeIcon icon={faChevronDown} />
@@ -137,6 +139,7 @@ function FilterProducts({
                       className={cx("select__link")}
                       onClick={() => {
                         onOptionClick(sectionIndex, optionIndex);
+                        onGetSortValue(selection.type, option.sortType)
                       }}
                     >
                       {option.title}

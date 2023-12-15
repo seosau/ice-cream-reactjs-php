@@ -120,6 +120,7 @@ function ViewProduct() {
       </div>
       {products.length > 0 && (
         <FilterProducts
+          isClient={false}
           meta={meta}
           onPageClick={onPageClick}
           onGetSortValue={onGetSortValue}

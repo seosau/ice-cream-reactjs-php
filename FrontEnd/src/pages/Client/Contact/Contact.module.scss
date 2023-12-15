@@ -90,8 +90,8 @@
 }
 
 .form-container .register{
-    // width: 50rem;
-    width: 55%;
+    width: 50rem;
+    
 }
 .form-container form .box{
     background-color: var(--white-alpha-25); 
@@ -188,7 +188,7 @@
 //responsive ======================================================================================
 @media (max-width: 1300px) {
     .form-container .register {
-        width: 80%; 
+        width: 60%; 
     }
 }
 @media (max-width: 500px) {
