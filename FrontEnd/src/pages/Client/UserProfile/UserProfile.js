@@ -10,7 +10,7 @@ const cx = className.bind(style);
 function UserProfile() {
   const [user, setUser] = useState({});
   const image_url = user.image_url
-    ? user.image_url
+    ? user  .image_url
     : require("../../../assets/img/avt.png");
   useEffect(() => {
     axiosClient
