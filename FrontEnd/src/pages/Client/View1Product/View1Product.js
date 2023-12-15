@@ -24,22 +24,11 @@ function View1Product() {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState([]);
-  const [meta, setMeta] = useState({});
-  const [params, setParams] = useState({});
   const getProducts = async (url = `/menu`) => {
-    setLoading(true);
-    var payload = {};
-    if (url.includes("viewproduct")) {
-      payload = { ...params };
-    }
     await axiosClient
-      .get(url, {
-        params: payload,
-      })
+      .get(url)
       .then(({ data }) => {
         setProducts(data.data);
-        // setMeta(data.meta);
-        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -58,29 +47,32 @@ function View1Product() {
         console.log(error);
       });
   };
-  useEffect(() => {
+  const fetchData = async () => {
     window.scrollTo(0, 0);
     setLoading(true);
     if (state) {
       setProduct(state);
       setLoading(false);
-      return;
+    } else {
+      await getProductById();
     }
-    getProductById();
-  }, []);
+  };
+  useEffect(() => {
+    fetchData();
+  }, [productId, state,getProductById]);
   useEffect(() => {
     getProducts();
   }, []);
   const handleCheckProductInWishList = (product_id) => {
     const isWishInMenu = wishListIds.some((item) => {
-      return item.product_id == product_id;
+      return item.product_id === product_id;
     });
     if (isWishInMenu) return true;
     return false;
   };
   const handleCheckProductInCart = (product_id) => {
     const isCartInMenu = cartIds?.some((item) => {
-      return item.product_id == product_id;
+      return item.product_id === product_id;
     });
     if (isCartInMenu) return true;
     return false;
@@ -157,7 +149,7 @@ function View1Product() {
         {!loading && (
           <div className={cx("main-box")}>
             <div className={cx("img-box")}>
-              <img src={product.image_url} alt="Main image" />
+              <img src={product.image_url} alt="" />
             </div>
             <div className={cx("detail-box")}>
               <span
@@ -261,8 +253,8 @@ function View1Product() {
                         className={cx("shap")}
                       />
                       <div className={cx("price-name")}>
-                        <h2 className={cx("price")}>Price ${product.price}</h2>
-                        <h3 className={cx("name")}> {product.name}</h3>
+                        <h2 className={cx("name")}> {product.name}</h2>
+                        <h3 className={cx("price")}>Price ${product.price}</h3>
                       </div>
                       <div className={cx("flex-btn")}>
                         <Btn

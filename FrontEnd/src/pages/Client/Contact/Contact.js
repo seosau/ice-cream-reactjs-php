@@ -76,21 +76,21 @@ function Contact() {
         </div>
         <div className={cx("box-container")}>
           <div className={cx("box")}>
-            <img src={require("../../../assets/img/0.png")}></img>
+            <img src={require("../../../assets/img/0.png")} alt=""></img>
             <div>
               <h1>Free Shipping Fast</h1>
               <p>Lorem ipsum dolor sit amet consectetur adipiscing elit.</p>
             </div>
           </div>
           <div className={cx("box")}>
-            <img src={require("../../../assets/img/1.png")}></img>
+            <img src={require("../../../assets/img/1.png")} alt=""></img>
             <div>
               <h1>Money Back & Guanrantee</h1>
               <p>Lorem ipsum dolor sit amet consectetur adipiscing elit.</p>
             </div>
           </div>
           <div className={cx("box")}>
-            <img src={require("../../../assets/img/2.png")}></img>
+            <img src={require("../../../assets/img/2.png")} alt=""></img>
             <div>
               <h1>Online Support 24/7</h1>
               <p>Lorem ipsum dolor sit amet consectetur adipiscing elit.</p>
@@ -252,7 +252,9 @@ function Contact() {
         </div>
         <div className={cx("box-map")}>
           <iframe
-          className={cx("box-mapdetail")}
+            alt=""
+            title="map"
+            className={cx("box-mapdetail")}
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.2311712352484!2d106.80047917586931!3d10.870014157458742!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317527587e9ad5bf%3A0xafa66f9c8be3c91!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBDw7RuZyBuZ2jhu4cgVGjDtG5nIHRpbiAtIMSQSFFHIFRQLkhDTQ!5e0!3m2!1svi!2s!4v1702533990688!5m2!1svi!2s"
             allowfullscreen=""
             loading="lazy"
