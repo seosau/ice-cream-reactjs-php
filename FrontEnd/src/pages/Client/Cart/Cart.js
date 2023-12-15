@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import className from "classnames/bind";
 import style from "./Cart.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,7 +16,7 @@ function Cart() {
   const [products, setProducts] = useState([]);
   const getProductsInCart = async () => {
     setLoading(true);
-   await axiosClient
+    await axiosClient
       .get("/cart")
       .then(({ data }) => {
         setProducts(data.cartList);
@@ -24,12 +24,12 @@ function Cart() {
       })
       .catch((error) => console.log(error));
   };
-  const handleTotalPrice = () => {
+  const handleTotalPrice = useCallback(() => {
     const total = products.reduce((accumulator, product) => {
       return accumulator + product.price * product.quantity;
     }, 0);
     setGrandTotal(total);
-  };
+  }, [products, setGrandTotal]);
   // const handleQuantity = (number, id) => {
   //   setProducts((prevProducts) => {
   //     return prevProducts.map((product) => {
@@ -73,8 +73,8 @@ function Cart() {
     );
   };
   const handleUpdateCart = async (cart_id, quantity) => {
-   await axiosClient
-      .put(`/cart/${cart_id}`,{ quantity})
+    await axiosClient
+      .put(`/cart/${cart_id}`, { quantity })
       .then(({ data }) => {
         Alert("success", "Update quantity successfully");
         setProducts(data.cartList);
@@ -93,12 +93,16 @@ function Cart() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-         axiosClient
+        axiosClient
           .delete(`/cart/${cart_id}`)
           .then(({ data }) => {
             setCartIds(data.cartListIds);
             setQuantityCart(data.quantity);
-            setProducts(prevProducts => prevProducts.filter(product =>  product.product_id !== product_id))
+            setProducts((prevProducts) =>
+              prevProducts.filter(
+                (product) => product.product_id !== product_id
+              )
+            );
             Swal.fire({
               title: "Deleted!",
               text: "Your product has been deleted.",
@@ -119,7 +123,7 @@ function Cart() {
   }, []);
   useEffect(() => {
     handleTotalPrice();
-  }, [products]);
+  }, [handleTotalPrice]);
 
   return (
     <div className={cx("main-container")}>
@@ -179,7 +183,9 @@ function Cart() {
                         </div>
 
                         <Btn
-                          onclick={() => handleUpdateCart(product.cart_id, product.quantity)}
+                          onclick={() =>
+                            handleUpdateCart(product.cart_id, product.quantity)
+                          }
                           style={{
                             width: "fit-content",
                           }}
@@ -189,10 +195,15 @@ function Cart() {
                       <div className={cx("flex-btn")}>
                         <p className={cx("sub-total")}>
                           Sub total:
-                          <span> {product.price * product.quantity}$</span>
+                          <span> ${product.price * product.quantity}</span>
                         </p>
                         <Btn
-                          onclick={() => handleButtonDelete(product.cart_id, product.product_id)}
+                          onclick={() =>
+                            handleButtonDelete(
+                              product.cart_id,
+                              product.product_id
+                            )
+                          }
                           style={{
                             width: "fit-content",
                           }}

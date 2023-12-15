@@ -139,9 +139,9 @@ function Shop() {
       axiosClient
         .post("/cart", payload)
         .then(({ data }) => {
+          Alert("success", "Add to cart successfully");
           setCartIds(data.cartListIds);
           setQuantityCart(data.quantity);
-          Alert("success", "Add to cart successfully");
         })
         .catch((error) => {
           if (error.response) {

@@ -2,22 +2,26 @@ import className from "classnames/bind";
 import { Btn } from "../../../components";
 import style from "./UserProfile.module.scss";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFolderMinus, faMessage } from "@fortawesome/free-solid-svg-icons";
-import { useStateContext } from "../../../context/ContextProvider";
 import axiosClient from "../../../axiosClient/axios";
 const cx = className.bind(style);
 
 function UserProfile() {
-  const { currentUser } = useStateContext();
-  const [user, setUser] = useState({...currentUser});
-  const image_url = currentUser.image_url
-    ? currentUser.image_url
+  const [user, setUser] = useState({});
+  const image_url = user.image_url
+    ? user.image_url
     : require("../../../assets/img/avt.png");
   useEffect(() => {
-    setUser({...currentUser})
-  }, [currentUser]);
+    axiosClient
+      .get("/me")
+      .then(({ data }) => {
+        setUser(data);
+      })
+      .catch((error) => {
+        return error;
+      });
+  }, []);
   return (
     <div className={cx("main-container")}>
       {/* <div className={cx("banner")}>

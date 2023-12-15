@@ -80,11 +80,8 @@ class CartController extends Controller
 
         $cartListIds = Cart::where("user_id", $user->id)->pluck('product_id');
 
-        $quantity = Cart::where("user_id", $user->id)->sum("quantity");
-
         return [
             "cartListIds" => $cartListIds,
-            "quantity" =>  $quantity,
             "message" => "Cart item deleted successfully",
         ];
     }
@@ -94,10 +91,8 @@ class CartController extends Controller
         $cartIds = Cart::query()->select('product_id')
             ->where("user_id", $user->id)
             ->get();
-        $quantity = Cart::query()->where("user_id", $user->id)->sum("quantity");
         return [
             "cartIds" =>  $cartIds,
-            "quantity" =>  $quantity,
         ];
     }
 }

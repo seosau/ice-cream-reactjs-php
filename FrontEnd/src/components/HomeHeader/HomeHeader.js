@@ -7,10 +7,7 @@ import {
   faSearch,
   faHeart,
   faShoppingCart,
-  faCircleXmark,
-  faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
-import HeadlessTippy from "@tippyjs/react/headless";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Btn, Search } from "../../components";
@@ -20,7 +17,6 @@ import Alert from "../Alert/Alert";
 const cx = className.bind(style);
 const navBarClass = cx("navbar");
 const navBarActive = navBarClass + " " + cx("active");
-
 const searchFormClass = cx("search-form");
 const searchFormActive = searchFormClass + " " + cx("active");
 function HomeHeader({ children }) {
@@ -31,8 +27,7 @@ function HomeHeader({ children }) {
     setUserToken,
     wishListIds,
     setWishListIds,
-    quantityCart,
-    setQuantityCart,
+    cartIds,
     setCartIds,
   } = useStateContext();
   const image_url = currentUser.image_url
@@ -52,8 +47,7 @@ function HomeHeader({ children }) {
         .catch((error) => {
           return error;
         });
-    } else {
-    }
+    } 
   }, []);
   useEffect(() => {
     if (!currentUser.id) {
@@ -67,7 +61,7 @@ function HomeHeader({ children }) {
       .catch((error) => {
         console.log(error);
       });
-  }, [currentUser]);
+  }, [currentUser, setWishListIds]);
   useEffect(() => {
     if (!currentUser.id) {
       return;
@@ -76,12 +70,11 @@ function HomeHeader({ children }) {
       .get("/quantityCartItems")
       .then(({ data }) => {
         setCartIds(data.cartIds);
-        setQuantityCart(data.quantity);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [currentUser]);
+  }, [currentUser,setCartIds]);
   const handleShowProfile = () => {
     setShowProfile(!showProfile);
   };
@@ -152,7 +145,7 @@ function HomeHeader({ children }) {
                 icon={faShoppingCart}
                 className={cx("icon-style")}
               />
-              {quantityCart > 0 ? <sup>{quantityCart}</sup> : null}
+              {cartIds?.length > 0 ? <sup>{cartIds.length}</sup> : null}
             </Link>
             <div id="user-btn">
               <FontAwesomeIcon

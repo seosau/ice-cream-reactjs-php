@@ -9,8 +9,6 @@ const StateContext = createContext({
   setWishListIds: () => {},
   cartIds: [],
   setCartIds: () => {},
-  quantityCart:null,
-  setQuantityCart:() =>{}
 });
 export const ContextProvider = ({ children }) => {
   const [currentUser, setcurrentUser] = useState({});
@@ -19,7 +17,6 @@ export const ContextProvider = ({ children }) => {
   );
   const [wishListIds, setWishListIds] = useState([]);
   const [cartIds, setCartIds] = useState([]);
-  const [quantityCart, setQuantityCart] = useState(0);
   const setUserToken = (token) => {
     if (token) {
       localStorage.setItem("TOKEN", token);
@@ -40,8 +37,6 @@ export const ContextProvider = ({ children }) => {
         setWishListIds,
         cartIds,
         setCartIds,
-        quantityCart,
-        setQuantityCart
       }}
     >
       {children}

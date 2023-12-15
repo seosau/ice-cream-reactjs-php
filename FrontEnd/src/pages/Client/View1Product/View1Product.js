@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
@@ -34,20 +34,19 @@ function View1Product() {
         console.log(error);
       });
   };
-  const getProductById = async (id = null) => {
+  const getProductById = useCallback(async (id = null) => {
     let product_id = id ? id : productId;
     setLoading(true);
-    await axiosClient
-      .get(`/menu/${product_id}`)
-      .then(({ data }) => {
-        setProduct(data.data[0]);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const fetchData = async () => {
+    try {
+      const { data } = await axiosClient.get(`/menu/${product_id}`);
+      setProduct(data.data[0]);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }, [productId]);
+  const fetchData = useCallback(async () => {
     window.scrollTo(0, 0);
     setLoading(true);
     if (state) {
@@ -56,10 +55,10 @@ function View1Product() {
     } else {
       await getProductById();
     }
-  };
+  }, [state, getProductById]);
   useEffect(() => {
     fetchData();
-  }, [productId, state,getProductById]);
+  }, [fetchData,getProductById]);
   useEffect(() => {
     getProducts();
   }, []);
