@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use App\Http\Requests\LoginRequest;
@@ -72,12 +73,23 @@ class ClientController extends Controller
     public function me(Request $request)
     {
         $user = $request->user();
+        $data = User::leftJoin('orders', 'users.id', '=', 'orders.user_id')
+            ->leftJoin('messages', 'users.id', '=', 'messages.user_id')
+            ->where('users.id', $user->id)
+            ->groupBy('users.id', 'users.name', 'users.email', 'users.image')
+            ->select(
+                DB::raw('COALESCE(count(orders.product_id), 0) as orderQuantity'),
+                DB::raw('COALESCE(count(DISTINCT messages.id), 0) as messageQuantity')
+            )
+            ->first();
         return [
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
             'image_url' => $user->image ? URL::to($user->image) : null,
             'user_type' => $user->user_type,
+            'totalOrders' =>  $data['orderQuantity'],
+            'totalMessages' => $data['messageQuantity']
         ];
     }
     public function update(UpdateProfileRequest $request)
