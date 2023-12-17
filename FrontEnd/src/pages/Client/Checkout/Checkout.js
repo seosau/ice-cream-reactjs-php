@@ -313,7 +313,9 @@ export default function Checkout() {
                 <div className={cx("error")}>{errors.address}</div>
               ) : null}
             </div>
-            <Btn value="place order" onclick={handleSubmitOrder} />
+            <div className={cx("flex-btn")}>
+              <Btn value="place order" style={{width: "50%"}} onclick={handleSubmitOrder} />
+            </div>
           </form>
         </div>
       </div>

@@ -129,6 +129,13 @@
   font-size: 1.2rem;
   color: red;
 }
+
+.form-container form .flex-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .quantity {
   display: inline-flex;
   flex: 0.5;
