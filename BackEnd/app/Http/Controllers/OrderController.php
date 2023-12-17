@@ -64,9 +64,8 @@ class OrderController extends Controller
             //     ->where('id', $product['product_id'])
             //     ->update(['stock' =>  $product['stock'] - $product['quantity']]);
         }
-        $quantity = Cart::query()->where("user_id", $data['user_id'])->sum("quantity");
         return [
-            'quantity' =>  $quantity ? $quantity : 0,
+            'success' =>  'order successfully',
         ];
     }
     public function update(OrderRequest $orderRequest, Order $order)

@@ -15,7 +15,7 @@ export default function Checkout() {
   const from = searchParams.get("from");
   const id = Number(searchParams.get("id"));
   const navigate = useNavigate();
-  const { currentUser, setQuantityCart } = useStateContext();
+  const { currentUser, setCartIds } = useStateContext();
   const [orderData, setOrderData] = useState({
     user_name: "",
     phone_number: "",
@@ -84,7 +84,7 @@ export default function Checkout() {
       axiosClient
         .post("/order", payload)
         .then(({ data }) => {
-          setQuantityCart(data.quantity);
+          setCartIds([]);
           Alert("success", "Order successfully");
           navigate("/order");
         })
@@ -125,9 +125,9 @@ export default function Checkout() {
     window.scrollTo(0, 0);
     if (id) {
       handleGetDataFromCurrentUrl();
-      return;
+    } else {
+      getProductsInCart();
     }
-    getProductsInCart();
   }, []);
   useEffect(() => {
     handleTotalPrice();
@@ -314,7 +314,11 @@ export default function Checkout() {
               ) : null}
             </div>
             <div className={cx("flex-btn")}>
-              <Btn value="place order" style={{width: "40%"}} onclick={handleSubmitOrder} />
+              <Btn
+                value="place order"
+                style={{ width: "40%" }}
+                onclick={handleSubmitOrder}
+              />
             </div>
           </form>
         </div>

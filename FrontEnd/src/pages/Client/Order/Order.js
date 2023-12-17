@@ -41,8 +41,8 @@ function Order() {
             .then(({ data }) => {
               console.log(data);
               Swal.fire({
-                title: "Updated!",
-                text: "Your order have been updated!",
+                title: "Canceled!",
+                text: "Your order have been canceled!",
                 icon: "success",
               });
             })
