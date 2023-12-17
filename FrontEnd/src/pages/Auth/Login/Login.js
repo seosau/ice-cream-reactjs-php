@@ -1,11 +1,13 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import className from "classnames/bind";
 import style from "./Login.module.scss";
-import { useState } from "react";
-import Btn from "../../../components/Button/Btn";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { Btn, Alert } from "../../../components";
 import axiosClient from "../../../axiosClient/axios";
 import { useStateContext } from "../../../context/ContextProvider";
-import Alert from "../../../components/Alert/Alert";
-import { Link } from "react-router-dom";
+
 const cx = className.bind(style);
 
 function Login() {
@@ -16,7 +18,13 @@ function Login() {
     password: "",
   });
   const [errors, setErrors] = useState({});
+  const [inputType, setInputType] = useState("password");
   const pathname = window.location.pathname;
+  const setShowPassword = () => {
+    setInputType((prevInputType) =>
+      prevInputType === "text" ? "password" : "text"
+    );
+  };
   const onSubmit = () => {
     axiosClient
       .post(`${pathname}`, userDataLogin)
@@ -25,7 +33,7 @@ function Login() {
         setUserToken(data.token);
         setcurrentUser(data.user);
       })
-      .catch((error) => { 
+      .catch((error) => {
         if (error.response.data.errors) {
           let finalErrors = error.response.data.errors;
           setErrors(finalErrors);
@@ -80,7 +88,7 @@ function Login() {
           </p>
           <input
             className={cx("box")}
-            type="password"
+            type={inputType}
             name="password"
             placeholder="enter your password..."
             maxLength={50}
@@ -96,6 +104,16 @@ function Login() {
             }}
             value={userDataLogin.password}
           />
+          {inputType === "password" ? (
+            <FontAwesomeIcon icon={faEye} className={cx("icon-showpassword")} onClick={setShowPassword}/>
+          ) : (
+            <FontAwesomeIcon
+              icon={faEyeSlash}
+              className={cx("icon-showpassword")}
+              onClick={setShowPassword}
+            />
+          )}
+
           {errors?.password ? (
             <div className={cx("error")}>
               {errors.password[errors?.password?.length - 1]}
@@ -104,7 +122,11 @@ function Login() {
         </div>
         <p className={cx("link")}>
           do not have an account?
-          <Link to={pathname.includes("seller") ? "/seller/register" :"/register"}>register now</Link>
+          <Link
+            to={pathname.includes("seller") ? "/seller/register" : "/register"}
+          >
+            register now
+          </Link>
         </p>
 
         <Btn value="Login now" onclick={onSubmit}></Btn>

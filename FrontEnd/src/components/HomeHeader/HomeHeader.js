@@ -9,7 +9,7 @@ import {
   faShoppingCart,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { Btn, Search } from "../../components";
 import { useStateContext } from "../../context/ContextProvider";
 import axiosClient from "../../axiosClient/axios";
@@ -192,4 +192,4 @@ function HomeHeader({ children }) {
   );
 }
 
-export default HomeHeader;
+export default memo(HomeHeader);

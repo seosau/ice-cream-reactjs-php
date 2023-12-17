@@ -10,7 +10,7 @@ const cx = className.bind(style);
 function UserProfile() {
   const [user, setUser] = useState({});
   const image_url = user.image_url
-    ? user  .image_url
+    ? user.image_url
     : require("../../../assets/img/avt.png");
   useEffect(() => {
     axiosClient
@@ -38,11 +38,11 @@ function UserProfile() {
       <div className={cx("profile")}>
         <div className={cx("heading")}>
           <h1>profile details</h1>
-          <img src={require("../../../assets/img/separator.png")} />
+          <img src={require("../../../assets/img/separator.png")} alt=""/>
         </div>
         <div className={cx("details")}>
           <div className={cx("user")}>
-            <img src={image_url} />
+            <img src={image_url} alt=""/>
             <h3>{user.name}</h3>
             <p>{user.email}</p>
             <Btn

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback,memo } from "react";
 import className from "classnames/bind";
 import style from "./Cart.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -96,24 +96,21 @@ function Cart() {
         axiosClient
           .delete(`/cart/${cart_id}`)
           .then(({ data }) => {
-            setCartIds(data.cartListIds);
-            setQuantityCart(data.quantity);
-            setProducts((prevProducts) =>
-              prevProducts.filter(
-                (product) => product.product_id !== product_id
-              )
-            );
             Swal.fire({
               title: "Deleted!",
               text: "Your product has been deleted.",
               icon: "success",
             });
+            setProducts((prevProducts) =>
+              prevProducts.filter(
+                (product) => product.product_id !== product_id
+              )
+            );
+            setCartIds(data.cartListIds);
+            setQuantityCart(data.quantity);
           })
           .catch((error) => {
-            Swal.fire({
-              title: "Something went wrong",
-              icon: "error",
-            });
+            console.log(error);
           });
       }
     });
@@ -241,4 +238,4 @@ function Cart() {
   );
 }
 
-export default Cart;
+export default memo(Cart);

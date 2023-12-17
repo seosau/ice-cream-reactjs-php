@@ -2,7 +2,7 @@ import { useState } from "react";
 import className from "classnames/bind";
 import style from "./Register.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImage } from "@fortawesome/free-solid-svg-icons";
+import { faImage,faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import Btn from "../../../components/Button/Btn";
 import axiosClient from "../../../axiosClient/axios.js";
 
@@ -20,6 +20,12 @@ function Register() {
     image: "",
     image_url: "",
   });
+  const [inputType, setInputType] = useState("password");
+  const setShowPassword = () => {
+    setInputType((prevInputType) =>
+      prevInputType === "text" ? "password" : "text"
+    );
+  };
   const pathname = window.location.pathname;
   const [errors, setErrors] = useState({});
   const onImageChoose = (e) => {
@@ -141,7 +147,7 @@ function Register() {
             </p>
             <input
               className={cx("box")}
-              type="password"
+              type={inputType}
               name="password"
               placeholder="enter your password..."
               maxLength={50}
@@ -156,6 +162,19 @@ function Register() {
               }}
               value={userDataRegister.password}
             />
+            {inputType === "password" ? (
+              <FontAwesomeIcon
+                icon={faEye}
+                className={cx("icon-showpassword")}
+                onClick={setShowPassword}
+              />
+            ) : (
+              <FontAwesomeIcon
+                icon={faEyeSlash}
+                className={cx("icon-showpassword")}
+                onClick={setShowPassword}
+              />
+            )}
             {errors?.password ? (
               <div className={cx("error")}>
                 {errors.password[errors?.password?.length - 1]}

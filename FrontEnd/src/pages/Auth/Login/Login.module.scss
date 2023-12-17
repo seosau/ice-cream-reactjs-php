@@ -91,3 +91,13 @@
     font-size: 1.2rem;
     color: red;
 }
+.input-field {
+    position: relative;
+}
+.icon-showpassword {
+    position: relative;
+    top: -48px;
+    left: 92%;
+    z-index: 5;
+    font-size: 20px;
+}

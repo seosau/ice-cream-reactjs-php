@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,memo } from "react";
 import { Link } from "react-router-dom";
 import className from "classnames/bind";
 import style from "./Favourite.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping, faX } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import { Btn, Loader, Alert } from "../../../components";
 import axiosClient from "../../../axiosClient/axios";
@@ -65,7 +65,7 @@ function Favourite() {
   };
   const handleCheckProductInCart = (product_id) => {
     const isCartInMenu = cartIds?.some((item) => {
-      return item.product_id == product_id;
+      return item.product_id === product_id;
     });
     if (isCartInMenu) return true;
     return false;
@@ -186,4 +186,4 @@ function Favourite() {
   );
 }
 
-export default Favourite;
+export default memo(Favourite);
