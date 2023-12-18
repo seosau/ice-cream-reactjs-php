@@ -59,6 +59,7 @@ function ViewProduct() {
     getProducts(link.url);
   };
   const onDelete = (id) => {
+    const url = currentPath.includes('/seller') ? '/seller/product' : '/admin/product';
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -70,14 +71,15 @@ function ViewProduct() {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosClient
-          .delete(`/seller/product/${id}`)
+          .delete(`${url}/${id}`)
           .then((res) => {
-            getProducts();
+            // getProducts();
             Swal.fire({
               title: "Deleted!",
               text: "Your product has been deleted.",
               icon: "success",
             });
+            setProducts(prevProducts => prevProducts.filter(product => product.id !== id));
           })
           .catch((error) => {
             Swal.fire({
@@ -88,10 +90,10 @@ function ViewProduct() {
       }
     });
   };
-  const onGetSortValue = (sortBy, order) => {
+  const onGetSortValue = async (sortBy, order) => {
     setLoading(true);
     setParams({ sortBy, order });
-    axiosClient
+   await axiosClient
       .get(
         currentPath.includes("seller")
           ? "/seller/viewproduct"

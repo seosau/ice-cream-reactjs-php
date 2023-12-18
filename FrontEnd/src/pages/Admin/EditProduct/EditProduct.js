@@ -37,13 +37,14 @@ function EditProduct() {
     reader.readAsDataURL(file);
   };
   const onEdit = async () => {
-    const payload = { ...product, seller_id: currentUser.id };
+    const payload = { ...product};
+    const url =  currentPath.includes("seller") ? '/seller/product' : '/admin/product';
     if (payload.image) {
       payload.image = payload.image_url;
     }
     delete payload.image_url;
     await axiosClient
-      .put(`/seller/product/${id}`, payload)
+      .put(`${url}/${id}`, payload)
       .then((res) => {
         navigate(
           currentPath.includes("seller")

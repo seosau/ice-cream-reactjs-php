@@ -107,6 +107,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->prefix('/admin')->group(funct
         'index' => 'admin.product.index',
         'show' => 'admin.product.show',
         'destroy' => 'admin.product.destroy',
+        'update' => 'admin.product.update',
     ]);
     Route::apiResource('/order', OrderController::class)->names([
         'index' => 'admin.order.index',

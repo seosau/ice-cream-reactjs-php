@@ -23,7 +23,7 @@ class DashboardController extends Controller
             $totalUserAccounts = null;
             $totalSellerAccounts = null;
             $totalMessage = Message::count();
-            $totalOrderPlaced = Order::where('seller_id', $user->id)->where('status', '!=', 'canceled')->count();
+            $totalOrderPlaced = Order::where('seller_id', $user->id)->where('status', '=', 'in progress')->count();
             $totalOrderCanceld = Order::where('seller_id', $user->id)->where('status', '=', 'canceled')->count();
             $totalOrderConfirmed = Order::where('seller_id', $user->id)->where('status', '=', 'delivered')->count();
         } else if ($user->user_type === 'admin') {
@@ -33,7 +33,7 @@ class DashboardController extends Controller
             $totalUserAccounts = User::count();
             $totalSellerAccounts = Seller::count();
             $totalMessage = Message::count();
-            $totalOrderPlaced = Order::where('status', '!=', 'canceled')->count();
+            $totalOrderPlaced = Order::where('status', '=', 'in progress')->count();
             $totalOrderCanceld = Order::where('status', '=', 'canceled')->count();
             $totalOrderConfirmed = Order::where('status', '=', 'delivered')->count();
         }

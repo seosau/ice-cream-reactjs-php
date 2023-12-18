@@ -11,9 +11,10 @@ function Order() {
   const [params, setParams] = useState({});
   const [paymentStatus, setPaymentStatus] = useState({});
   const currentURL = window.location.search;
+  const currentPath = window.location.pathname;
   const isSort = currentURL.includes("status");
   const getOrderData = () => {
-    const url = currentURL.includes("seller")
+    const url = currentPath.includes("seller")
       ? "/seller/order"
       : "/admin/order";
     setLoading(true);
@@ -91,7 +92,7 @@ function Order() {
       if (result.isConfirmed) {
         axiosClient
           .delete(
-            currentURL.includes("seller")
+            currentPath.includes("seller")
               ? `/seller/order/${orderId}`
               : `/admin/order/${orderId}`
           )
@@ -116,7 +117,7 @@ function Order() {
     setLoading(true);
     setParams({ status, payment_status });
     axiosClient
-      .get(currentURL.includes("seller") ? "/seller/order" : "/admin/order", {
+      .get(currentPath.includes("seller") ? "/seller/order" : "/admin/order", {
         params: {
           status: status,
           payment_status: payment_status,
@@ -132,7 +133,7 @@ function Order() {
   };
   useEffect(() => {
     getProductsFromCurrentUrl();
-  }, [currentURL]);
+  }, [currentPath]);
   return (
     <div className={cx("container")}>
       <div className={cx("heading")}>

@@ -53,7 +53,7 @@ function ProductListItem({ item, onDelete, url }) {
                 ? `/seller/productdetail/${item.id}`
                 : `/admin/productdetail/${item.id}`
             }
-            value={"description"}
+            value={"view"}
           />
         </div>
       </div>
