@@ -49,7 +49,8 @@ function UserProfile() {
               href={`updateprofile`}
               value="update profile"
               style={{
-                width: "13rem",
+                // width: "30%",
+                width: 'fit-content',
               }}
             />
           </div>
@@ -66,7 +67,8 @@ function UserProfile() {
                 href={`/order`}
                 value="view orders"
                 style={{
-                  width: "13rem",
+                  // width: "60%",
+                  width: 'fit-content',
                 }}
               />
             </div>
@@ -79,7 +81,8 @@ function UserProfile() {
                 href={`/contact`}
                 value="view messages"
                 style={{
-                  width: "13rem",
+                  // width: "60%",
+                  width: 'fit-content',
                 }}
               />
             </div>
