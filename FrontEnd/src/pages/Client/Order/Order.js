@@ -3,12 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import className from "classnames/bind";
 import style from "./Order.module.scss";
 import Swal from "sweetalert2";
-import { Btn, Loader } from "../../../components";
+import { Btn, Loader, Alert } from "../../../components";
 import axiosClient from "../../../axiosClient/axios";
+import { useStateContext } from "../../../context/ContextProvider";
 const cx = className.bind(style);
 
 function Order() {
   const navigate = useNavigate();
+  const { userToken } = useStateContext();
   const [loading, setLoading] = useState(false);
   const [orderData, setOrderData] = useState([]);
   const handleEventUpdateOrder = (orderId, index) => {
@@ -52,7 +54,7 @@ function Order() {
         }
       });
     } else if (orderData[index].status === "canceled") {
-      navigate('/checkout');
+      navigate("/checkout");
     }
   };
   const getOrderData = () => {
@@ -68,8 +70,13 @@ function Order() {
       });
   };
   useEffect(() => {
-    getOrderData();
-  }, []);
+    if (userToken) {
+      getOrderData();
+    } else {
+      Alert("warning", "Please login to have more experience");
+      navigate('/login')
+    }
+  }, [userToken]);
   return (
     <div className={cx("main-container")}>
       <div className={cx("orders")}>
@@ -95,15 +102,13 @@ function Order() {
                       <p className={cx("date")}>{orderInfo.date}</p>
                     </Link>
                     <div className={cx("content")}>
-                    <img
+                      <img
                         alt=""
                         src={require("../../../assets/img/shape-19.png")}
                         className={cx("sharp")}
                       />
                       <div className={cx("")}>
-                        <h3 className={cx("name")}>
-                          {orderInfo.product_name}
-                        </h3>
+                        <h3 className={cx("name")}>{orderInfo.product_name}</h3>
                         <p className={cx("price")}>Price: {orderInfo.price}$</p>
                         <p
                           className={cx(
@@ -125,7 +130,11 @@ function Order() {
                         {orderInfo.status.toLowerCase() ===
                         "delivered" ? null : (
                           <Btn
-                            href={orderInfo.status === "canceled" ? `?from=order&id=${orderInfo.id}`: ''}
+                            href={
+                              orderInfo.status === "canceled"
+                                ? `?from=order&id=${orderInfo.id}`
+                                : ""
+                            }
                             style={{
                               width: "fit-content",
                             }}

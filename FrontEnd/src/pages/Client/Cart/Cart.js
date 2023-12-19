@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback,memo } from "react";
+import { useState, useEffect, useCallback, memo } from "react";
 import className from "classnames/bind";
 import style from "./Cart.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,10 +7,12 @@ import Swal from "sweetalert2";
 import { Alert, Btn, Loader } from "../../../components";
 import axiosClient from "../../../axiosClient/axios";
 import { useStateContext } from "../../../context/ContextProvider";
+import { useNavigate } from "react-router-dom";
 const cx = className.bind(style);
 
 function Cart() {
-  const { setCartIds, setQuantityCart } = useStateContext();
+  const navigate = useNavigate();
+  const { setCartIds, setQuantityCart, userToken } = useStateContext();
   const [grandTotal, setGrandTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
@@ -116,8 +118,13 @@ function Cart() {
     });
   };
   useEffect(() => {
-    getProductsInCart();
-  }, []);
+    if (userToken) {
+      getProductsInCart();
+    } else {
+      Alert("warning", "Please login to have more experience");
+      navigate("/login");
+    }
+  }, [userToken]);
   useEffect(() => {
     handleTotalPrice();
   }, [handleTotalPrice]);

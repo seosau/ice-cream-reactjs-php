@@ -1,5 +1,5 @@
-import { useEffect, useState,memo } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState, memo } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import className from "classnames/bind";
 import style from "./Favourite.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,7 +11,9 @@ import { useStateContext } from "../../../context/ContextProvider";
 const cx = className.bind(style);
 
 function Favourite() {
-  const { currentUser, setCartIds, setQuantityCart,cartIds, } = useStateContext();
+  const navigate = useNavigate();
+  const { currentUser, setCartIds, setQuantityCart, cartIds, userToken } =
+    useStateContext();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const { setWishListIds } = useStateContext();
@@ -28,8 +30,13 @@ function Favourite() {
       });
   };
   useEffect(() => {
-    getProductsInWishList();
-  }, []);
+    if (userToken) {
+      getProductsInWishList();
+    } else {
+      Alert("warning", "Please login to have more experience");
+      navigate("/login");
+    }
+  }, [userToken]);
   const handleButtonDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -140,7 +147,7 @@ function Favourite() {
                               {handleCheckProductInCart(product.product_id)
                                 ? "Already In Cart"
                                 : "Add To Cart"}
-        
+
                               <FontAwesomeIcon
                                 icon={faCartShopping}
                                 className={cx("detail-icon-style")}
