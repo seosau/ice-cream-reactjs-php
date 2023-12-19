@@ -142,3 +142,10 @@
   font-size: 1.8rem;
   text-align: center;
 }
+
+@media screen and (max-width: 1025px) {
+  .box-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  }
+}

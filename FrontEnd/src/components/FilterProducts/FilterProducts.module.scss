@@ -96,3 +96,28 @@
   background-color: var(--main-color);
   color: #fff;
 }
+
+@media screen and (max-width: 1025px){
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .sort-choice {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+  }
+  .sort-text {
+    flex: 1 100%;
+    text-align: center;
+  }
+  .btn-sort, .select {
+    flex: 1 35%;
+    margin: 0;
+    padding: 1rem;
+  }
+}
