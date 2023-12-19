@@ -11,7 +11,8 @@ use App\Http\Resources\ProductResource;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use App\Models\Product;
-
+use App\Models\WishList;
+use App\Models\Cart;
 
 class ProductController extends Controller
 {
@@ -78,6 +79,8 @@ class ProductController extends Controller
             return abort(403, 'Unauthorized action');
         }
         $product->delete();
+        WishList::where('product_id', $product['id'])->delete();
+        Cart::where('product_id', $product['id'])->delete();
         if ($product->image) {
             $absolutePath = public_path($product->image);
             File::delete($absolutePath);
@@ -111,7 +114,6 @@ class ProductController extends Controller
         } elseif ($sortBy === 'bestsale') {
             $query->where('stock', '<', 10);
         } else {
-           
         }
 
 
