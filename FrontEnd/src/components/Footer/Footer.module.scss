@@ -81,3 +81,12 @@ footer .bottom {
         width: 85vw;
     }
 }
+
+@media screen and (min-width: 430px) and (max-width: 1030px) {
+    footer .content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+        align-items: center;
+        justify-content: center;
+    }
+}

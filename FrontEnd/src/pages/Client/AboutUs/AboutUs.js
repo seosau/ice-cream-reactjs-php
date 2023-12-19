@@ -162,7 +162,7 @@ function AboutUs() {
           </div>
           <div className={cx("box")}>
             <img
-              src={require("../../../assets/img/team-1.jpg")}
+              src={require("../../../assets/img/team-6.jpg")}
               className={cx("img")}
               alt="Team Member"
             />
@@ -195,7 +195,7 @@ function AboutUs() {
           </div>
           <div className={cx("box")}>
             <img
-              src={require("../../../assets/img/team-3.jpg")}
+              src={require("../../../assets/img/team-4.jpg")}
               className={cx("img")}
               alt="Team Member"
             />

@@ -568,3 +568,21 @@
         justify-content: center;
     }
 }
+
+@media screen and (min-width: 430px) and (max-width: 1030px) {
+    .box-container {
+        grid-template-columns: none;
+    }
+    .slider-container {
+        min-height: 50vh;
+    }
+    
+    .slider-container .imgBox img {
+        width: 100%;
+        height: 50vh;
+    }
+    
+    .slider-container .textBox h1 {
+        font-size: 1.5rem;
+    }
+}

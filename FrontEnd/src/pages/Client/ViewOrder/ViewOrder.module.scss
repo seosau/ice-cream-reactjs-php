@@ -17,6 +17,7 @@
     margin: 1rem auto;
     padding: 1rem;
     box-shadow: var(--box-shadow);
+    background-color: var(--white-alpha-40);
 }
 
 .order-detail .box-container .box {
@@ -39,7 +40,7 @@
 .order-detail .box-container .box img {
     height: 30rem;
     width: 100%;
-    object-fit: fill;
+    object-fit: contain;
     margin: 1rem 0;
 }
 
@@ -99,4 +100,17 @@
 }
 .order-detail .box-container .box .col .status.delivered {
     color: green;
+}
+
+@media screen and (max-width: 1025px) {
+    .order-detail .box-container .box img {
+        height: 17rem;
+        width: 100%;
+        object-fit: contain;
+        margin: 1rem 1.2rem;
+    }
+    .order-detail .box-container .box .col {
+        flex: 1 1 20rem;
+        font-size: 1rem;
+    }
 }

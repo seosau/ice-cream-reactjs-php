@@ -398,3 +398,16 @@
     width: 0;
   }
 }
+
+@media screen and (min-width: 430px) and (max-width: 1030px) {
+  .banner {
+    min-height: 50vh;
+  }
+  .team .box-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    align-items: center;
+    gap: 3rem,
+  }
+
+}
