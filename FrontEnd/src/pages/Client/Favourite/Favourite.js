@@ -12,7 +12,7 @@ const cx = className.bind(style);
 
 function Favourite() {
   const navigate = useNavigate();
-  const { currentUser, setCartIds, setQuantityCart, cartIds, userToken } =
+  const { currentUser, setCartIds, cartIds, userToken } =
     useStateContext();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -98,9 +98,8 @@ function Favourite() {
     axiosClient
       .post("/cart", payload)
       .then(({ data }) => {
-        setCartIds(data.cartListIds);
-        setQuantityCart(data.quantity);
         Alert("success", "Add to cart successfully");
+        setCartIds(data.cartListIds);
       })
       .catch((error) => {
         if (error.response) {
@@ -165,14 +164,14 @@ function Favourite() {
                         <Btn
                           onclick={() => handleButtonDelete(product.product_id)}
                           style={{
-                            width: "fit-content",
+                            width: "40%",
                           }}
                           value={"Delete"}
                         />
                         <Btn
                           href={`/checkout?from=menu&id=${product.product_id}`}
                           style={{
-                            width: "fit-content",
+                            width: "40%",
                           }}
                           value="buy now"
                         />

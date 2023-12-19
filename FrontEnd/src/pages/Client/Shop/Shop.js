@@ -186,10 +186,10 @@ function Shop() {
         <div className={cx("detail")}>
           <h1>Our Menu</h1>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing
-            <br />
-            elit, sed do eiusmod tempor incididunt ut labore et <br />
-            dolore magna aliqua.
+            Welcome to our charming ice cream shop! Nestled in the city center,<br/>
+            we offer a delectable array of freshly churned delights. Indulge in<br/>
+            creamy perfection with our exquisite flavors, carefully crafted from<br/>
+            the finest ingredients. Treat yourself to a taste of pure joy!<br/>
           </p>
         </div>
       </div>

@@ -128,8 +128,9 @@ function Header({ children }) {
                       href={currentURL.includes('seller') ? "/seller/profile" : '/admin/profile'}
                       onclick={() => handleShowProfile()}
                       value="profile"
+                      style={{width:'100%'}}
                     ></Btn>
-                    <Btn value="logout" onclick={handleLogout}></Btn>
+                    <Btn value="logout" onclick={handleLogout}  style={{width:'100%'}}></Btn>
                   </div>
                 </div>
               ) : (

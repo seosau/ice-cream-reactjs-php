@@ -30,7 +30,7 @@ function Cart() {
     const total = products.reduce((accumulator, product) => {
       return accumulator + product.price * product.quantity;
     }, 0);
-    setGrandTotal(total);
+    setGrandTotal(total.toFixed(1));
   }, [products, setGrandTotal]);
   // const handleQuantity = (number, id) => {
   //   setProducts((prevProducts) => {
@@ -199,7 +199,7 @@ function Cart() {
                       <div className={cx("flex-btn")}>
                         <p className={cx("sub-total")}>
                           Sub total:
-                          <span> ${product.price * product.quantity}</span>
+                          <span> ${(product.price * product.quantity).toFixed(1)}</span>
                         </p>
                         <Btn
                           onclick={() =>

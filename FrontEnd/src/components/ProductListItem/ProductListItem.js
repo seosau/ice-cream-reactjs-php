@@ -38,7 +38,7 @@ function ProductListItem({ item, onDelete, url }) {
 
           <Btn
             style={{
-              width: "30%",
+              width: "32%",
             }}
             value={"delete"}
             onclick={() => onDelete(item.id)}

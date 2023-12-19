@@ -55,10 +55,9 @@ function Contact() {
         <div className={cx("detail")}>
           <h1>Contact Us</h1>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing
-            <br />
-            elit, sed do eiusmod tempor incididunt ut labore et <br />
-            dolore magna aliqua.
+            Need assistance or have inquiries? Contact us anytime through our<br/>
+            user-friendly contact page. Our dedicated team is ready to help you<br/>
+            promptly and provide the support you need.
           </p>
         </div>
       </div>
@@ -79,21 +78,21 @@ function Contact() {
             <img src={require("../../../assets/img/0.png")} alt=""></img>
             <div>
               <h1>Free Shipping Fast</h1>
-              <p>Lorem ipsum dolor sit amet consectetur adipiscing elit.</p>
+              <p>Rapid delivery with complimentary shipping!</p>
             </div>
           </div>
           <div className={cx("box")}>
             <img src={require("../../../assets/img/1.png")} alt=""></img>
             <div>
               <h1>Money Back & Guanrantee</h1>
-              <p>Lorem ipsum dolor sit amet consectetur adipiscing elit.</p>
+              <p>Money-back guarantee for your assurance.</p>
             </div>
           </div>
           <div className={cx("box")}>
             <img src={require("../../../assets/img/2.png")} alt=""></img>
             <div>
               <h1>Online Support 24/7</h1>
-              <p>Lorem ipsum dolor sit amet consectetur adipiscing elit.</p>
+              <p>24/7 online support for you anytime.</p>
             </div>
           </div>
         </div>
@@ -237,7 +236,7 @@ function Contact() {
             <FontAwesomeIcon icon={faPhone} className={cx("icon-style")} />
             <div>
               <h4>phone number</h4>
-              <p>0358000001</p>
+              <p>0934102546</p>
               <p>0358000001</p>
             </div>
           </div>
@@ -246,7 +245,7 @@ function Contact() {
             <div>
               <h4>email</h4>
               <p>icreamshop@gmail.com</p>
-              <p>icreamshop@gmail.com</p>
+              <p>icecreampinky@gmail.com</p>
             </div>
           </div>
         </div>
