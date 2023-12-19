@@ -1,20 +1,21 @@
 @import "normalize.css";
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Rubik:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Rubik:wght@300;400;500;600;700&display=swap");
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    outline: none;
-    border: none;
-    text-decoration: none;
-    list-style: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  list-style: none;
 }
 body {
-    font-family: 'Quicksand', sans-serif;
-    background-repeat: no-repeat;
-    background-position: center;
+  font-family: "Quicksand", sans-serif;
+  background-repeat: no-repeat;
+  background-position: center;
+  overflow-x: hidden;
+
 }
 html {
-    scroll-behavior: smooth;
-   
+  scroll-behavior: smooth;
 }

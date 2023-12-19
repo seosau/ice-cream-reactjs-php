@@ -340,7 +340,7 @@
   margin-bottom: -3, 7rem;
 }
 
-@media screen and (max-width: 430px) {
+@media screen and (max-width: 576px) {
   .banner {
     min-height: 40vh;
   }
@@ -352,10 +352,6 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-  }
-
-  .chef .box > img {
-    width: 95vw;
   }
 
   .team .box-container {
@@ -398,8 +394,10 @@
     width: 0;
   }
 }
-
-@media screen and (min-width: 430px) and (max-width: 1030px) {
+.box img {
+  width: 50%;
+}
+@media screen and (min-width: 768px) and (max-width: 1200px) {
   .banner {
     min-height: 50vh;
   }
@@ -409,5 +407,7 @@
     align-items: center;
     gap: 3rem,
   }
-
+  .chef {
+    margin-bottom: 10px;
+  }
 }

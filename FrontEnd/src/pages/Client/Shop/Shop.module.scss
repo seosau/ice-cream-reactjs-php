@@ -27,7 +27,7 @@
   position: relative;
   // margin-top: 80px;
   background-image: url("../../../assets/img/bg1.webp");
-  padding: 4%;
+  padding-top: 4%;
   padding-bottom: 50px;
 }
 .heading {
@@ -55,7 +55,6 @@
   height: 25rem;
   object-fit: cover;
   transition: 0.5s;
-  background-color: palegreen;
 }
 .products .box-container .box:hover img {
   transform: scale(1.1);
@@ -112,7 +111,7 @@
   margin-left: 6rem;
 }
 .products .box-container .box .content .flex-btn .like-cart #like-icon {
-  padding-right: 2rem;
+  padding-right: 1rem;
 }
 .icon-style {
   font-size: 2rem;
@@ -143,9 +142,17 @@
   text-align: center;
 }
 
-@media screen and (max-width: 1025px) {
+@media screen and (max-width: 576px) {
+  .products .box-container .box img {
+    height: 20rem;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1200px) {
   .box-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+    margin: 2px;
+  }
+  .products .box-container .box {
+    width: 97%;
   }
 }

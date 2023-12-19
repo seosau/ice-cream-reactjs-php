@@ -55,6 +55,8 @@ function Footer() {
                     <Btn
                         href="/contact"
                         value="contact now"
+
+                        style={{width:'fit-content'}}
                     />
                 </div>
                 {

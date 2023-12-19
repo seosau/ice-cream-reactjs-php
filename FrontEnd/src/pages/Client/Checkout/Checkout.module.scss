@@ -173,3 +173,18 @@
 .product-info {
     width: auto;
 }
+
+
+@media screen and (max-width: 576px) {
+  .summary {
+    padding: 0;
+  }
+  .summary .total {
+    font-size: 1.2rem;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1200px) {
+  .summary .box-container .box {
+    justify-content: unset;
+  }
+}

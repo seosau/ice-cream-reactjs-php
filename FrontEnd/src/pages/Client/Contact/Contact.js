@@ -202,7 +202,7 @@ function Contact() {
           <Btn
             onclick={handleSubmitMessage}
             value="send message"
-            style={{ width: "40%" }}
+            style={{ 'max-width': "45%" }}
           />
         </form>
       </div>

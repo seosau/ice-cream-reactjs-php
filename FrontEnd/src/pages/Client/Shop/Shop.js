@@ -242,7 +242,7 @@ function Shop() {
                       <div className={cx("flex-btn")}>
                         <Btn
                           onclick={() => handleBuyProduct(product)}
-                          style={{ flex: 1 }}
+                          style={{ 'min-width': '38%', width:'fit-content' }}
                           value="Buy Now"
                           href={`?from=menu&id=${product.id}`}
                         />
