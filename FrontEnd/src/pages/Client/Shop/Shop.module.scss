@@ -2,7 +2,6 @@
   display: flex;
   // justify-content: center;
   align-items: center;
-  height: 100vh;
   margin-top: 80px;
   background-image: url("../../../assets/img/banner.jpg");
   // position: relative;
@@ -147,5 +146,11 @@
   .box-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  }
+}
+
+@media screen and (max-width: 1025px)  {
+  .banner {
+    min-height: 50vh;
   }
 }

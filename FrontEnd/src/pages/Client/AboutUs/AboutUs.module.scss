@@ -2,7 +2,6 @@
   display: flex;
   // justify-content: center;
   align-items: center;
-  min-height: 100vh;
   margin-top: 80px;
   background-image: url("../../../assets/img/banner.jpg");
   // position: relative;
@@ -342,7 +341,7 @@
 
 @media screen and (max-width: 430px) {
   .banner {
-    min-height: 40vh;
+    min-height: 50vh;
   }
   
   // Chef ######################################################################
@@ -399,7 +398,7 @@
   }
 }
 
-@media screen and (min-width: 430px) and (max-width: 1030px) {
+@media screen and (min-width: 431px) and (max-width: 1030px) {
   .banner {
     min-height: 50vh;
   }
