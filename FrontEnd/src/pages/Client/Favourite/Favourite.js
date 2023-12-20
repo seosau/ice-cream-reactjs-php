@@ -134,7 +134,7 @@ function Favourite() {
                         className={cx("sharp")}
                       />
                       <h3>{product.name}</h3>
-                      <p className={cx("price")}>Price: ${product.price}</p>
+                      <p className={cx("price")}>Price: {product.price}$</p>
                       <div className={cx("flex-btn")}>
                         <Btn
                           onclick={() => handleClickCart(product)}

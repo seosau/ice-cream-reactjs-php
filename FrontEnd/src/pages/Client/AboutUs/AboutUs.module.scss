@@ -55,8 +55,6 @@
   margin-bottom: -2rem;
 }
 
-
-
 .chef .box p {
   font-size: 1.3rem;
   color: #666;
@@ -344,7 +342,7 @@
   .banner {
     min-height: 40vh;
   }
-  
+
   // Chef ######################################################################
   .chef {
     padding-left: 4%;
@@ -358,37 +356,37 @@
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   //Testimonial
   .testimonial {
     width: 100vw;
   }
-  
+
   .slide-row {
     width: 400vw;
   }
-  
+
   .slide-col {
     width: 100vw;
     height: 400px;
   }
-  
+
   .user-img {
     width: 320px;
     object-fit: cover;
     display: flex;
     justify-content: flex-end;
   }
-  
+
   .user-img img {
     width: 70%;
   }
-  
+
   .user-text {
     width: 60vw;
     height: 370px;
   }
-  
+
   // Mission
   .mission .box-container .box .img {
     width: 0;
@@ -396,6 +394,11 @@
 }
 .box img {
   width: 50%;
+}
+@media screen and (max-width: 576px) {
+  .banner {
+    min-height: 50vh;
+  }
 }
 @media screen and (min-width: 768px) and (max-width: 1200px) {
   .banner {
@@ -405,7 +408,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
     align-items: center;
-    gap: 3rem,
+    gap: 3rem;
   }
   .chef {
     margin-bottom: 10px;

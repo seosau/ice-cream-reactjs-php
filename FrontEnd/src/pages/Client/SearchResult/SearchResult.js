@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate,useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import className from "classnames/bind";
 import style from "./SearchResult.module.scss";
@@ -15,7 +15,7 @@ const cx = className.bind(style);
 
 function SearchResult() {
   const navigate = useNavigate();
-  const {keyword} = useParams();
+  const { keyword } = useParams();
   const {
     currentUser,
     wishListIds,
@@ -59,8 +59,9 @@ function SearchResult() {
         order: order,
       });
       onGetSortValue(sortBy, order);
+    } else {
+      getProducts();
     }
-    return;
   };
   const onGetSortValue = (sortBy, order) => {
     setLoading(true);
@@ -98,16 +99,16 @@ function SearchResult() {
     if (isCartInMenu) return true;
     return false;
   };
-  useEffect(() => {
-    if (isSort === false) {
-      getProducts();
-    } else {
-      return;
-    }
-  }, [keyword]);
+  // useEffect(() => {
+  //   if (isSort === false) {
+  //     getProducts();
+  //   } else {
+  //     return;
+  //   }
+  // }, [keyword]);
   useEffect(() => {
     getProductsFromCurrentUrl();
-  }, []);
+  }, [keyword, currentURL]);
   const handleClickLike = (product) => {
     if (currentUser.id) {
       const payload = { ...product, user_id: currentUser.id };

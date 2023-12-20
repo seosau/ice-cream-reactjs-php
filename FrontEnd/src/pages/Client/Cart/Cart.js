@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, memo } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import className from "classnames/bind";
 import style from "./Cart.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,7 +8,6 @@ import Swal from "sweetalert2";
 import { Alert, Btn, Loader } from "../../../components";
 import axiosClient from "../../../axiosClient/axios";
 import { useStateContext } from "../../../context/ContextProvider";
-import { useNavigate } from "react-router-dom";
 const cx = className.bind(style);
 
 function Cart() {
@@ -146,7 +146,9 @@ function Cart() {
               {products.length > 0 ? (
                 products.map((product, index) => (
                   <div key={index} className={cx("box")}>
-                    <img src={product.image_url} alt="product" />
+                    <Link to={`/shop/view1product/${product.product_id}`}>
+                      <img src={product.image_url} alt="product" />
+                    </Link>
                     <div className={cx("content")}>
                       <img
                         alt=""
@@ -155,7 +157,7 @@ function Cart() {
                       />
                       <h3>{product.name}</h3>
                       <div className={cx("flex-btn")}>
-                        <p className={cx("price")}>Price: ${product.price}</p>
+                        <p className={cx("price")}>Price: {product.price}$</p>
                         <div className={cx("quantity")}>
                           <button
                             className={cx("btn-quantity", "quanity-item")}
@@ -168,6 +170,7 @@ function Cart() {
                           <input
                             className={cx("quantity-input")}
                             type="text"
+                            disabled
                             value={product.quantity}
                             onChange={(e) =>
                               handleQuantity(
@@ -199,7 +202,9 @@ function Cart() {
                       <div className={cx("flex-btn")}>
                         <p className={cx("sub-total")}>
                           Sub total:
-                          <span> ${(product.price * product.quantity).toFixed(1)}</span>
+                          <span>
+                            {(product.price * product.quantity).toFixed(1)}$
+                          </span>
                         </p>
                         <Btn
                           onclick={() =>

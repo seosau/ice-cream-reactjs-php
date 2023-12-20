@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\File;
 use App\Models\Product;
 use App\Models\WishList;
 use App\Models\Cart;
+use App\Models\Order;
 
 class ProductController extends Controller
 {
@@ -81,6 +82,7 @@ class ProductController extends Controller
         $product->delete();
         WishList::where('product_id', $product['id'])->delete();
         Cart::where('product_id', $product['id'])->delete();
+        Order::where('product_id', $product['id'])->delete();
         if ($product->image) {
             $absolutePath = public_path($product->image);
             File::delete($absolutePath);

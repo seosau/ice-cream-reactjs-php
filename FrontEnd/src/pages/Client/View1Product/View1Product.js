@@ -158,7 +158,7 @@ function View1Product() {
               >
                 {product?.stock > 0 ? "In Stock" : "Out of Stock"}
               </span>
-              <p className={cx("product-price")}>Price: ${product.price}</p>
+              <p className={cx("product-price")}>Price: {product.price}$</p>
               <h2>{product.name}</h2>
               <p className={cx("description-text")}>{product.product_detail}</p>
               <div className={cx("detail-btn")}>
@@ -253,7 +253,7 @@ function View1Product() {
                       />
                       <div className={cx("price-name")}>
                         <h2 className={cx("name")}> {product.name}</h2>
-                        <h3 className={cx("price")}>Price ${product.price}</h3>
+                        <h3 className={cx("price")}>Price {product.price}$</h3>
                       </div>
                       <div className={cx("flex-btn")}>
                         <Btn

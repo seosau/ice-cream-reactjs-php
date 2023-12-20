@@ -88,8 +88,9 @@ function Search({ classname }) {
           <div className={cx("search-result")} tabIndex="-1" {...attrs}>
             <div className={cx("search-wrapper")}>
               <h4 className={cx("search-title")}>Products</h4>
-              {searchResult.map((result) => (
+              {searchResult.slice(0, 4).map((result, index) => (
                 <SearchItemResult
+                  key={index}
                   data={result}
                   onClick={handleViewProductDetail}
                 />
@@ -112,7 +113,7 @@ function Search({ classname }) {
             <button
               className={cx("clear")}
               onClick={handleClear}
-              style={{ left: width * 0.65 }}
+              style={{ left: width * 0.66 }}
             >
               <FontAwesomeIcon icon={faCircleXmark} />
             </button>

@@ -237,7 +237,7 @@ function Shop() {
                       />
                       <div className={cx("price-name")}>
                         <h2 className={cx("name")}>{product.name}</h2>
-                        <h3 className={cx("price")}>Price ${product.price}</h3>
+                        <h3 className={cx("price")}>Price {product.price}$</h3>
                       </div>
                       <div className={cx("flex-btn")}>
                         <Btn

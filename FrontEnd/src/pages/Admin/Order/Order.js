@@ -65,7 +65,12 @@ function Order() {
         return prevOrderInfo;
       });
       axiosClient
-        .put(`/seller/order/${orderId}`, updateOrderData[index])
+        .put(
+          currentPath.includes("seller")
+            ? `/seller/order/${orderId}`
+            : `/admin/order/${orderId}`,
+          updateOrderData[index]
+        )
         .then(({ data }) => {
           getOrderData();
           Alert(
@@ -235,7 +240,11 @@ function Order() {
                       <select
                         className={cx("box")}
                         name="update_payment"
-                        value={orderInfo.payment_status}
+                        value={
+                          paymentStatus?.orderId === orderInfo.id
+                            ? paymentStatus.paymentStatus
+                            : orderInfo.payment_status
+                        }
                         onChange={(e) => {
                           setPaymentStatus({
                             orderId: orderInfo.id,

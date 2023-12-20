@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import className from "classnames/bind";
 import style from "./UpdateUserProfile.module.scss";
 import Btn from "../../../components/Button/Btn";
@@ -79,7 +81,7 @@ function UpdateUserProfile() {
   };
   return (
     <div className={cx("form-container")}>
-      <div className={cx("banner")}>
+      {/* <div className={cx("banner")}>
         <div className={cx("detail")}>
           <h1>Update Profile</h1>
           <p>
@@ -89,10 +91,10 @@ function UpdateUserProfile() {
             dolore magna aliqua.
           </p>
         </div>
-      </div>
+      </div> */}
       <div className={cx("heading")}>
         <h1>update profile details</h1>
-        <img src={require("../../../assets/img/separator.png")} />
+        <img src={require("../../../assets/img/separator.png")} alt="" />
       </div>
       {loading && <Loader />}
       {!loading && (
@@ -104,8 +106,18 @@ function UpdateUserProfile() {
                   ? userDataUpdate.image_url
                   : user_img_url
               }
-              alt="image"
+              alt=""
             />
+            {/* <label className={cx("cameraButton")}>
+              <input
+                className={cx("camera")}
+                type="file"
+                name="image"
+                accept="image/*;capture=camera"
+                onChange={(e) => onImageChoose(e)}
+              />
+              <FontAwesomeIcon icon={faCamera} className={cx("icon-camera")} />
+            </label> */}
           </div>
           <div className={cx("")}>
             <div className={cx("row")}>
@@ -159,7 +171,10 @@ function UpdateUserProfile() {
 
             <div className={cx("row")}>
               <div className={cx("input-field")}>
-                <p className={cx("")}>your current password</p>
+                <p className={cx("")}>
+                  your current password{" "}
+                  <span className={cx("required")}>*</span>
+                </p>
                 <input
                   className={cx("box")}
                   type="password"
@@ -248,7 +263,11 @@ function UpdateUserProfile() {
               onChange={(e) => onImageChoose(e)}
             />
           </div>
-          <Btn value={"update now"} onclick={onUpdate} style={{ width: "100%" }}></Btn>
+          <Btn
+            value={"update now"}
+            onclick={onUpdate}
+            style={{ width: "fit-content" }}
+          ></Btn>
         </form>
       )}
     </div>

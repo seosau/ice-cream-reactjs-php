@@ -128,14 +128,24 @@ class ClientController extends Controller
         $sortBy = $request->input('sortBy');
         $order = $request->input('order');
         $data = Product::where('status', '=', 'active');
-        if ($sortBy === 'price') {
+        // if ($sortBy === 'price') {
+        //     $data->orderBy($sortBy, $order);
+        // } elseif ($sortBy === 'status') {
+        //     $data->where($sortBy, '=', $order);
+        // }
+
+        if ($sortBy === 'category') {
+            $data->where('category', $order);
+        } elseif ($sortBy === 'price') {
             $data->orderBy($sortBy, $order);
-        } elseif ($sortBy === 'status') {
-            $data->where($sortBy, '=', $order);
+        } elseif ($sortBy === 'newest') {
+            $data->orderBy('updated_at', 'desc');
+        } elseif ($sortBy === 'bestsale') {
+            $data->where('stock', '<', 10);
         }
         return ProductResource::collection(
             $data->where('name', 'like', "%{$keyword}%")
-                ->paginate(4)
+                ->paginate(12)
         );
     }
     private function saveImage($image)

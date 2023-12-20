@@ -47,7 +47,8 @@
   margin: 1rem;
   overflow: hidden;
   top: 0;
-  max-width: 25rem;
+  max-width: 28rem;
+  width: 100%;
 }
 .products .box-container .box img {
   width: 100%;
@@ -85,7 +86,7 @@
 .products .box-container .box .content .shap {
   position: absolute;
   left: 0;
-  top: -80px;
+  top: -79px;
   width: 80px;
   height: 80px;
   background-repeat: no-repeat;
@@ -142,16 +143,25 @@
 }
 
 @media screen and (max-width: 576px) {
+  .banner {
+    min-height: 50vh;
+  }
   .products .box-container .box img {
     height: 20rem;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1200px) {
+  .banner {
+    min-height: 50vh;
+  }
   .box-container {
     grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
     margin: 2px;
   }
   .products .box-container .box {
     width: 97%;
+    margin: 10px;
+    max-width: none;
   }
+  
 }
